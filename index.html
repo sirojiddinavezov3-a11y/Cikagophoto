@@ -1,0 +1,842 @@
+```html
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIKAGO PHOTO Web App</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#2563EB',
+                            lightBlue: '#3B82F6',
+                            darkBg: '#0B1528',
+                            cardBg: '#13223C',
+                            accent: '#FBBF24',
+                            warning: '#FEF3C7',
+                            textWarning: '#92400E',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #080E1A;
+            color: #E2E8F0;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1528;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E293B;
+            border-radius: 2px;
+        }
+        /* Page transition effects */
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Shimmer effect for progress loading */
+        .shimmer {
+            background: linear-gradient(90deg, #13223C 25%, #1D355E 50%, #13223C 75%);
+            background-size: 200% 100%;
+            animation: loading-shimmer 1.5s infinite;
+        }
+        @keyframes loading-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        /* Circular countdown loader */
+        .loader-circle {
+            border-top-color: #3B82F6;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex justify-center min-h-screen items-start bg-neutral-950">
+
+    <!-- Mobile Screen Wrapper -->
+    <div id="app-container" class="w-full max-w-md bg-brand-darkBg min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden border-x border-slate-800/40">
+        
+        <!-- TOP NAVIGATION BAR -->
+        <header class="flex items-center justify-between px-4 py-4 border-b border-slate-800/30 bg-brand-darkBg/90 backdrop-blur-md sticky top-0 z-50">
+            <div class="flex items-center space-x-2">
+                <button id="back-btn" class="text-slate-400 hover:text-white p-1 rounded-full hover:bg-slate-800/50 transition duration-200 hidden">
+                    <i class="fa-solid fa-arrow-left text-lg"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 rounded-xl bg-brand-lightBlue flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">
+                        C
+                    </div>
+                    <span class="font-bold text-lg tracking-wide text-white">CIKAGO <span class="text-brand-lightBlue">PHOTO</span></span>
+                </div>
+            </div>
+            
+            <!-- Dynamic Avatar Stack -->
+            <div class="flex items-center space-x-3">
+                <div class="flex -space-x-2">
+                    <div class="w-7 h-7 rounded-full border-2 border-brand-darkBg bg-yellow-400 flex items-center justify-center text-xs font-semibold text-neutral-900">👩</div>
+                    <div class="w-7 h-7 rounded-full border-2 border-brand-darkBg bg-purple-500 flex items-center justify-center text-xs font-semibold text-white">👨</div>
+                    <div class="w-7 h-7 rounded-full border-2 border-brand-darkBg bg-green-500 flex items-center justify-center text-xs font-semibold text-white">😎</div>
+                </div>
+                <button class="text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-ellipsis-vertical text-lg"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- MAIN DYNAMIC CONTENT CONTAINER -->
+        <main class="flex-1 px-4 py-4 overflow-y-auto mb-20">
+
+            <!-- SCREEN 1: PROFILE / HOME (1352.jpg modified) -->
+            <div id="screen-profile" class="fade-in space-y-4">
+                <!-- System Warning Banner -->
+                <div class="bg-amber-950/40 border border-amber-800/30 rounded-2xl p-4 flex items-start space-x-3 text-amber-200">
+                    <div class="bg-amber-500/20 p-2 rounded-xl text-amber-400 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+                    </div>
+                    <div class="space-y-1 text-sm">
+                        <h4 class="font-bold text-amber-400 uppercase tracking-wider text-xs">Tizim xabari</h4>
+                        <p class="leading-relaxed text-slate-300">Yangidan sessiyani boshlash uchun <strong class="text-white font-medium">mablag'larni olib qo'yish</strong> shart. Xavfsizlik maqsadida ichki balans uzoq saqlanmaydi.</p>
+                    </div>
+                </div>
+
+                <!-- Main Status Card (GOLD removed, User empty layout configured) -->
+                <div class="bg-gradient-to-br from-brand-cardBg to-slate-900 border border-slate-800/50 rounded-3xl p-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
+                    
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center shadow-lg border border-slate-700">
+                            <i class="fa-solid fa-user text-2xl text-slate-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                                Foydalanuvchi <span class="text-lg">👤</span>
+                            </h3>
+                            <p class="text-slate-500 text-xs mt-0.5">Yangi hisob</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800/40">
+                        <div>
+                            <span class="text-slate-500 text-xs block mb-1">AKKAUNT STATUSI</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-500/10 text-brand-lightBlue border border-blue-500/20">
+                                Faol <span class="w-1.5 h-1.5 rounded-full bg-blue-400 ml-1.5 animate-pulse"></span>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 text-xs block mb-1">RO'YXATDAN O'TISH</span>
+                            <span class="text-slate-400 text-xs font-medium" id="reg-date">15.06.2026</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 text-xs block mb-1">SOTILGAN FOTO</span>
+                            <span class="text-slate-200 text-sm font-bold" id="sold-photo-count">0 ta</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 text-xs block mb-1">JAMI DAROMAD</span>
+                            <span class="text-brand-lightBlue text-sm font-extrabold" id="total-revenue">0 so'm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Balance Card (0 so'm) -->
+                <div class="bg-slate-900/60 border border-slate-800/30 rounded-3xl p-6 flex flex-col justify-between shadow-lg">
+                    <span class="text-slate-400 text-xs tracking-wider uppercase">Mavjud balans</span>
+                    <div class="flex items-baseline justify-between mt-2">
+                        <span class="text-3xl font-extrabold text-white tracking-tight" id="balance-amount">0 so'm</span>
+                    </div>
+                </div>
+
+                <!-- Fast Upload Button (Call To Action) -->
+                <button onclick="changeScreen('screen-upload')" class="w-full bg-brand-lightBlue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 flex items-center justify-center space-x-2 transition duration-200 active:scale-[0.98]">
+                    <i class="fa-solid fa-camera-retro text-lg"></i>
+                    <span>Foto yuklash sahifasiga o'tish</span>
+                </button>
+            </div>
+
+
+            <!-- SCREEN 2: PHOTO UPLOAD (1353.jpg) -->
+            <div id="screen-upload" class="fade-in space-y-6 hidden">
+                <div class="text-center space-y-2 py-4">
+                    <h2 class="text-2xl font-extrabold text-white uppercase tracking-wider">Foto Yuklang</h2>
+                    <p class="text-slate-400 text-sm">Galereyadan 10 tagacha suratni tanlang</p>
+                    <p class="text-brand-lightBlue font-semibold text-xs" id="selected-count-label">Tanlangan: 0 / 10</p>
+                </div>
+
+                <!-- Interactive Upload Box -->
+                <div id="upload-zone" onclick="simulatePhotoSelect()" class="border-2 border-dashed border-slate-700/60 hover:border-brand-lightBlue/60 bg-brand-cardBg/40 hover:bg-brand-cardBg/60 rounded-3xl p-8 flex flex-col items-center justify-center cursor-pointer transition duration-300 min-h-[220px]">
+                    <div class="w-16 h-16 rounded-full bg-blue-500/10 text-brand-lightBlue flex items-center justify-center mb-4 border border-blue-500/20 transition">
+                        <i class="fa-solid fa-plus text-3xl"></i>
+                    </div>
+                    <p class="text-slate-300 text-sm font-medium text-center">Rasm tanlash uchun bosing</p>
+                    <p class="text-slate-500 text-xs mt-1">PNG, JPG, JPEG (Maks. 15MB)</p>
+                    
+                    <!-- Selected Photos Grid Container -->
+                    <div id="selected-photos-preview" class="grid grid-cols-4 gap-2 mt-4 w-full hidden">
+                        <!-- Simulated Photo cards generated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button id="btn-submit-moderation" disabled onclick="startModeration()" class="w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200">
+                    Tekshiruvga yuborish
+                </button>
+            </div>
+
+
+            <!-- SCREEN 3: MODERATION LOADING (1354.jpg) -->
+            <div id="screen-moderation" class="fade-in flex flex-col items-center justify-center py-12 space-y-8 hidden">
+                <div class="relative w-40 h-40 flex items-center justify-center">
+                    <div class="absolute inset-0 rounded-full border-4 border-slate-800"></div>
+                    <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-brand-lightBlue animate-spin"></div>
+                    <div class="w-28 h-28 rounded-full bg-brand-cardBg flex items-center justify-center shadow-inner">
+                        <i class="fa-solid fa-wand-magic-sparkles text-4xl text-brand-lightBlue animate-pulse"></i>
+                    </div>
+                </div>
+
+                <div class="text-center space-y-3 max-w-xs">
+                    <h2 class="text-2xl font-extrabold text-white tracking-wider animate-pulse">Moderatsiya...</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">Sun'iy intellekt fotolar sifatini va unikalligini tekshiradi</p>
+                </div>
+
+                <div class="w-full max-w-xs bg-brand-cardBg/50 border border-slate-800/40 rounded-2xl p-4 space-y-3">
+                    <div class="flex items-center space-x-3 text-xs">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                        <span class="text-slate-300">Format va o'lcham tekshirilmoqda...</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-xs">
+                        <i id="mod-step-2-icon" class="fa-solid fa-circle-notch text-brand-lightBlue animate-spin"></i>
+                        <span id="mod-step-2-text" class="text-slate-400">Unikallik tahlil qilinmoqda...</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SCREEN 4: SEARCHING BUYERS (1355.jpg) -->
+            <div id="screen-search" class="fade-in flex flex-col items-center justify-center py-12 space-y-8 hidden">
+                <div class="flex space-x-3 py-6 justify-center">
+                    <div class="w-4 h-4 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                    <div class="w-4 h-4 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="w-4 h-4 bg-blue-300 rounded-full animate-bounce" style="animation-delay: 0.3s"></div>
+                </div>
+
+                <div class="text-center space-y-3 max-w-xs">
+                    <h2 class="text-2xl font-extrabold text-white tracking-wider">Xaridor qidirish...</h2>
+                    <p id="search-country-text" class="text-slate-300 text-sm h-12 leading-relaxed font-semibold">AQSh, BAA va Germaniyadan 4 ta potensial xaridor topildi</p>
+                </div>
+
+                <div class="w-48 h-48 rounded-full border border-blue-500/20 relative flex items-center justify-center bg-blue-500/5">
+                    <div class="absolute w-36 h-36 rounded-full border border-blue-500/30 animate-ping opacity-70"></div>
+                    <div class="absolute w-24 h-24 rounded-full border border-blue-500/40"></div>
+                    <div class="w-12 h-12 rounded-full bg-brand-lightBlue/20 flex items-center justify-center text-brand-lightBlue">
+                        <i class="fa-solid fa-earth-americas text-xl animate-spin" style="animation-duration: 8s"></i>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- SCREEN 5: OFFER FOUND (1356.jpg) -->
+            <div id="screen-offer" class="fade-in space-y-6 hidden">
+                <div class="bg-gradient-to-br from-brand-cardBg to-slate-900 border border-brand-lightBlue/30 rounded-3xl p-6 text-center space-y-6 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -top-12 -left-12 w-24 h-24 bg-brand-lightBlue/10 rounded-full blur-xl"></div>
+                    
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest">
+                        Taklif topildi
+                    </span>
+
+                    <div class="space-y-2">
+                        <p class="text-slate-400 text-sm">Xaridor fotolaringizni quyidagi narxda olishga tayyor:</p>
+                        <h1 class="text-4xl sm:text-5xl font-black text-white tracking-tight" id="offer-price-display">
+                            103 164 <span class="text-brand-lightBlue">so'm</span>
+                        </h1>
+                        <p class="text-slate-500 text-xs">Birinchi sotuv uchun xizmat haqi 0%</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="startSearch(true)" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800/80 font-bold py-4 px-3 rounded-2xl text-sm transition duration-200 active:scale-[0.98]">
+                        Yangi xaridor qidirish
+                    </button>
+                    <button onclick="acceptOffer()" class="bg-brand-lightBlue hover:bg-blue-600 text-white font-bold py-4 px-3 rounded-2xl text-sm shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
+                        Taklifni qabul qilish
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- SCREEN 6: PHOTOS SOLD SUCCESS (1357.jpg) -->
+            <div id="screen-sold" class="fade-in flex flex-col items-center justify-center py-8 space-y-8 text-center hidden">
+                <div class="relative w-full flex justify-center">
+                    <div class="w-24 h-24 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
+                        <i class="fa-solid fa-camera-retro text-4xl animate-bounce-slow"></i>
+                    </div>
+                    <span class="absolute text-xl -top-2 left-1/4 animate-bounce" style="animation-delay: 0.2s">✨</span>
+                    <span class="absolute text-xl top-8 right-1/4 animate-pulse">🎉</span>
+                    <span class="absolute text-lg -bottom-2 left-1/3">💰</span>
+                </div>
+
+                <div class="space-y-3 max-w-sm">
+                    <h2 class="text-3xl font-extrabold text-white tracking-tight">Fotolaringiz sotildi!</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed px-4">Tranzaksiya muvaffaqiyatli yakunlandi, mablag'lar ichki balansga o'tkazildi.</p>
+                </div>
+
+                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-lightBlue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
+                    Profilga o'tish
+                </button>
+            </div>
+
+
+            <!-- SCREEN 7: WITHDRAW METHOD (1358.jpg modified to Sberbank & Infinbank) -->
+            <div id="screen-withdraw-options" class="fade-in space-y-4 hidden">
+                <div class="py-2">
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">Chiqarish usuli</h2>
+                    <p class="text-slate-400 text-sm mt-1">Mablag'larni qulay usulda hamyoningizga yechib oling</p>
+                </div>
+
+                <!-- Option 1: Sberbank -->
+                <div onclick="selectWithdrawMethod('Sber')" class="bg-brand-cardBg/60 hover:bg-brand-cardBg hover:border-slate-700/60 border border-slate-800/40 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-green-500/15 text-green-400 border border-green-500/20 flex items-center justify-center font-bold text-lg">
+                            S
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-brand-lightBlue transition">Sberbank</h4>
+                            <p class="text-slate-400 text-xs mt-0.5">Rossiya va xalqaro o'tkazmalar uchun</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-sm group-hover:translate-x-1 transition"></i>
+                </div>
+
+                <!-- Option 2: Infinbank -->
+                <div onclick="selectWithdrawMethod('Infin')" class="bg-brand-cardBg/60 hover:bg-brand-cardBg hover:border-slate-700/60 border border-slate-800/40 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-orange-500/15 text-orange-400 border border-orange-500/20 flex items-center justify-center font-bold text-lg">
+                            I
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-brand-lightBlue transition">Infinbank</h4>
+                            <p class="text-slate-400 text-xs mt-0.5">O'zbekiston milliy valyuta kartalari uchun</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-sm group-hover:translate-x-1 transition"></i>
+                </div>
+
+                <!-- Option 3: Cryptocurrency -->
+                <div onclick="selectWithdrawMethod('Crypto')" class="bg-brand-cardBg/60 hover:bg-brand-cardBg hover:border-slate-700/60 border border-slate-800/40 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/20 flex items-center justify-center">
+                            <i class="fa-brands fa-ethereum text-2xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-base group-hover:text-brand-lightBlue transition">Kriptovalyuta</h4>
+                            <p class="text-slate-400 text-xs mt-0.5">USDT, TON, BTC qabul qilinadi</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-sm group-hover:translate-x-1 transition"></i>
+                </div>
+            </div>
+
+
+            <!-- SCREEN 8: ENTER CARD / PAYMENT DETAILS (1359.jpg) -->
+            <div id="screen-payment-details" class="fade-in space-y-6 hidden">
+                <div class="py-2">
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">To'lov ma'lumotlari</h2>
+                    <p class="text-slate-400 text-sm mt-1">Pul o'tkaziladigan kerakli rekvizitlarni to'g'ri kiriting</p>
+                </div>
+
+                <div class="bg-slate-900/60 border border-slate-800/30 rounded-3xl p-6 space-y-4">
+                    <!-- Bank Country Selection -->
+                    <div class="space-y-1.5">
+                        <label class="text-slate-400 text-xs font-semibold uppercase tracking-wider block">BANK MAMLAKATI</label>
+                        <div class="relative">
+                            <select id="bank-country" class="w-full bg-brand-cardBg border border-slate-700/60 rounded-xl px-4 py-3.5 text-slate-200 text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-brand-lightBlue/50">
+                                <option value="uz">O'zbekiston</option>
+                                <option value="ru">Rossiya</option>
+                                <option value="kz">Qozog'iston</option>
+                                <option value="us">AQSh</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-chevron-down text-xs"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Number Input -->
+                    <div class="space-y-1.5">
+                        <label id="input-label-primary" class="text-slate-400 text-xs font-semibold uppercase tracking-wider block">KARTA RAQAMI</label>
+                        <div class="relative">
+                            <input type="text" id="card-number-input" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full bg-brand-cardBg border border-slate-700/60 rounded-xl px-4 py-3.5 text-slate-200 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-brand-lightBlue/50 placeholder:text-slate-600">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500">
+                                <i id="input-card-icon" class="fa-solid fa-credit-card"></i>
+                            </div>
+                        </div>
+                        <span class="text-slate-500 text-xs block">Karta egasining nomini kiritish shart emas</span>
+                    </div>
+                </div>
+
+                <!-- Confirm Button -->
+                <button onclick="confirmWithdrawal()" class="w-full bg-brand-lightBlue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
+                    Chiqarishni tasdiqlash
+                </button>
+            </div>
+
+
+            <!-- SCREEN 9: SPONSOR REQUIRED CHANNELS (1360.jpg & 1361.jpg) -->
+            <div id="screen-sponsors" class="fade-in space-y-6 hidden">
+                <div class="text-center space-y-2 py-2">
+                    <h2 class="text-3xl font-black text-white tracking-tight uppercase">Demak tayyor!</h2>
+                </div>
+
+                <div class="bg-brand-cardBg/40 border border-slate-800/40 rounded-3xl p-5 space-y-4">
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Mablag'larni olish uchun bizga homiylarimizga obuna bo'lishingiz kerak — bu bepul va targ'ibot uchun zarur.
+                    </p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Agar allaqachon obuna bo'lgan bo'lsangiz, qaytadan obuna bo'lib tekshiring. Agar Telegramda obuna bo'lishning imkoniyati yo'q bo'lsa, bir necha daqiqadan keyin yana urining.
+                    </p>
+                    <p class="text-slate-400 text-xs leading-relaxed italic">
+                        Barcha kanallarni arxivga o'tkazish va bildirishnomalarni o'chirish mumkin. Keyinchalik obunadan chiqish mumkin.
+                    </p>
+                </div>
+
+                <!-- Sponsor Channel List -->
+                <div class="space-y-3">
+                    <!-- Channel 1 -->
+                    <div class="bg-brand-cardBg/60 border border-slate-800/30 rounded-2xl p-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-500 to-orange-400 flex items-center justify-center text-white font-bold text-xs shadow-inner">
+                               💼
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">ISH HAMMAGA</h4>
+                                <p class="text-slate-500 text-xs">Vakansiyalar & Maoshlar</p>
+                            </div>
+                        </div>
+                        <a href="https://t.me/" target="_blank" onclick="markSubscribed(1)" id="sub-btn-1" class="bg-brand-lightBlue hover:bg-blue-600 text-white font-bold text-xs py-2 px-4 rounded-xl transition duration-150 whitespace-nowrap">
+                            Obuna bo'lish
+                        </a>
+                    </div>
+
+                    <!-- Channel 2 -->
+                    <div class="bg-brand-cardBg/60 border border-slate-800/30 rounded-2xl p-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-xs shadow-inner">
+                               💎
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">💎 Strategiya Markazi</h4>
+                                <p class="text-slate-500 text-xs">Moliyaviy tahlillar</p>
+                            </div>
+                        </div>
+                        <a href="https://t.me/" target="_blank" onclick="markSubscribed(2)" id="sub-btn-2" class="bg-brand-lightBlue hover:bg-blue-600 text-white font-bold text-xs py-2 px-4 rounded-xl transition duration-150 whitespace-nowrap">
+                            Obuna bo'lish
+                        </a>
+                    </div>
+
+                    <!-- Channel 3 -->
+                    <div class="bg-brand-cardBg/60 border border-slate-800/30 rounded-2xl p-4 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-inner">
+                               💰
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">PhotoStock To'lovlari</h4>
+                                <p class="text-slate-500 text-xs">Rasmiy to'lov cheklari</p>
+                            </div>
+                        </div>
+                        <a href="https://t.me/" target="_blank" onclick="markSubscribed(3)" id="sub-btn-3" class="bg-brand-lightBlue hover:bg-blue-600 text-white font-bold text-xs py-2 px-4 rounded-xl transition duration-150 whitespace-nowrap">
+                            Obuna bo'lish
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Check Subscriptions Button -->
+                <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-lightBlue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
+                    Men obuna bo'ldim
+                </button>
+            </div>
+
+        </main>
+
+        <!-- FOOTER TABS MENU -->
+        <footer id="main-footer" class="bg-brand-darkBg/95 backdrop-blur-md border-t border-slate-800/40 py-2.5 px-6 grid grid-cols-3 gap-1 fixed bottom-0 max-w-md w-full z-50">
+            <button onclick="changeScreen('screen-profile')" id="nav-btn-home" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition group">
+                <i class="fa-solid fa-user-tie text-xl group-hover:scale-110 transition"></i>
+                <span class="text-[10px] font-medium">Profil</span>
+            </button>
+            
+            <button onclick="changeScreen('screen-upload')" id="nav-btn-upload" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition group">
+                <i class="fa-solid fa-cloud-arrow-up text-xl group-hover:scale-110 transition"></i>
+                <span class="text-[10px] font-medium">Foto Yuklash</span>
+            </button>
+
+            <button onclick="changeScreen('screen-withdraw-options')" id="nav-btn-withdraw" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition group">
+                <i class="fa-solid fa-wallet text-xl group-hover:scale-110 transition"></i>
+                <span class="text-[10px] font-medium">Pul Chiqarish</span>
+            </button>
+        </footer>
+
+        <!-- CUSTOM NOTIFICATION MODAL -->
+        <div id="custom-modal" class="fixed inset-0 bg-neutral-950/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden">
+            <div class="bg-brand-cardBg border border-slate-800 rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl scale-95 transition-all duration-300 transform" id="modal-content">
+                <div id="modal-icon-container" class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto text-2xl">
+                    <!-- Dynamic Icon -->
+                </div>
+                <div class="space-y-1.5">
+                    <h3 id="modal-title" class="text-lg font-bold text-white">Xabar sarlavhasi</h3>
+                    <p id="modal-desc" class="text-slate-400 text-sm leading-relaxed">Xabar mazmuni batafsil bu yerda ko'rinadi.</p>
+                </div>
+                <button onclick="closeModal()" class="w-full bg-brand-lightBlue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl text-sm transition duration-150">
+                    OK
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MAIN JAVASCRIPT APP LOGIC -->
+    <script>
+        // State variables initialized to 0 as requested
+        let appState = {
+            balance: 0,
+            soldPhotos: 0,
+            totalEarnings: 0,
+            selectedPhotoCount: 0,
+            pendingOffer: 103164,
+            currentWithdrawMethod: 'Infin',
+            subscriptions: {
+                1: false,
+                2: false,
+                3: false
+            },
+            history: ['screen-profile'] // Back button history tracking
+        };
+
+        // DOM elements
+        const backBtn = document.getElementById('back-btn');
+        const balanceAmount = document.getElementById('balance-amount');
+        const soldPhotoCount = document.getElementById('sold-photo-count');
+        const totalRevenue = document.getElementById('total-revenue');
+        const selectedCountLabel = document.getElementById('selected-count-label');
+        const uploadZone = document.getElementById('upload-zone');
+        const btnSubmitModeration = document.getElementById('btn-submit-moderation');
+        const previewGrid = document.getElementById('selected-photos-preview');
+
+        // Formats numbers with spaces
+        function formatMoney(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\n))/g, " ") + " so'm";
+        }
+
+        // Initialize display values on load
+        window.addEventListener('DOMContentLoaded', () => {
+            updateUI();
+            
+            // Format card number on input
+            const cardInput = document.getElementById('card-number-input');
+            cardInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let formatted = '';
+                for (let i = 0; i < value.length; i++) {
+                    if (i > 0 && i % 4 === 0) {
+                        formatted += ' ';
+                    }
+                    formatted += value[i];
+                }
+                e.target.value = formatted;
+            });
+        });
+
+        // Dynamic State UI Sync
+        function updateUI() {
+            balanceAmount.innerText = formatMoney(appState.balance);
+            soldPhotoCount.innerText = appState.soldPhotos + " ta";
+            totalRevenue.innerText = formatMoney(appState.totalEarnings);
+        }
+
+        // Custom Modal UI instead of alert()
+        function showModal(title, text, type = 'success') {
+            const modal = document.getElementById('custom-modal');
+            const iconContainer = document.getElementById('modal-icon-container');
+            const titleEl = document.getElementById('modal-title');
+            const descEl = document.getElementById('modal-desc');
+
+            titleEl.innerText = title;
+            descEl.innerText = text;
+
+            if (type === 'success') {
+                iconContainer.className = "w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto text-2xl";
+                iconContainer.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else if (type === 'error') {
+                iconContainer.className = "w-14 h-14 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center mx-auto text-2xl";
+                iconContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+            } else {
+                iconContainer.className = "w-14 h-14 rounded-2xl bg-blue-500/10 text-brand-lightBlue border border-blue-500/20 flex items-center justify-center mx-auto text-2xl";
+                iconContainer.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        // Screen changer and router
+        function changeScreen(screenId) {
+            const screens = [
+                'screen-profile', 
+                'screen-upload', 
+                'screen-moderation', 
+                'screen-search', 
+                'screen-offer', 
+                'screen-sold', 
+                'screen-withdraw-options', 
+                'screen-payment-details', 
+                'screen-sponsors'
+            ];
+            
+            screens.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+
+            const activeScreen = document.getElementById(screenId);
+            activeScreen.classList.remove('hidden');
+
+            if (appState.history[appState.history.length - 1] !== screenId) {
+                appState.history.push(screenId);
+            }
+
+            if (appState.history.length > 1) {
+                backBtn.classList.remove('hidden');
+            } else {
+                backBtn.classList.add('hidden');
+            }
+
+            updateFooterNavStyles(screenId);
+        }
+
+        // Handle Back button
+        backBtn.addEventListener('click', () => {
+            if (appState.history.length > 1) {
+                appState.history.pop();
+                const prevScreen = appState.history[appState.history.length - 1];
+                
+                if (prevScreen === 'screen-moderation' || prevScreen === 'screen-search') {
+                    changeScreen('screen-profile');
+                } else {
+                    changeScreen(prevScreen);
+                }
+            }
+        });
+
+        function updateFooterNavStyles(activeScreenId) {
+            const homeBtn = document.getElementById('nav-btn-home');
+            const uploadBtn = document.getElementById('nav-btn-upload');
+            const withdrawBtn = document.getElementById('nav-btn-withdraw');
+
+            [homeBtn, uploadBtn, withdrawBtn].forEach(btn => {
+                btn.classList.remove('text-brand-lightBlue');
+                btn.classList.add('text-slate-400');
+            });
+
+            if (activeScreenId === 'screen-profile') {
+                homeBtn.classList.add('text-brand-lightBlue');
+                homeBtn.classList.remove('text-slate-400');
+            } else if (activeScreenId === 'screen-upload') {
+                uploadBtn.classList.add('text-brand-lightBlue');
+                uploadBtn.classList.remove('text-slate-400');
+            } else if (activeScreenId === 'screen-withdraw-options' || activeScreenId === 'screen-payment-details' || activeScreenId === 'screen-sponsors') {
+                withdrawBtn.classList.add('text-brand-lightBlue');
+                withdrawBtn.classList.remove('text-slate-400');
+            }
+        }
+
+        // SIMULATED PROCESS: Selecting photos
+        function simulatePhotoSelect() {
+            appState.selectedPhotoCount = Math.floor(Math.random() * 5) + 2; 
+            selectedCountLabel.innerText = `Tanlangan: ${appState.selectedPhotoCount} / 10`;
+
+            previewGrid.innerHTML = '';
+            previewGrid.classList.remove('hidden');
+            
+            for (let i = 0; i < appState.selectedPhotoCount; i++) {
+                const colors = ['bg-rose-500', 'bg-violet-500', 'bg-blue-500', 'bg-teal-500', 'bg-amber-500'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                const card = document.createElement('div');
+                card.className = `${randomColor} aspect-square rounded-lg flex items-center justify-center text-white text-xs font-bold relative shadow-md`;
+                card.innerHTML = `<span>IMG_${i+1}</span><span class="absolute top-0.5 right-0.5 bg-brand-darkBg text-[8px] px-1 rounded">Ok</span>`;
+                previewGrid.appendChild(card);
+            }
+
+            btnSubmitModeration.removeAttribute('disabled');
+            btnSubmitModeration.className = "w-full bg-brand-lightBlue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 cursor-pointer active:scale-[0.98]";
+        }
+
+        // SIMULATED PROCESS: AI Moderation
+        function startModeration() {
+            changeScreen('screen-moderation');
+
+            setTimeout(() => {
+                const step2Icon = document.getElementById('mod-step-2-icon');
+                const step2Text = document.getElementById('mod-step-2-text');
+                
+                step2Icon.className = "fa-solid fa-circle-check text-emerald-400";
+                step2Text.className = "text-slate-300";
+                step2Text.innerText = "Unikallik tahlili muvaffaqiyatli!";
+            }, 1800);
+
+            setTimeout(() => {
+                startSearch();
+            }, 3500);
+        }
+
+        // SIMULATED PROCESS: Buyer Search
+        function startSearch(isAlternative = false) {
+            changeScreen('screen-search');
+            
+            const textEl = document.getElementById('search-country-text');
+            
+            setTimeout(() => {
+                textEl.innerText = "Fransiya va Shveytsariyadan 2 ta yetakchi fond topildi...";
+            }, 1200);
+
+            setTimeout(() => {
+                let baseOffer = isAlternative ? 122400 : 103164;
+                appState.pendingOffer = Math.floor(baseOffer + (Math.random() * 45000));
+                
+                document.getElementById('offer-price-display').innerHTML = `${formatMoney(appState.pendingOffer).replace("so'm", "")}<span class="text-brand-lightBlue text-xl">so'm</span>`;
+                
+                changeScreen('screen-offer');
+            }, 2800);
+        }
+
+        function acceptOffer() {
+            changeScreen('screen-sold');
+        }
+
+        function goToProfileAfterSale() {
+            // Update stats
+            appState.balance += appState.pendingOffer;
+            appState.totalEarnings += appState.pendingOffer;
+            appState.soldPhotos += appState.selectedPhotoCount;
+
+            // Reset state
+            appState.selectedPhotoCount = 0;
+            selectedCountLabel.innerText = "Tanlangan: 0 / 10";
+            btnSubmitModeration.setAttribute('disabled', 'true');
+            btnSubmitModeration.className = "w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200";
+            previewGrid.classList.add('hidden');
+            previewGrid.innerHTML = '';
+
+            updateUI();
+            changeScreen('screen-profile');
+        }
+
+        // SIMULATED PROCESS: Withdraw configuration
+        function selectWithdrawMethod(method) {
+            appState.currentWithdrawMethod = method;
+            
+            const cardInput = document.getElementById('card-number-input');
+            const labelEl = document.getElementById('input-label-primary');
+            const iconEl = document.getElementById('input-card-icon');
+            const countrySelect = document.getElementById('bank-country');
+
+            if (method === 'Sber') {
+                labelEl.innerText = "SBERBANK KARTA / TELEFON RAQAMI";
+                cardInput.placeholder = "0000 0000 0000 0000 yoki +7...";
+                cardInput.maxLength = 19;
+                iconEl.className = "fa-solid fa-credit-card";
+                countrySelect.value = 'ru';
+            } else if (method === 'Infin') {
+                labelEl.innerText = "INFINBANK / UZCARD / HUMO KARTA RAQAMI";
+                cardInput.placeholder = "8600 0000 0000 0000 yoki 9860...";
+                cardInput.maxLength = 19;
+                iconEl.className = "fa-solid fa-credit-card";
+                countrySelect.value = 'uz';
+            } else if (method === 'Crypto') {
+                labelEl.innerText = "KRIPTOVALYUTA HAMYON MANZILI (TON / USDT)";
+                cardInput.placeholder = "UQDv_... yoki TXv...";
+                cardInput.maxLength = 50;
+                iconEl.className = "fa-solid fa-wallet";
+            }
+
+            changeScreen('screen-payment-details');
+        }
+
+        function confirmWithdrawal() {
+            const val = document.getElementById('card-number-input').value.trim();
+            if (val.length < 5) {
+                showModal("Xatolik", "Iltimos, to'lov rekvizitlarini to'g'ri kiriting!", "error");
+                return;
+            }
+
+            changeScreen('screen-sponsors');
+        }
+
+        // SIMULATED PROCESS: Sponsors System
+        function markSubscribed(id) {
+            appState.subscriptions[id] = true;
+            const btn = document.getElementById(`sub-btn-${id}`);
+            btn.className = "bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-xs py-2 px-4 rounded-xl transition duration-150 whitespace-nowrap";
+            btn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Obunadaman';
+        }
+
+        function verifyAllSubscriptions() {
+            const allChecked = Object.values(appState.subscriptions).every(v => v === true);
+
+            if (!allChecked) {
+                showModal("Tizim ogohlantirishi", "Siz barcha homiy kanallarga hali obuna bo'lmadingiz! Pul yechishni boshlash uchun barcha obunalarni tasdiqlash shart.", "error");
+            } else {
+                showModal(
+                    "So'rov yuborildi!", 
+                    "Mablag'larni chiqarish bo'yicha so'rovingiz muvaffaqiyatli tasdiqlandi. 24 soat ichida homiylik kanallari moderatsiyasi yakunlangach pulingiz hisobingizga kelib tushadi.", 
+                    "success"
+                );
+                
+                // Reset state
+                setTimeout(() => {
+                    appState.balance = 0;
+                    updateUI();
+                    closeModal();
+                    changeScreen('screen-profile');
+                }, 4000);
+            }
+        }
+    </script>
+</body>
+</html>
+
+```
