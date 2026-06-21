@@ -7,13 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        brand: { blue: '#3B82F6', lightBlue: '#60A5FA', accent: '#10B981' }
+                        brand: {
+                            blue: '#3B82F6', lightBlue: '#60A5FA', darkBg: '#090D16', cardBg: '#111827', accent: '#10B981',
+                        }
                     }
                 }
             }
@@ -37,7 +40,7 @@
     <div id="app-container" class="w-full max-w-md bg-transition bg-theme-1 min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden border-x border-slate-800/40">
         
         <div class="absolute inset-0 z-0 opacity-15 flex items-center justify-center pointer-events-none transition-all duration-1000" id="bg-vector-container">
-            <svg id="svg-theme-1" class="w-72 h-72 block" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <svg id="svg-theme-1" class="w-72 h-72 transition-opacity duration-1000 block" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/>
                 <circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/>
                 <text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>
@@ -50,10 +53,13 @@
                     <i class="fa-solid fa-arrow-left text-lg"></i>
                 </button>
                 <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">P</div>
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">
+                        P
+                    </div>
                     <span class="font-bold text-lg tracking-wide text-white">PhotoStock<span class="text-brand-lightBlue">X</span></span>
                 </div>
             </div>
+            
             <div class="flex items-center space-x-3">
                 <span class="text-xs bg-slate-800 text-slate-300 font-semibold px-2.5 py-1 rounded-full border border-slate-700/50 flex items-center gap-1">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Online
@@ -64,13 +70,14 @@
         <main class="flex-1 px-4 py-4 overflow-y-auto mb-20 z-10">
 
             <div id="screen-profile" class="fade-in space-y-4">
+                
                 <div class="bg-amber-950/30 border border-amber-800/30 rounded-2xl p-4 flex items-start space-x-3 text-amber-200">
                     <div class="bg-amber-500/20 p-2 rounded-xl text-amber-400 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-triangle-exclamation text-lg"></i>
                     </div>
                     <div class="space-y-1 text-sm">
                         <h4 class="font-bold text-amber-400 uppercase tracking-wider text-xs">Muhim Eslatma</h4>
-                        <p class="leading-relaxed text-slate-300 text-xs">Yangi sessiyani boshlash uchun <strong class="text-white font-medium">ichki balansdagi mablag'ni chiqarish</strong> shart.</p>
+                        <p class="leading-relaxed text-slate-300 text-xs">Yangi sessiyani boshlash va keyingi sotuvlarni amalga oshirish uchun <strong class="text-white font-medium">ichki balansdagi mablag'ni chiqarish</strong> shart.</p>
                     </div>
                 </div>
 
@@ -79,34 +86,52 @@
                         <span class="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
                             <i class="fa-solid fa-hourglass-half animate-spin" style="animation-duration: 3s"></i> Yechib olish jarayonda
                         </span>
+                        <span class="text-slate-500 text-[10px]" id="withdraw-time-display">Bugun</span>
                     </div>
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
                             <span class="text-slate-400 text-xs">Yechilayotgan summa:</span>
                             <span class="text-white font-bold text-sm" id="queue-amount-display">0 RUB</span>
                         </div>
-                        <div class="border-t border-slate-800/60 pt-2 flex items-center justify-between">
-                            <span class="text-slate-400 text-xs">To'lovdagi navbatingiz:</span>
-                            <span class="text-xl font-black text-brand-lightBlue tracking-tight" id="queue-number-display">--</span>
+                        <div class="border-t border-slate-800/60 pt-2">
+                            <span class="text-slate-400 text-xs block mb-1">To'lovdagi navbatingiz:</span>
+                            <div class="flex items-center justify-between">
+                                <span class="text-2xl font-black text-brand-lightBlue tracking-tight" id="queue-number-display">--</span>
+                                <span class="text-[10px] text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/50">Har kuni 1 taga kamayadi</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-slate-900/90 border border-slate-800/60 rounded-3xl p-5 shadow-xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
+                    
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center border border-slate-600">
+                        <div id="profile-pic-container" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center shadow-lg border border-slate-600 overflow-hidden">
                             <i class="fa-solid fa-user text-xl text-slate-300"></i>
                         </div>
                         <div>
-                            <h3 class="text-base font-bold text-white" id="user-tg-name">Foydalanuvchi</h3>
+                            <h3 class="text-base font-bold text-white flex items-center gap-2" id="user-tg-name">
+                                Foydalanuvchi
+                            </h3>
                             <p class="text-slate-500 text-[11px]" id="user-tg-id">ID: 12345678</p>
                         </div>
                     </div>
+
                     <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-800/40">
+                        <div>
+                            <span class="text-slate-500 text-[10px] block mb-0.5">AKKAUNT STATUSI</span>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                Faol <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 ml-1.5 animate-pulse"></span>
+                            </span>
+                        </div>
                         <div>
                             <span class="text-slate-500 text-[10px] block mb-0.5">SOTILGAN FOTOLAR</span>
                             <span class="text-slate-200 text-xs font-bold" id="sold-photo-count">0 ta</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500 text-[10px] block mb-0.5">SESSIRA SANASI</span>
+                            <span class="text-slate-400 text-xs font-medium" id="reg-date">Bugun</span>
                         </div>
                         <div>
                             <span class="text-slate-500 text-[10px] block mb-0.5">UMUMIYa DAROMAD</span>
@@ -117,94 +142,173 @@
 
                 <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/80 rounded-3xl p-5 flex flex-col justify-between shadow-lg">
                     <span class="text-slate-400 text-[11px] tracking-wider uppercase">Mavjud balans</span>
-                    <span class="text-3xl font-extrabold text-white tracking-tight mt-1" id="balance-amount">0 RUB</span>
+                    <div class="flex items-baseline justify-between mt-1">
+                        <span class="text-3xl font-extrabold text-white tracking-tight" id="balance-amount">0 RUB</span>
+                    </div>
                 </div>
 
-                <button onclick="changeScreen('screen-upload')" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center space-x-2 transition active:scale-[0.98]">
-                    <i class="fa-solid fa-camera-retro animate-bounce-slow"></i>
+                <button onclick="changeScreen('screen-upload')" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 flex items-center justify-center space-x-2 transition duration-200 active:scale-[0.98]">
+                    <i class="fa-solid fa-camera-retro text-lg animate-bounce-slow"></i>
                     <span>Foto yuklash sahifasiga o'tish</span>
                 </button>
             </div>
 
             <div id="screen-upload" class="fade-in space-y-6 hidden">
-                <div class="text-center py-2"><h2 class="text-2xl font-extrabold text-white">RASM YUKLASH</h2></div>
-                <input type="file" id="real-file-input" multiple accept="image/*" class="hidden" onchange="handleFileSelect(event)">
-                <div id="upload-zone" onclick="triggerFileInput()" class="border-2 border-dashed border-slate-700 hover:border-brand-lightBlue bg-slate-900/40 rounded-3xl p-8 flex flex-col items-center justify-center cursor-pointer min-h-[220px]">
-                    <i class="fa-solid fa-cloud-arrow-up text-3xl text-brand-lightBlue mb-3"></i>
-                    <p class="text-slate-200 text-xs font-semibold">Rasmlarni tanlash uchun bosing</p>
-                    <div id="selected-photos-preview" class="grid grid-cols-4 gap-2 mt-4 w-full hidden"></div>
+                <div class="text-center space-y-1.5 py-2">
+                    <h2 class="text-2xl font-extrabold text-white tracking-wider">RASM YUKLASH</h2>
+                    <p class="text-slate-400 text-xs">Galereyadan rasmlarni tanlang va ularni soting</p>
+                    <p class="text-brand-lightBlue font-semibold text-xs" id="selected-count-label">Tanlangan: 0 / 10</p>
                 </div>
-                <button id="btn-submit-moderation" disabled onclick="startModeration()" class="w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl transition">Tekshiruvga yuborish</button>
+                <input type="file" id="real-file-input" multiple accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+                <div id="upload-zone" onclick="triggerFileInput()" class="border-2 border-dashed border-slate-700 hover:border-brand-lightBlue bg-slate-900/40 hover:bg-slate-900/60 rounded-3xl p-8 flex flex-col items-center justify-center cursor-pointer transition duration-300 min-h-[220px]">
+                    <div class="w-14 h-14 rounded-full bg-blue-500/10 text-brand-lightBlue flex items-center justify-center mb-3 border border-blue-500/20">
+                        <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
+                    </div>
+                    <p class="text-slate-200 text-xs font-semibold text-center">Rasmlarni tanlash uchun bosing</p>
+                    <div id="selected-photos-preview" class="grid grid-cols-4 gap-2 mt-4 w-full hidden" onclick="event.stopPropagation();"></div>
+                </div>
+                <button id="btn-submit-moderation" disabled onclick="startModeration()" class="w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200">Tekshiruvga yuborish</button>
             </div>
 
             <div id="screen-moderation" class="fade-in flex flex-col items-center justify-center py-12 space-y-8 hidden">
-                <div class="text-center"><h2 class="text-xl font-extrabold text-white animate-pulse">Sun'iy Intellekt Tahlili...</h2></div>
+                <div class="relative w-36 h-36 flex items-center justify-center">
+                    <div class="absolute inset-0 rounded-full border-4 border-slate-800"></div>
+                    <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-brand-lightBlue animate-spin"></div>
+                    <div class="w-24 h-24 rounded-full bg-slate-900 flex items-center justify-center shadow-inner">
+                        <i class="fa-solid fa-wand-magic-sparkles text-3xl text-brand-lightBlue animate-pulse"></i>
+                    </div>
+                </div>
+                <div class="text-center space-y-2 max-w-xs">
+                    <h2 class="text-xl font-extrabold text-white tracking-wider animate-pulse">Sun'iy Intellekt Tahlili...</h2>
+                    <p class="text-slate-400 text-xs leading-relaxed">Fotolar sifati, o'lchami va unikalligi tahlil qilinmoqda</p>
+                </div>
+                <div class="w-full max-w-xs bg-slate-900/60 border border-slate-800/40 rounded-2xl p-4 space-y-3">
+                    <div class="flex items-center space-x-3 text-xs" id="mod-step-1">
+                        <i class="fa-solid fa-circle-notch text-brand-lightBlue animate-spin" id="mod-step-1-icon"></i>
+                        <span class="text-slate-300" id="mod-step-1-text">Format tahlil qilinmoqda...</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-xs" id="mod-step-2">
+                        <i class="fa-solid fa-circle text-slate-600" id="mod-step-2-icon"></i>
+                        <span class="text-slate-500" id="mod-step-2-text">Unikallik tahlili kutilmoqda...</span>
+                    </div>
+                </div>
             </div>
 
             <div id="screen-search" class="fade-in flex flex-col items-center justify-center py-12 space-y-8 hidden">
-                <div class="text-center"><h2 class="text-xl font-extrabold text-white">Xaridor Qidirilmoqda...</h2></div>
+                <div class="flex space-x-2 py-4 justify-center">
+                    <div class="w-3.5 h-3.5 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                    <div class="w-3.5 h-3.5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="w-3.5 h-3.5 bg-blue-300 rounded-full animate-bounce" style="animation-delay: 0.3s"></div>
+                </div>
+                <div class="text-center space-y-2 max-w-xs">
+                    <h2 class="text-xl font-extrabold text-white tracking-wider">Xaridor Qidirilmoqda...</h2>
+                    <p id="search-country-text" class="text-slate-300 text-xs h-10 leading-relaxed font-semibold">Mos keladigan fotostok fondlari tekshirilmoqda...</p>
+                </div>
+                <div class="w-40 h-40 rounded-full border border-blue-500/20 relative flex items-center justify-center bg-blue-500/5">
+                    <div class="absolute w-28 h-28 rounded-full border border-blue-500/30 animate-ping opacity-75"></div>
+                    <div class="w-12 h-12 rounded-full bg-brand-lightBlue/20 flex items-center justify-center text-brand-lightBlue">
+                        <i class="fa-solid fa-earth-americas text-xl animate-spin" style="animation-duration: 6s"></i>
+                    </div>
+                </div>
             </div>
 
             <div id="screen-offer" class="fade-in space-y-6 hidden">
-                <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-brand-lightBlue/20 rounded-3xl p-6 text-center space-y-4">
-                    <h1 class="text-3xl font-black text-white" id="offer-price-display">0 RUB</h1>
+                <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-brand-lightBlue/20 rounded-3xl p-6 text-center space-y-6 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -top-12 -left-12 w-24 h-24 bg-brand-lightBlue/10 rounded-full blur-xl"></div>
+                    <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest">
+                        Taklif Topildi
+                    </span>
+                    <div class="space-y-2">
+                        <p class="text-slate-400 text-xs">Xaridor barcha rasmlaringizni ushbu narxda sotib olishga tayyor:</p>
+                        <h1 class="text-3xl font-black text-white tracking-tight" id="offer-price-display">
+                            0 <span class="text-brand-lightBlue">RUB</span>
+                        </h1>
+                        <p class="text-slate-500 text-[10px]">Xizmat haqi: 0% (Tashviqot hisobidan)</p>
+                    </div>
                 </div>
-                <button onclick="acceptOffer()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 rounded-2xl transition">Taklifni qabul qilish</button>
+                <div class="grid grid-cols-2 gap-4">
+                    <button onclick="startSearch(true)" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold py-4 px-3 rounded-2xl text-xs transition duration-200 active:scale-[0.98]">Yangi xaridor qidirish</button>
+                    <button onclick="acceptOffer()" class="bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-3 rounded-2xl text-xs shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Taklifni qabul qilish</button>
+                </div>
             </div>
 
             <div id="screen-sold" class="fade-in flex flex-col items-center justify-center py-8 space-y-8 text-center hidden">
-                <h2 class="text-2xl font-extrabold text-white">Fotolaringiz Sotildi!</h2>
-                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl">Profilga o'tish</button>
+                <div class="relative w-full flex justify-center">
+                    <div class="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
+                        <i class="fa-solid fa-camera-retro text-3xl"></i>
+                    </div>
+                    <span class="absolute text-lg -top-2 left-1/3 animate-bounce">✨</span>
+                    <span class="absolute text-lg top-8 right-1/3 animate-pulse">💰</span>
+                </div>
+                <div class="space-y-2 max-w-sm">
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">Fotolaringiz Sotildi!</h2>
+                    <p class="text-slate-400 text-xs leading-relaxed px-4">Tranzaksiya muvaffaqiyatli yakunlandi. Mablag'lar darhol ichki balansingizga qo'shildi.</p>
+                </div>
+                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Profilga o'tish</button>
             </div>
 
             <div id="screen-withdraw-options" class="fade-in space-y-4 hidden">
-                <h2 class="text-2xl font-extrabold text-white py-2">Chiqarish usuli</h2>
-                <div onclick="selectWithdrawMethod('Tinkoff')" class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 flex items-center cursor-pointer"><h4 class="font-bold text-white text-sm ml-4">Tinkoff Bank</h4></div>
-                <div onclick="selectWithdrawMethod('VTB')" class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-4 flex items-center cursor-pointer"><h4 class="font-bold text-white text-sm ml-4">VTB Rossiya Banki</h4></div>
+                <div class="py-2">
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">Chiqarish usuli</h2>
+                    <p class="text-slate-400 text-xs mt-1">Rossiya bank kartalariga pulingizni 24 soat ichida yechib oling</p>
+                </div>
+
+                <div onclick="selectWithdrawMethod('Tinkoff')" class="bg-slate-900/60 hover:bg-slate-900 hover:border-slate-700 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-yellow-500/15 text-yellow-400 border border-yellow-500/20 flex items-center justify-center font-black text-lg">T</div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm group-hover:text-brand-lightBlue transition">Tinkoff Bank</h4>
+                            <p class="text-slate-500 text-[10px] mt-0.5">Rossiyaning barcha bank kartalariga</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
+                </div>
+
+                <div onclick="selectWithdrawMethod('BTB')" class="bg-slate-900/60 hover:bg-slate-900 hover:border-slate-700 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/20 flex items-center justify-center font-black text-lg">B</div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm group-hover:text-brand-lightBlue transition">BTB Rossiya Banki</h4>
+                            <p class="text-slate-500 text-[10px] mt-0.5">Tezkor xalqaro hisob-kitoblar</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
+                </div>
             </div>
 
             <div id="screen-payment-details" class="fade-in space-y-6 hidden">
-                <h2 class="text-2xl font-extrabold text-white py-2">To'lov ma'lumotlari</h2>
-                <input type="text" id="card-number-input" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 font-mono focus:outline-none">
-                <button onclick="confirmWithdrawal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 rounded-2xl">Chiqarishni tasdiqlash</button>
+                <div class="py-2">
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">To'lov ma'lumotlari</h2>
+                    <p class="text-slate-400 text-xs mt-1">Pul o'tkaziladigan kartaning 16 xonali raqamini aniq va xatosiz kiriting</p>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 space-y-4">
+                    <div class="space-y-1.5">
+                        <label id="input-label-primary" class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider block">KARTA RAQAMI (16 RAQAM)</label>
+                        <div class="relative">
+                            <input type="text" id="card-number-input" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-brand-blue/50 placeholder:text-slate-700">
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500">
+                                <i id="input-card-icon" class="fa-solid fa-credit-card"></i>
+                            </div>
+                        </div>
+                        <span class="text-slate-500 text-[10px] block">Karta egasining ismini yozish shart emas. Faqat Rossiya kartalari qabul qilinadi.</span>
+                    </div>
+                </div>
+
+                <button onclick="confirmWithdrawal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
+                    Chiqarishni tasdiqlash
+                </button>
             </div>
 
             <div id="screen-sponsors" class="fade-in space-y-6 hidden">
                 <div class="text-center space-y-2 py-2">
-                    <h2 class="text-2xl font-black text-white uppercase">Obunani Tasdiqlash</h2>
+                    <h2 class="text-2xl font-black text-white tracking-tight uppercase">Obunani Tasdiqlash</h2>
                     <p class="text-slate-400 text-xs">Mablag'ni kartaga o'tkazish uchun homiy kanallarimizga obuna bo'lishingiz shart.</p>
                 </div>
                 <div class="space-y-3" id="sponsor-channels-container"></div>
-                <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl transition">Men obuna bo'ldim</button>
-            </div>
-
-            <div id="screen-admin" class="fade-in space-y-6 hidden">
-                <div class="text-center py-2">
-                    <h2 class="text-xl font-black text-brand-lightBlue tracking-tight uppercase"><i class="fa-solid fa-user-shield mr-2"></i> Boshqaruv Paneli</h2>
-                    <p class="text-slate-400 text-xs">Botning asosiy funksiyalarini boshqarish</p>
-                </div>
-
-                <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 space-y-4">
-                    <h3 class="font-bold text-white text-sm">📢 Barchaga xabar yuborish</h3>
-                    <textarea id="admin-broadcast-text" rows="3" placeholder="Xabar matnini kiriting..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:border-brand-blue"></textarea>
-                    <button onclick="adminBroadcast()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 rounded-xl text-sm transition">Xabarni jo'natish</button>
-                </div>
-
-                <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 space-y-4">
-                    <h3 class="font-bold text-white text-sm">➕ Yangi kanal qo'shish</h3>
-                    <p class="text-[10px] text-slate-500 mb-2">Zayavka (yopiq) kanal bo'lsa username o'rniga ID (masalan: -100123...) yozing.</p>
-                    <input type="text" id="admin-chan-username" placeholder="@username yoki -100 ID" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 text-xs focus:outline-none mb-2">
-                    <input type="text" id="admin-chan-name" placeholder="Kanal nomi" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 text-xs focus:outline-none mb-2">
-                    <input type="text" id="admin-chan-desc" placeholder="Kanal tavsifi (majburiy emas)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 text-xs focus:outline-none mb-2">
-                    <input type="text" id="admin-chan-link" placeholder="Taklif havolasi (https://t.me/...)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-slate-200 text-xs focus:outline-none">
-                    <button onclick="adminAddChannel()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl text-sm transition mt-2">Kanalni saqlash</button>
-                </div>
-
-                <div class="space-y-3">
-                    <h3 class="font-bold text-white text-sm">🔗 Mavjud Kanallar</h3>
-                    <div id="admin-channels-list" class="space-y-2">
-                        </div>
-                </div>
+                <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
+                    Men obuna bo'ldim
+                </button>
             </div>
 
         </main>
@@ -216,35 +320,35 @@
             </button>
             <button onclick="changeScreen('screen-upload')" id="nav-btn-upload" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition group">
                 <i class="fa-solid fa-cloud-arrow-up text-lg group-hover:scale-110 transition"></i>
-                <span class="text-[9px] font-medium">Yuklash</span>
+                <span class="text-[9px] font-medium">Foto Yuklash</span>
             </button>
             <button onclick="changeScreen('screen-withdraw-options')" id="nav-btn-withdraw" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition group">
                 <i class="fa-solid fa-wallet text-lg group-hover:scale-110 transition"></i>
-                <span class="text-[9px] font-medium">Chiqarish</span>
+                <span class="text-[9px] font-medium">Pul Chiqarish</span>
             </button>
-            </footer>
+        </footer>
 
         <div id="custom-modal" class="fixed inset-0 bg-neutral-950/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden">
             <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl scale-95 transition-all duration-300 transform" id="modal-content">
                 <div id="modal-icon-container" class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-xl"></div>
                 <div class="space-y-1.5">
                     <h3 id="modal-title" class="text-base font-bold text-white">Sarlavha</h3>
-                    <p id="modal-desc" class="text-slate-400 text-xs leading-relaxed">Xabar</p>
+                    <p id="modal-desc" class="text-slate-400 text-xs leading-relaxed">Xabar mazmuni shu yerda bo'ladi.</p>
                 </div>
-                <button onclick="closeModal()" class="w-full bg-brand-blue text-white font-bold py-3 px-4 rounded-xl text-xs">OK</button>
+                <button onclick="closeModal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl text-xs transition duration-150">OK</button>
             </div>
         </div>
 
     </div>
 
     <script>
-        const BACKEND_URL = "https://c1210.coresuz1.ru/public/bot.php"; 
-        const ADMIN_ID = "5780755613";
-        
+        const BACKEND_URL = "https://c1210.coresuz1.ru/bot.php"; 
+
+        // WebApp Context orqali foydalanuvchi ma'lumotlarini olish
         let tgUserId = "12345678";
         let tgUserName = "Foydalanuvchi";
-        let isAdmin = false;
-
+        let tgPhotoUrl = "";
+        
         try {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
@@ -253,63 +357,44 @@
                 if (initData && initData.user) {
                     tgUserId = initData.user.id.toString();
                     tgUserName = initData.user.first_name || initData.user.username || "Foydalanuvchi";
+                    tgPhotoUrl = initData.user.photo_url || ""; // Profil rasmi mavjud bo'lsa
                 }
             }
-        } catch(e) {}
-
-        if (tgUserId === ADMIN_ID) {
-            isAdmin = true;
+        } catch(e) {
+            console.log("Telegram WebApp context yuklanmadi");
         }
 
         let appState = {
-            balance: 0, soldPhotos: 0, totalEarnings: 0,
-            selectedPhotoCount: 0, pendingOffer: 0,
-            currentWithdrawMethod: 'Tinkoff',
-            subscriptions: {}, history: ['screen-profile'],
+            balance: 0, soldPhotos: 0, totalEarnings: 0, selectedPhotoCount: 0, pendingOffer: 0,
+            currentWithdrawMethod: 'Tinkoff', subscriptions: {}, history: ['screen-profile'],
             dynamicChannels: [], withdrawPending: false, withdrawAmount: 0, queuePosition: 0
         };
 
-        const themes = [
-            { class: 'bg-theme-1', svg: `<path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/><circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/>` },
-            { class: 'bg-theme-2', svg: `<rect x="40" y="60" width="120" height="70" rx="8" fill="none" stroke="#10B981" stroke-width="4"/><circle cx="100" cy="95" r="18" fill="none" stroke="#34D399" stroke-width="3"/>` },
-            { class: 'bg-theme-3', svg: `<path d="M60,140 C60,100 80,70 100,70 C120,70 140,100 140,140 Z" fill="none" stroke="#F59E0B" stroke-width="4"/><path d="M90,70 L110,70" stroke="#F59E0B" stroke-width="5"/>` }
-        ];
-        let currentThemeIndex = 0;
-
-        setInterval(() => {
-            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-            document.getElementById('app-container').className = `w-full max-w-md bg-transition ${themes[currentThemeIndex].class} min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden border-x border-slate-800/40`;
-            const svgContainer = document.getElementById('bg-vector-container');
-            svgContainer.style.opacity = 0;
-            setTimeout(() => {
-                svgContainer.innerHTML = `<svg class="w-72 h-72 block" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">${themes[currentThemeIndex].svg}</svg>`;
-                svgContainer.style.opacity = 0.15;
-            }, 500);
-        }, 60000);
-
-        function formatRubles(num) { return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " RUB"; }
+        const backBtn = document.getElementById('back-btn');
+        const balanceAmount = document.getElementById('balance-amount');
+        const soldPhotoCount = document.getElementById('sold-photo-count');
+        const totalRevenue = document.getElementById('total-revenue');
+        const selectedCountLabel = document.getElementById('selected-count-label');
+        const uploadZone = document.getElementById('upload-zone');
+        const btnSubmitModeration = document.getElementById('btn-submit-moderation');
+        const previewGrid = document.getElementById('selected-photos-preview');
+        const withdrawStatusCard = document.getElementById('withdraw-status-card');
 
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('user-tg-name').innerText = tgUserName;
             document.getElementById('user-tg-id').innerText = `ID: ${tgUserId}`;
             
-            if (isAdmin) {
-                const footer = document.getElementById('main-footer');
-                footer.classList.remove('grid-cols-3');
-                footer.classList.add('grid-cols-4');
-                
-                const adminBtn = document.createElement('button');
-                adminBtn.onclick = () => { changeScreen('screen-admin'); loadAdminChannels(); };
-                adminBtn.id = 'nav-btn-admin';
-                adminBtn.className = 'flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition group';
-                adminBtn.innerHTML = `<i class="fa-solid fa-user-shield text-lg group-hover:scale-110 transition"></i><span class="text-[9px] font-medium">Admin</span>`;
-                footer.appendChild(adminBtn);
+            // Profil rasmi o'rnatilishi
+            if(tgPhotoUrl) {
+                const picContainer = document.getElementById('profile-pic-container');
+                picContainer.innerHTML = `<img src="${tgPhotoUrl}" class="w-full h-full object-cover rounded-2xl">`;
             }
 
             loadLocalState();
             fetchSponsorChannels();
             
-            document.getElementById('card-number-input').addEventListener('input', (e) => {
+            const cardInput = document.getElementById('card-number-input');
+            cardInput.addEventListener('input', (e) => {
                 let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
                 let formatted = '';
                 for (let i = 0; i < value.length; i++) {
@@ -320,10 +405,14 @@
             });
         });
 
+        function formatRubles(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " RUB";
+        }
+
         function saveLocalState() {
             localStorage.setItem(`photostock_state_${tgUserId}`, JSON.stringify({
                 balance: appState.balance, soldPhotos: appState.soldPhotos, totalEarnings: appState.totalEarnings,
-                withdrawPending: appState.withdrawPending, withdrawAmount: appState.withdrawAmount, queuePosition: appState.queuePosition
+                withdrawPending: appState.withdrawPending, withdrawAmount: appState.withdrawAmount, queuePosition: appState.queuePosition,
             }));
             updateUI();
         }
@@ -332,24 +421,27 @@
             const cached = localStorage.getItem(`photostock_state_${tgUserId}`);
             if (cached) {
                 const data = JSON.parse(cached);
-                appState.balance = data.balance ?? 0;
-                appState.soldPhotos = data.soldPhotos ?? 0;
-                appState.totalEarnings = data.totalEarnings ?? 0;
-                appState.withdrawPending = data.withdrawPending ?? false;
+                appState.balance = data.balance ?? 0; appState.soldPhotos = data.soldPhotos ?? 0;
+                appState.totalEarnings = data.totalEarnings ?? 0; appState.withdrawPending = data.withdrawPending ?? false;
                 appState.withdrawAmount = data.withdrawAmount ?? 0;
-                if (appState.withdrawPending) appState.queuePosition = data.queuePosition ?? 40;
+                
+                if (appState.withdrawPending) {
+                    appState.queuePosition = data.queuePosition ?? 40;
+                }
             }
             updateUI();
         }
 
         function updateUI() {
-            document.getElementById('balance-amount').innerText = formatRubles(appState.balance);
-            document.getElementById('sold-photo-count').innerText = appState.soldPhotos + " ta";
-            document.getElementById('total-revenue').innerText = formatRubles(appState.totalEarnings);
+            balanceAmount.innerText = formatRubles(appState.balance);
+            soldPhotoCount.innerText = appState.soldPhotos + " ta";
+            totalRevenue.innerText = formatRubles(appState.totalEarnings);
             if (appState.withdrawPending) {
-                document.getElementById('withdraw-status-card').classList.remove('hidden');
+                withdrawStatusCard.classList.remove('hidden');
                 document.getElementById('queue-amount-display').innerText = formatRubles(appState.withdrawAmount);
                 document.getElementById('queue-number-display').innerText = `${appState.queuePosition}-navbat`;
+            } else {
+                withdrawStatusCard.classList.add('hidden');
             }
         }
 
@@ -357,30 +449,43 @@
             fetch(`${BACKEND_URL}?action=get_channels&user_id=${tgUserId}`)
                 .then(res => res.json())
                 .then(data => {
-                    if (data && data.success && data.channels) appState.dynamicChannels = data.channels;
+                    if (data && data.success && data.channels) {
+                        appState.dynamicChannels = data.channels;
+                    } else {
+                        appState.dynamicChannels = []; // Agar umuman kanal ulanmagan bo'lsa
+                    }
                     renderChannels();
-                }).catch(() => renderChannels());
+                })
+                .catch(() => {
+                    appState.dynamicChannels = [];
+                    renderChannels();
+                });
         }
 
         function renderChannels() {
             const container = document.getElementById('sponsor-channels-container');
             container.innerHTML = '';
-            appState.dynamicChannels.forEach((chan) => {
-                const isSub = appState.subscriptions[chan.id] || false;
-                container.innerHTML += `
-                    <div class="bg-slate-900/60 border border-slate-800/60 rounded-2xl p-4 flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-bold text-xs">${chan.name.charAt(0)}</div>
-                            <div>
-                                <h4 class="font-bold text-white text-xs">${chan.name}</h4>
-                                <p class="text-slate-500 text-[10px]">${chan.desc || 'Kanalga a\'zo bo\'ling'}</p>
-                            </div>
+            
+            appState.dynamicChannels.forEach((chan, idx) => {
+                const uniqueId = chan.id || (idx + 1);
+                const isSub = appState.subscriptions[uniqueId] || false;
+                const channelCard = document.createElement('div');
+                channelCard.className = "bg-slate-900/60 border border-slate-800/60 rounded-2xl p-4 flex items-center justify-between";
+                channelCard.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-inner">
+                            ${chan.name.charAt(0)}
                         </div>
-                        <a href="${chan.link}" target="_blank" onclick="markSubscribed(${chan.id})" id="sub-btn-${chan.id}" class="${isSub ? 'bg-emerald-500' : 'bg-brand-blue'} text-white font-bold text-[10px] py-2 px-3.5 rounded-xl whitespace-nowrap">
-                            ${isSub ? '<i class="fa-solid fa-check mr-1"></i> Obunadaman' : 'Obuna bo\'lish'}
-                        </a>
+                        <div>
+                            <h4 class="font-bold text-white text-xs">${chan.name}</h4>
+                            <p class="text-slate-500 text-[10px]">${chan.desc || 'Kanalga a\'zo bo\'ling'}</p>
+                        </div>
                     </div>
+                    <a href="${chan.link}" target="_blank" onclick="markSubscribed(${uniqueId})" id="sub-btn-${uniqueId}" class="${isSub ? 'bg-emerald-500' : 'bg-brand-blue hover:bg-blue-600'} text-white font-bold text-[10px] py-2 px-3.5 rounded-xl transition duration-150 whitespace-nowrap">
+                        ${isSub ? '<i class="fa-solid fa-check mr-1"></i> Obunadaman' : 'Obuna bo\'lish'}
+                    </a>
                 `;
+                container.appendChild(channelCard);
             });
         }
 
@@ -388,178 +493,239 @@
             appState.subscriptions[id] = true;
             const btn = document.getElementById(`sub-btn-${id}`);
             if (btn) {
-                btn.className = "bg-emerald-500 text-white font-bold text-[10px] py-2 px-3.5 rounded-xl whitespace-nowrap";
+                btn.className = "bg-emerald-500 text-white font-bold text-[10px] py-2 px-3.5 rounded-xl transition duration-150 whitespace-nowrap";
                 btn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Obunadaman';
             }
         }
 
         function showModal(title, text, type = 'success') {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerText = text;
-            const icon = document.getElementById('modal-icon-container');
+            const modal = document.getElementById('custom-modal');
+            const iconContainer = document.getElementById('modal-icon-container');
+            const titleEl = document.getElementById('modal-title');
+            const descEl = document.getElementById('modal-desc');
+
+            titleEl.innerText = title; descEl.innerText = text;
+
             if (type === 'success') {
-                icon.className = "w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto text-xl";
-                icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+                iconContainer.className = "w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto text-xl";
+                iconContainer.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else if (type === 'error') {
+                iconContainer.className = "w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center mx-auto text-xl";
+                iconContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
             } else {
-                icon.className = "w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center mx-auto text-xl";
-                icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+                iconContainer.className = "w-12 h-12 rounded-2xl bg-blue-500/10 text-brand-lightBlue border border-blue-500/20 flex items-center justify-center mx-auto text-xl";
+                iconContainer.innerHTML = '<i class="fa-solid fa-circle-info"></i>';
             }
-            document.getElementById('custom-modal').classList.remove('hidden');
+
+            modal.classList.remove('hidden');
         }
 
         function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); }
 
         function changeScreen(screenId) {
-            ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors', 'screen-admin'].forEach(id => {
-                const el = document.getElementById(id);
-                if(el) el.classList.add('hidden');
-            });
+            const screens = ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'];
+            screens.forEach(id => { document.getElementById(id).classList.add('hidden'); });
             document.getElementById(screenId).classList.remove('hidden');
-            if (appState.history[appState.history.length - 1] !== screenId) appState.history.push(screenId);
-            
-            document.getElementById('back-btn').classList.toggle('hidden', appState.history.length <= 1);
 
-            // Nav tab highlight
-            ['nav-btn-home', 'nav-btn-upload', 'nav-btn-withdraw', 'nav-btn-admin'].forEach(id => {
-                const btn = document.getElementById(id);
-                if(btn) { btn.classList.remove('text-brand-lightBlue'); btn.classList.add('text-slate-400'); }
-            });
-            if (screenId === 'screen-profile') document.getElementById('nav-btn-home').classList.add('text-brand-lightBlue');
-            else if (screenId === 'screen-upload') document.getElementById('nav-btn-upload').classList.add('text-brand-lightBlue');
-            else if (['screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'].includes(screenId)) document.getElementById('nav-btn-withdraw').classList.add('text-brand-lightBlue');
-            else if (screenId === 'screen-admin' && isAdmin) document.getElementById('nav-btn-admin').classList.add('text-brand-lightBlue');
+            if (appState.history[appState.history.length - 1] !== screenId) appState.history.push(screenId);
+            if (appState.history.length > 1) backBtn.classList.remove('hidden');
+            else backBtn.classList.add('hidden');
+            
+            updateFooterNavStyles(screenId);
         }
 
-        document.getElementById('back-btn').addEventListener('click', () => {
+        backBtn.addEventListener('click', () => {
             if (appState.history.length > 1) {
                 appState.history.pop();
-                changeScreen(appState.history[appState.history.length - 1]);
+                const prevScreen = appState.history[appState.history.length - 1];
+                if (prevScreen === 'screen-moderation' || prevScreen === 'screen-search') changeScreen('screen-profile');
+                else changeScreen(prevScreen);
             }
         });
 
-        // ------------------ STANDART FUNKSIYALAR (Upload / Logic) ------------------
+        function updateFooterNavStyles(activeScreenId) {
+            const homeBtn = document.getElementById('nav-btn-home');
+            const uploadBtn = document.getElementById('nav-btn-upload');
+            const withdrawBtn = document.getElementById('nav-btn-withdraw');
+
+            [homeBtn, uploadBtn, withdrawBtn].forEach(btn => {
+                btn.classList.remove('text-brand-lightBlue');
+                btn.classList.add('text-slate-400');
+            });
+
+            if (activeScreenId === 'screen-profile') {
+                homeBtn.classList.add('text-brand-lightBlue'); homeBtn.classList.remove('text-slate-400');
+            } else if (activeScreenId === 'screen-upload') {
+                uploadBtn.classList.add('text-brand-lightBlue'); uploadBtn.classList.remove('text-slate-400');
+            } else if (activeScreenId === 'screen-withdraw-options' || activeScreenId === 'screen-payment-details' || activeScreenId === 'screen-sponsors') {
+                withdrawBtn.classList.add('text-brand-lightBlue'); withdrawBtn.classList.remove('text-slate-400');
+            }
+        }
+
         function triggerFileInput() { document.getElementById('real-file-input').click(); }
+
         function handleFileSelect(event) {
             const files = event.target.files;
-            if (!files.length) return;
+            if (files.length === 0) return;
             appState.selectedPhotoCount = Math.min(files.length, 10);
-            document.getElementById('btn-submit-moderation').removeAttribute('disabled');
-            document.getElementById('btn-submit-moderation').className = "w-full bg-brand-blue text-white font-bold py-4 px-6 rounded-2xl";
+            selectedCountLabel.innerText = `Tanlangan: ${appState.selectedPhotoCount} / 10`;
+
+            previewGrid.innerHTML = ''; previewGrid.classList.remove('hidden');
+
+            for (let i = 0; i < appState.selectedPhotoCount; i++) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const card = document.createElement('div');
+                    card.className = "aspect-square rounded-xl bg-slate-800 border border-slate-700 relative overflow-hidden shadow-md";
+                    card.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-full object-cover">
+                        <span class="absolute bottom-1 right-1 bg-slate-950/80 text-[8px] px-1.5 py-0.5 rounded font-mono text-emerald-400">OK</span>
+                    `;
+                    previewGrid.appendChild(card);
+                }
+                reader.readAsDataURL(files[i]);
+            }
+
+            btnSubmitModeration.removeAttribute('disabled');
+            btnSubmitModeration.className = "w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 cursor-pointer active:scale-[0.98]";
         }
+
         function startModeration() {
             changeScreen('screen-moderation');
-            setTimeout(() => { changeScreen('screen-search'); }, 2000);
             setTimeout(() => {
-                appState.pendingOffer = Math.floor((Math.random() * 30 + 10) * 92.5);
-                document.getElementById('offer-price-display').innerHTML = `${formatRubles(appState.pendingOffer)}`;
-                changeScreen('screen-offer');
-            }, 4000);
+                document.getElementById('mod-step-1-icon').className = "fa-solid fa-circle-check text-emerald-400";
+                document.getElementById('mod-step-1-text').className = "text-slate-400 line-through";
+                const step2Icon = document.getElementById('mod-step-2-icon');
+                const step2Text = document.getElementById('mod-step-2-text');
+                step2Icon.className = "fa-solid fa-circle-notch text-brand-lightBlue animate-spin";
+                step2Text.className = "text-slate-300";
+                step2Text.innerText = "Unikallik tahlili bajarilmoqda...";
+            }, 1500);
+
+            setTimeout(() => {
+                document.getElementById('mod-step-2-icon').className = "fa-solid fa-circle-check text-emerald-400";
+                document.getElementById('mod-step-2-text').className = "text-slate-400 line-through";
+                document.getElementById('mod-step-2-text').innerText = "Sifat va Unikallik tasdiqlandi!";
+            }, 3200);
+
+            setTimeout(() => { startSearch(); }, 4500);
         }
+
+        function startSearch() {
+            changeScreen('screen-search');
+            const textEl = document.getElementById('search-country-text');
+            textEl.innerText = "Yevropa va AQSh fotostok fondlari bilan bog'lanilmoqda...";
+            setTimeout(() => { textEl.innerText = "Mos xaridorlar topildi. Taklif shakllantirilmoqda..."; }, 1500);
+            setTimeout(() => {
+                const randomUSD = Math.random() * (40 - 10) + 10;
+                appState.pendingOffer = Math.floor(randomUSD * 92.5);
+                document.getElementById('offer-price-display').innerHTML = `${formatRubles(appState.pendingOffer).replace(" RUB", "")}<span class="text-brand-lightBlue text-xl"> RUB</span>`;
+                changeScreen('screen-offer');
+            }, 3200);
+        }
+
         function acceptOffer() { changeScreen('screen-sold'); }
+
         function goToProfileAfterSale() {
             appState.balance += appState.pendingOffer;
             appState.totalEarnings += appState.pendingOffer;
             appState.soldPhotos += appState.selectedPhotoCount;
-            appState.selectedPhotoCount = appState.pendingOffer = 0;
+            appState.selectedPhotoCount = 0; appState.pendingOffer = 0;
+            selectedCountLabel.innerText = "Tanlangan: 0 / 10";
+            btnSubmitModeration.setAttribute('disabled', 'true');
+            btnSubmitModeration.className = "w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200";
+            previewGrid.classList.add('hidden'); previewGrid.innerHTML = '';
+            document.getElementById('real-file-input').value = '';
             saveLocalState();
             changeScreen('screen-profile');
         }
-        function selectWithdrawMethod(method) { changeScreen('screen-payment-details'); }
+
+        function selectWithdrawMethod(method) {
+            appState.currentWithdrawMethod = method;
+            const cardInput = document.getElementById('card-number-input');
+            const labelEl = document.getElementById('input-label-primary');
+            cardInput.value = '';
+
+            if (method === 'BTB') { // BTB bank qismi
+                labelEl.innerText = "BTB BANK KARTA RAQAMI (16 RAQAM)";
+                cardInput.placeholder = "2200 0000 0000 0000";
+            } else {
+                labelEl.innerText = "TINKOFF BANK KARTA RAQAMI (16 RAQAM)";
+                cardInput.placeholder = "4377 0000 0000 0000";
+            }
+            changeScreen('screen-payment-details');
+        }
+
         function confirmWithdrawal() {
-            if(document.getElementById('card-number-input').value.length < 19) return showModal("Xatolik", "Karta raqami xato", "error");
-            if(appState.balance <= 0) return showModal("Xatolik", "Balansda pul yo'q", "error");
-            changeScreen('screen-sponsors');
+            const val = document.getElementById('card-number-input').value.replace(/\s/g, '');
+            if (val.length !== 16) {
+                showModal("Xatolik", "Iltimos, Rossiya bankining 16 xonali karta raqamini to'g'ri va to'liq kiriting!", "error");
+                return;
+            }
+            if (appState.balance <= 0) {
+                showModal("Xatolik", "Yechib olish uchun hisobingizda yetarli mablag' mavjud emas!", "error");
+                return;
+            }
+            
+            // Agar umuman kanal qo'shilmagan bo'lsa darhol o'tkazamiz
+            if(appState.dynamicChannels.length === 0) {
+                processWithdrawalSuccess();
+            } else {
+                changeScreen('screen-sponsors');
+            }
         }
 
         function verifyAllSubscriptions() {
+            const allChecked = Object.values(appState.subscriptions).length >= appState.dynamicChannels.length && 
+                               Object.values(appState.subscriptions).every(v => v === true);
+
+            if (!allChecked) {
+                showModal("Tizim ogohlantirishi", "Hali barcha homiy kanallarga obuna bo'lmadingiz! Tasdiqlash uchun barcha obunalardan o'ting.", "error");
+                return;
+            }
+
+            const verifyBtn = document.querySelector('button[onclick="verifyAllSubscriptions()"]');
+            verifyBtn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-1"></i> Tekshirilmoqda...`;
+            verifyBtn.disabled = true;
+
             fetch(`${BACKEND_URL}?action=check_subscriptions&user_id=${tgUserId}`)
                 .then(res => res.json())
                 .then(data => {
-                    if (data.success) {
-                        appState.queuePosition = Math.floor(Math.random() * 31) + 40;
-                        appState.withdrawAmount = appState.balance;
-                        appState.balance = 0;
-                        appState.withdrawPending = true;
-                        saveLocalState();
-                        showModal("Muvaffaqiyatli", `Pulingiz yechishga qo'yildi. Navbatingiz: ${appState.queuePosition}`, "success");
-                        setTimeout(() => { closeModal(); changeScreen('screen-profile'); }, 3000);
-                    } else {
-                        showModal("Xatolik", data.message, "error");
-                    }
-                }).catch(() => showModal("Xatolik", "Server bilan bog'lanib bo'lmadi.", "error"));
-        }
+                    verifyBtn.innerHTML = "Men obuna bo'ldim";
+                    verifyBtn.disabled = false;
 
-        // ------------------ ADMIN PANEL FUNKSIYALARI ------------------
-        function loadAdminChannels() {
-            fetch(`${BACKEND_URL}?action=get_channels&user_id=${tgUserId}`)
-                .then(r => r.json())
-                .then(data => {
-                    const list = document.getElementById('admin-channels-list');
-                    list.innerHTML = '';
-                    if(data.channels) {
-                        data.channels.forEach(ch => {
-                            list.innerHTML += `
-                                <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-xs text-white font-bold">${ch.name}</p>
-                                        <p class="text-[10px] text-slate-500">${ch.username}</p>
-                                    </div>
-                                    <button onclick="adminDeleteChannel(${ch.id})" class="text-rose-500 text-lg hover:text-rose-400 p-2"><i class="fa-solid fa-trash-can"></i></button>
-                                </div>
-                            `;
-                        });
+                    if (data && data.success) {
+                        processWithdrawalSuccess();
+                    } else {
+                        showModal("Xatolik", data.message || "Tizim obunani tasdiqlay olmadi. Iltimos barcha kanallarga obunani tekshiring.", "error");
                     }
+                })
+                .catch(() => {
+                    verifyBtn.innerHTML = "Men obuna bo'ldim";
+                    verifyBtn.disabled = false;
+                    processWithdrawalSuccess(); // Tarmoq xatosi bo'lganda ham o'tkaziladi
                 });
         }
+        
+        function processWithdrawalSuccess() {
+            const startQueue = Math.floor(Math.random() * 31) + 40;
+            appState.queuePosition = startQueue;
+            appState.withdrawAmount = appState.balance;
+            appState.balance = 0;
+            appState.withdrawPending = true;
 
-        function adminBroadcast() {
-            const text = document.getElementById('admin-broadcast-text').value;
-            if(!text) return showModal("Xatolik", "Xabar matnini kiriting!", "error");
-            
-            fetch(`${BACKEND_URL}?action=broadcast&user_id=${tgUserId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: text })
-            }).then(r => r.json()).then(res => {
-                showModal("Natija", res.message, res.success ? "success" : "error");
-                document.getElementById('admin-broadcast-text').value = '';
-            });
-        }
+            saveLocalState();
 
-        function adminAddChannel() {
-            const username = document.getElementById('admin-chan-username').value;
-            const name = document.getElementById('admin-chan-name').value;
-            const desc = document.getElementById('admin-chan-desc').value;
-            const link = document.getElementById('admin-chan-link').value;
+            showModal(
+                "So'rov yuborildi!", 
+                `Sizning pul yechish so'rovingiz tasdiqlandi. Katta navbat yuklamasi tufayli sizning navbatingiz: ${startQueue}-o'rinda. Pulingiz navbatingiz kelganda avtomatik tushadi.`, 
+                "success"
+            );
 
-            if(!username || !name || !link) return showModal("Xatolik", "Majburiy maydonlarni to'ldiring!", "error");
-
-            fetch(`${BACKEND_URL}?action=add_channel&user_id=${tgUserId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, name, desc, link })
-            }).then(r => r.json()).then(res => {
-                showModal("Natija", res.message, res.success ? "success" : "error");
-                if(res.success) {
-                    ['admin-chan-username', 'admin-chan-name', 'admin-chan-desc', 'admin-chan-link'].forEach(id => document.getElementById(id).value = '');
-                    loadAdminChannels();
-                    fetchSponsorChannels();
-                }
-            });
-        }
-
-        function adminDeleteChannel(id) {
-            fetch(`${BACKEND_URL}?action=delete_channel&user_id=${tgUserId}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: id })
-            }).then(r => r.json()).then(res => {
-                showModal("Natija", res.message, res.success ? "success" : "error");
-                if(res.success) {
-                    loadAdminChannels();
-                    fetchSponsorChannels();
-                }
-            });
+            setTimeout(() => {
+                closeModal();
+                changeScreen('screen-profile');
+            }, 5000);
         }
     </script>
 </body>
