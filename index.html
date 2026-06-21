@@ -3,27 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhotoStockX Web App</title>
-    <!-- Tailwind CSS -->
+    <title>CikagoPhoto Web App</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         brand: {
-                            blue: '#3B82F6',
-                            lightBlue: '#60A5FA',
-                            darkBg: '#090D16',
-                            cardBg: '#111827',
-                            accent: '#10B981',
+                            blue: '#3B82F6', lightBlue: '#60A5FA', darkBg: '#090D16', cardBg: '#111827', accent: '#10B981',
                         }
                     }
                 }
@@ -31,66 +23,30 @@
         }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #05070B;
-            color: #E2E8F0;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            overflow-x: hidden;
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #090D16;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1F2937;
-            border-radius: 2px;
-        }
-        /* Page transition effects */
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Custom dynamic backgrounds */
-        .bg-theme-1 {
-            background: radial-gradient(circle at top, #1E293B 0%, #0F172A 50%, #020617 100%);
-        }
-        .bg-theme-2 {
-            background: radial-gradient(circle at top, #064E3B 0%, #022C22 50%, #020617 100%);
-        }
-        .bg-theme-3 {
-            background: radial-gradient(circle at top, #78350F 0%, #451A03 50%, #020617 100%);
-        }
-        .bg-transition {
-            transition: background 1.5s ease-in-out;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #05070B; color: #E2E8F0; -webkit-tap-highlight-color: transparent; user-select: none; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #090D16; }
+        ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 2px; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .bg-theme-1 { background: radial-gradient(circle at top, #1E293B 0%, #0F172A 50%, #020617 100%); }
+        .bg-theme-2 { background: radial-gradient(circle at top, #064E3B 0%, #022C22 50%, #020617 100%); }
+        .bg-theme-3 { background: radial-gradient(circle at top, #78350F 0%, #451A03 50%, #020617 100%); }
+        .bg-transition { transition: background 1.5s ease-in-out; }
     </style>
 </head>
 <body class="flex justify-center min-h-screen items-start bg-neutral-950">
 
-    <!-- Mobile Screen Wrapper -->
     <div id="app-container" class="w-full max-w-md bg-transition bg-theme-1 min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden border-x border-slate-800/40">
         
-        <!-- Background Slider Layer -->
         <div class="absolute inset-0 z-0 opacity-15 flex items-center justify-center pointer-events-none transition-all duration-1000" id="bg-vector-container">
-            <!-- Theme 1 Vector (Purse with coins) -->
             <svg id="svg-theme-1" class="w-72 h-72 transition-opacity duration-1000 block" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/>
                 <circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/>
                 <text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>
-                <rect x="75" y="25" width="20" height="35" rx="3" fill="none" stroke="#10B981" stroke-width="3" transform="rotate(-15 85 42.5)"/>
-                <rect x="105" y="25" width="20" height="35" rx="3" fill="none" stroke="#10B981" stroke-width="3" transform="rotate(15 115 42.5)"/>
             </svg>
         </div>
 
-        <!-- TOP NAVIGATION BAR -->
         <header class="flex items-center justify-between px-4 py-4 border-b border-slate-800/30 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
             <div class="flex items-center space-x-2">
                 <button id="back-btn" class="text-slate-400 hover:text-white p-1 rounded-full hover:bg-slate-800/50 transition duration-200 hidden">
@@ -111,13 +67,10 @@
             </div>
         </header>
 
-        <!-- MAIN DYNAMIC CONTENT CONTAINER -->
         <main class="flex-1 px-4 py-4 overflow-y-auto mb-20 z-10">
 
-            <!-- SCREEN 1: PROFILE / HOME -->
             <div id="screen-profile" class="fade-in space-y-4">
                 
-                <!-- System Warning Banner -->
                 <div class="bg-amber-950/30 border border-amber-800/30 rounded-2xl p-4 flex items-start space-x-3 text-amber-200">
                     <div class="bg-amber-500/20 p-2 rounded-xl text-amber-400 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-triangle-exclamation text-lg"></i>
@@ -128,7 +81,6 @@
                     </div>
                 </div>
 
-                <!-- Active Withdrawal Queue Status Card (Only Visible if Queue Exists) -->
                 <div id="withdraw-status-card" class="bg-gradient-to-br from-emerald-950/40 to-slate-900 border border-emerald-500/30 rounded-3xl p-5 shadow-xl hidden">
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
@@ -151,12 +103,11 @@
                     </div>
                 </div>
 
-                <!-- Main Status Card -->
                 <div class="bg-slate-900/90 border border-slate-800/60 rounded-3xl p-5 shadow-xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                     
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center shadow-lg border border-slate-600">
+                        <div id="profile-pic-container" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center shadow-lg border border-slate-600 overflow-hidden">
                             <i class="fa-solid fa-user text-xl text-slate-300"></i>
                         </div>
                         <div>
@@ -180,7 +131,7 @@
                         </div>
                         <div>
                             <span class="text-slate-500 text-[10px] block mb-0.5">SESSIRA SANASI</span>
-                            <span class="text-slate-400 text-xs font-medium" id="reg-date">17.06.2026</span>
+                            <span class="text-slate-400 text-xs font-medium" id="reg-date">Bugun</span>
                         </div>
                         <div>
                             <span class="text-slate-500 text-[10px] block mb-0.5">UMUMIYa DAROMAD</span>
@@ -189,7 +140,6 @@
                     </div>
                 </div>
 
-                <!-- Current Balance Card -->
                 <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800/80 rounded-3xl p-5 flex flex-col justify-between shadow-lg">
                     <span class="text-slate-400 text-[11px] tracking-wider uppercase">Mavjud balans</span>
                     <div class="flex items-baseline justify-between mt-1">
@@ -197,45 +147,29 @@
                     </div>
                 </div>
 
-                <!-- Fast Upload Button (Call To Action) -->
                 <button onclick="changeScreen('screen-upload')" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 flex items-center justify-center space-x-2 transition duration-200 active:scale-[0.98]">
                     <i class="fa-solid fa-camera-retro text-lg animate-bounce-slow"></i>
                     <span>Foto yuklash sahifasiga o'tish</span>
                 </button>
             </div>
 
-            <!-- SCREEN 2: PHOTO UPLOAD -->
             <div id="screen-upload" class="fade-in space-y-6 hidden">
                 <div class="text-center space-y-1.5 py-2">
                     <h2 class="text-2xl font-extrabold text-white tracking-wider">RASM YUKLASH</h2>
                     <p class="text-slate-400 text-xs">Galereyadan rasmlarni tanlang va ularni soting</p>
                     <p class="text-brand-lightBlue font-semibold text-xs" id="selected-count-label">Tanlangan: 0 / 10</p>
                 </div>
-
-                <!-- Real File Input (Hidden) -->
                 <input type="file" id="real-file-input" multiple accept="image/*" class="hidden" onchange="handleFileSelect(event)">
-
-                <!-- Interactive Upload Box -->
                 <div id="upload-zone" onclick="triggerFileInput()" class="border-2 border-dashed border-slate-700 hover:border-brand-lightBlue bg-slate-900/40 hover:bg-slate-900/60 rounded-3xl p-8 flex flex-col items-center justify-center cursor-pointer transition duration-300 min-h-[220px]">
                     <div class="w-14 h-14 rounded-full bg-blue-500/10 text-brand-lightBlue flex items-center justify-center mb-3 border border-blue-500/20">
                         <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
                     </div>
                     <p class="text-slate-200 text-xs font-semibold text-center">Rasmlarni tanlash uchun bosing</p>
-                    <p class="text-slate-500 text-[10px] mt-1">Sifatli suratlar yuqori narxlanadi (Maks. 15MB)</p>
-                    
-                    <!-- Selected Photos Grid Container -->
-                    <div id="selected-photos-preview" class="grid grid-cols-4 gap-2 mt-4 w-full hidden" onclick="event.stopPropagation();">
-                        <!-- Simulated or selected photo previews go here -->
-                    </div>
+                    <div id="selected-photos-preview" class="grid grid-cols-4 gap-2 mt-4 w-full hidden" onclick="event.stopPropagation();"></div>
                 </div>
-
-                <!-- Submit Button -->
-                <button id="btn-submit-moderation" disabled onclick="startModeration()" class="w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200">
-                    Tekshiruvga yuborish
-                </button>
+                <button id="btn-submit-moderation" disabled onclick="startModeration()" class="w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200">Tekshiruvga yuborish</button>
             </div>
 
-            <!-- SCREEN 3: MODERATION LOADING -->
             <div id="screen-moderation" class="fade-in flex flex-col items-center justify-center py-12 space-y-8 hidden">
                 <div class="relative w-36 h-36 flex items-center justify-center">
                     <div class="absolute inset-0 rounded-full border-4 border-slate-800"></div>
@@ -260,7 +194,6 @@
                 </div>
             </div>
 
-            <!-- SCREEN 4: SEARCHING BUYERS -->
             <div id="screen-search" class="fade-in flex flex-col items-center justify-center py-12 space-y-8 hidden">
                 <div class="flex space-x-2 py-4 justify-center">
                     <div class="w-3.5 h-3.5 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
@@ -279,7 +212,6 @@
                 </div>
             </div>
 
-            <!-- SCREEN 5: OFFER FOUND -->
             <div id="screen-offer" class="fade-in space-y-6 hidden">
                 <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-brand-lightBlue/20 rounded-3xl p-6 text-center space-y-6 shadow-2xl relative overflow-hidden">
                     <div class="absolute -top-12 -left-12 w-24 h-24 bg-brand-lightBlue/10 rounded-full blur-xl"></div>
@@ -295,16 +227,11 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="startSearch(true)" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold py-4 px-3 rounded-2xl text-xs transition duration-200 active:scale-[0.98]">
-                        Yangi xaridor qidirish
-                    </button>
-                    <button onclick="acceptOffer()" class="bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-3 rounded-2xl text-xs shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
-                        Taklifni qabul qilish
-                    </button>
+                    <button onclick="startSearch(true)" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold py-4 px-3 rounded-2xl text-xs transition duration-200 active:scale-[0.98]">Yangi xaridor qidirish</button>
+                    <button onclick="acceptOffer()" class="bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-3 rounded-2xl text-xs shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Taklifni qabul qilish</button>
                 </div>
             </div>
 
-            <!-- SCREEN 6: PHOTOS SOLD SUCCESS -->
             <div id="screen-sold" class="fade-in flex flex-col items-center justify-center py-8 space-y-8 text-center hidden">
                 <div class="relative w-full flex justify-center">
                     <div class="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
@@ -317,24 +244,18 @@
                     <h2 class="text-2xl font-extrabold text-white tracking-tight">Fotolaringiz Sotildi!</h2>
                     <p class="text-slate-400 text-xs leading-relaxed px-4">Tranzaksiya muvaffaqiyatli yakunlandi. Mablag'lar darhol ichki balansingizga qo'shildi.</p>
                 </div>
-                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
-                    Profilga o'tish
-                </button>
+                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Profilga o'tish</button>
             </div>
 
-            <!-- SCREEN 7: WITHDRAW METHOD -->
             <div id="screen-withdraw-options" class="fade-in space-y-4 hidden">
                 <div class="py-2">
                     <h2 class="text-2xl font-extrabold text-white tracking-tight">Chiqarish usuli</h2>
                     <p class="text-slate-400 text-xs mt-1">Rossiya bank kartalariga pulingizni 24 soat ichida yechib oling</p>
                 </div>
 
-                <!-- Option 1: Tinkoff Bank -->
                 <div onclick="selectWithdrawMethod('Tinkoff')" class="bg-slate-900/60 hover:bg-slate-900 hover:border-slate-700 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group">
                     <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-yellow-500/15 text-yellow-400 border border-yellow-500/20 flex items-center justify-center font-black text-lg">
-                            T
-                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-yellow-500/15 text-yellow-400 border border-yellow-500/20 flex items-center justify-center font-black text-lg">T</div>
                         <div>
                             <h4 class="font-bold text-white text-sm group-hover:text-brand-lightBlue transition">Tinkoff Bank</h4>
                             <p class="text-slate-500 text-[10px] mt-0.5">Rossiyaning barcha bank kartalariga</p>
@@ -343,14 +264,11 @@
                     <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
                 </div>
 
-                <!-- Option 2: VTB Bank -->
-                <div onclick="selectWithdrawMethod('VTB')" class="bg-slate-900/60 hover:bg-slate-900 hover:border-slate-700 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group">
+                <div onclick="selectWithdrawMethod('BTB')" class="bg-slate-900/60 hover:bg-slate-900 hover:border-slate-700 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group">
                     <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/20 flex items-center justify-center font-black text-lg">
-                            V
-                        </div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/20 flex items-center justify-center font-black text-lg">B</div>
                         <div>
-                            <h4 class="font-bold text-white text-sm group-hover:text-brand-lightBlue transition">VTB Rossiya Banki</h4>
+                            <h4 class="font-bold text-white text-sm group-hover:text-brand-lightBlue transition">BTB Rossiya Banki</h4>
                             <p class="text-slate-500 text-[10px] mt-0.5">Tezkor xalqaro hisob-kitoblar</p>
                         </div>
                     </div>
@@ -358,7 +276,6 @@
                 </div>
             </div>
 
-            <!-- SCREEN 8: ENTER CARD / PAYMENT DETAILS -->
             <div id="screen-payment-details" class="fade-in space-y-6 hidden">
                 <div class="py-2">
                     <h2 class="text-2xl font-extrabold text-white tracking-tight">To'lov ma'lumotlari</h2>
@@ -383,19 +300,12 @@
                 </button>
             </div>
 
-            <!-- SCREEN 9: SPONSOR REQUIRED CHANNELS -->
             <div id="screen-sponsors" class="fade-in space-y-6 hidden">
                 <div class="text-center space-y-2 py-2">
                     <h2 class="text-2xl font-black text-white tracking-tight uppercase">Obunani Tasdiqlash</h2>
                     <p class="text-slate-400 text-xs">Mablag'ni kartaga o'tkazish uchun homiy kanallarimizga obuna bo'lishingiz shart.</p>
                 </div>
-
-                <!-- Sponsor Channel List Container -->
-                <div class="space-y-3" id="sponsor-channels-container">
-                    <!-- Loaded dynamically from Backend or default values -->
-                </div>
-
-                <!-- Check Subscriptions Button -->
+                <div class="space-y-3" id="sponsor-channels-container"></div>
                 <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">
                     Men obuna bo'ldim
                 </button>
@@ -403,7 +313,6 @@
 
         </main>
 
-        <!-- FOOTER TABS MENU -->
         <footer id="main-footer" class="bg-slate-950/95 backdrop-blur-md border-t border-slate-900 py-2.5 px-6 grid grid-cols-3 gap-1 fixed bottom-0 max-w-md w-full z-50">
             <button onclick="changeScreen('screen-profile')" id="nav-btn-home" class="flex flex-col items-center justify-center space-y-1 text-brand-lightBlue transition group">
                 <i class="fa-solid fa-user text-lg group-hover:scale-110 transition"></i>
@@ -419,41 +328,27 @@
             </button>
         </footer>
 
-        <!-- CUSTOM NOTIFICATION MODAL -->
         <div id="custom-modal" class="fixed inset-0 bg-neutral-950/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden">
             <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl scale-95 transition-all duration-300 transform" id="modal-content">
-                <div id="modal-icon-container" class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-xl">
-                    <!-- Dynamic Icon -->
-                </div>
+                <div id="modal-icon-container" class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-xl"></div>
                 <div class="space-y-1.5">
                     <h3 id="modal-title" class="text-base font-bold text-white">Sarlavha</h3>
                     <p id="modal-desc" class="text-slate-400 text-xs leading-relaxed">Xabar mazmuni shu yerda bo'ladi.</p>
                 </div>
-                <button onclick="closeModal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl text-xs transition duration-150">
-                    OK
-                </button>
+                <button onclick="closeModal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl text-xs transition duration-150">OK</button>
             </div>
         </div>
 
     </div>
 
-    <!-- MAIN JAVASCRIPT APP LOGIC -->
     <script>
-        // ==========================================
-        //  ⚠️ DIQQAT! PHP BACKEND ABSOLYUT MANZILI:
-        // ==========================================
-        // PHP hostingingizdagi bot.php faylining to'liq manzili bilan almashtiring:
         const BACKEND_URL = "https://c1210.coresuz1.ru/bot.php"; 
-        // Birlamchi zaxira kanallari (Agar PHP so'rovi uzilib qolsa ishlaydi)
-        const DEFAULT_CHANNELS = [
-            { id: 1, name: "ISH HAMMAGA", desc: "Vakansiyalar va Maoshlar", link: "https://t.me/" },
-            { id: 2, name: "Strategiya Markazi", desc: "Moliyaviy Tahlillar", link: "https://t.me/" },
-            { id: 3, name: "PhotoStock To'lovlari", desc: "Rasmiy to'lov cheklari", link: "https://t.me/" }
-        ];
 
-        // Telegram WebApp Context
+        // WebApp Context orqali foydalanuvchi ma'lumotlarini olish
         let tgUserId = "12345678";
         let tgUserName = "Foydalanuvchi";
+        let tgPhotoUrl = "";
+        
         try {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
@@ -462,29 +357,19 @@
                 if (initData && initData.user) {
                     tgUserId = initData.user.id.toString();
                     tgUserName = initData.user.first_name || initData.user.username || "Foydalanuvchi";
+                    tgPhotoUrl = initData.user.photo_url || ""; // Profil rasmi mavjud bo'lsa
                 }
             }
         } catch(e) {
-            console.log("Telegram WebApp context yuklanmadi, test rejimida ishga tushdi.");
+            console.log("Telegram WebApp context yuklanmadi");
         }
 
-        // State Manager
         let appState = {
-            balance: 0,
-            soldPhotos: 0,
-            totalEarnings: 0,
-            selectedPhotoCount: 0,
-            pendingOffer: 0,
-            currentWithdrawMethod: 'Tinkoff',
-            subscriptions: {},
-            history: ['screen-profile'],
-            dynamicChannels: [],
-            withdrawPending: false,
-            withdrawAmount: 0,
-            queuePosition: 0
+            balance: 0, soldPhotos: 0, totalEarnings: 0, selectedPhotoCount: 0, pendingOffer: 0,
+            currentWithdrawMethod: 'Tinkoff', subscriptions: {}, history: ['screen-profile'],
+            dynamicChannels: [], withdrawPending: false, withdrawAmount: 0, queuePosition: 0
         };
 
-        // DOM elements
         const backBtn = document.getElementById('back-btn');
         const balanceAmount = document.getElementById('balance-amount');
         const soldPhotoCount = document.getElementById('sold-photo-count');
@@ -495,52 +380,16 @@
         const previewGrid = document.getElementById('selected-photos-preview');
         const withdrawStatusCard = document.getElementById('withdraw-status-card');
 
-        // Dynamic Backgrounds Array
-        const themes = [
-            {
-                class: 'bg-theme-1',
-                svg: `<path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/>
-                      <circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/>
-                      <text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>`
-            },
-            {
-                class: 'bg-theme-2',
-                svg: `<rect x="40" y="60" width="120" height="70" rx="8" fill="none" stroke="#10B981" stroke-width="4" transform="rotate(-10 100 95)"/>
-                      <circle cx="100" cy="95" r="18" fill="none" stroke="#34D399" stroke-width="3"/>
-                      <line x1="70" y1="95" x2="130" y2="95" stroke="#10B981" stroke-width="3"/>`
-            },
-            {
-                class: 'bg-theme-3',
-                svg: `<path d="M60,140 C60,100 80,70 100,70 C120,70 140,100 140,140 C140,160 120,170 100,170 C80,170 60,160 60,140 Z" fill="none" stroke="#F59E0B" stroke-width="4"/>
-                      <path d="M90,70 L110,70" stroke="#F59E0B" stroke-width="5" stroke-linecap="round"/>
-                      <text x="90" y="135" fill="#F59E0B" font-family="sans" font-size="30" font-weight="900">$</text>`
-            }
-        ];
-        let currentThemeIndex = 0;
-
-        // Background rotation scheduler (Every 60s)
-        setInterval(() => {
-            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-            const container = document.getElementById('app-container');
-            const svgContainer = document.getElementById('bg-vector-container');
-            
-            container.className = `w-full max-w-md bg-transition ${themes[currentThemeIndex].class} min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden border-x border-slate-800/40`;
-            
-            svgContainer.style.opacity = 0;
-            setTimeout(() => {
-                svgContainer.innerHTML = `<svg class="w-72 h-72 block" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">${themes[currentThemeIndex].svg}</svg>`;
-                svgContainer.style.opacity = 0.15;
-            }, 500);
-        }, 60000);
-
-        function formatRubles(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " RUB";
-        }
-
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('user-tg-name').innerText = tgUserName;
             document.getElementById('user-tg-id').innerText = `ID: ${tgUserId}`;
             
+            // Profil rasmi o'rnatilishi
+            if(tgPhotoUrl) {
+                const picContainer = document.getElementById('profile-pic-container');
+                picContainer.innerHTML = `<img src="${tgPhotoUrl}" class="w-full h-full object-cover rounded-2xl">`;
+            }
+
             loadLocalState();
             fetchSponsorChannels();
             
@@ -549,24 +398,21 @@
                 let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
                 let formatted = '';
                 for (let i = 0; i < value.length; i++) {
-                    if (i > 0 && i % 4 === 0) {
-                        formatted += ' ';
-                    }
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
                     formatted += value[i];
                 }
                 e.target.value = formatted;
             });
         });
 
+        function formatRubles(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " RUB";
+        }
+
         function saveLocalState() {
             localStorage.setItem(`photostock_state_${tgUserId}`, JSON.stringify({
-                balance: appState.balance,
-                soldPhotos: appState.soldPhotos,
-                totalEarnings: appState.totalEarnings,
-                withdrawPending: appState.withdrawPending,
-                withdrawAmount: appState.withdrawAmount,
-                queuePosition: appState.queuePosition,
-                withdrawDate: localStorage.getItem(`photostock_withdraw_date_${tgUserId}`)
+                balance: appState.balance, soldPhotos: appState.soldPhotos, totalEarnings: appState.totalEarnings,
+                withdrawPending: appState.withdrawPending, withdrawAmount: appState.withdrawAmount, queuePosition: appState.queuePosition,
             }));
             updateUI();
         }
@@ -575,20 +421,12 @@
             const cached = localStorage.getItem(`photostock_state_${tgUserId}`);
             if (cached) {
                 const data = JSON.parse(cached);
-                appState.balance = data.balance ?? 0;
-                appState.soldPhotos = data.soldPhotos ?? 0;
-                appState.totalEarnings = data.totalEarnings ?? 0;
-                appState.withdrawPending = data.withdrawPending ?? false;
+                appState.balance = data.balance ?? 0; appState.soldPhotos = data.soldPhotos ?? 0;
+                appState.totalEarnings = data.totalEarnings ?? 0; appState.withdrawPending = data.withdrawPending ?? false;
                 appState.withdrawAmount = data.withdrawAmount ?? 0;
                 
                 if (appState.withdrawPending) {
-                    const savedDate = localStorage.getItem(`photostock_withdraw_date_${tgUserId}`);
-                    if (savedDate) {
-                        const daysPassed = Math.floor((Date.now() - parseInt(savedDate)) / (24 * 60 * 60 * 1000));
-                        appState.queuePosition = Math.max(1, data.queuePosition - daysPassed);
-                    } else {
-                        appState.queuePosition = data.queuePosition ?? 40;
-                    }
+                    appState.queuePosition = data.queuePosition ?? 40;
                 }
             }
             updateUI();
@@ -598,7 +436,6 @@
             balanceAmount.innerText = formatRubles(appState.balance);
             soldPhotoCount.innerText = appState.soldPhotos + " ta";
             totalRevenue.innerText = formatRubles(appState.totalEarnings);
-
             if (appState.withdrawPending) {
                 withdrawStatusCard.classList.remove('hidden');
                 document.getElementById('queue-amount-display').innerText = formatRubles(appState.withdrawAmount);
@@ -608,23 +445,19 @@
             }
         }
 
-        // ABSOLYUT BACKEND API SO'ROVLARINI BOSHQARISH
         function fetchSponsorChannels() {
-            const container = document.getElementById('sponsor-channels-container');
-            container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><i class="fa-solid fa-spinner animate-spin mr-1"></i> Kanallar yuklanmoqda...</div>`;
-
             fetch(`${BACKEND_URL}?action=get_channels&user_id=${tgUserId}`)
                 .then(res => res.json())
                 .then(data => {
-                    if (data && data.success && data.channels && data.channels.length > 0) {
+                    if (data && data.success && data.channels) {
                         appState.dynamicChannels = data.channels;
                     } else {
-                        appState.dynamicChannels = DEFAULT_CHANNELS;
+                        appState.dynamicChannels = []; // Agar umuman kanal ulanmagan bo'lsa
                     }
                     renderChannels();
                 })
                 .catch(() => {
-                    appState.dynamicChannels = DEFAULT_CHANNELS;
+                    appState.dynamicChannels = [];
                     renderChannels();
                 });
         }
@@ -632,11 +465,10 @@
         function renderChannels() {
             const container = document.getElementById('sponsor-channels-container');
             container.innerHTML = '';
-
+            
             appState.dynamicChannels.forEach((chan, idx) => {
                 const uniqueId = chan.id || (idx + 1);
                 const isSub = appState.subscriptions[uniqueId] || false;
-                
                 const channelCard = document.createElement('div');
                 channelCard.className = "bg-slate-900/60 border border-slate-800/60 rounded-2xl p-4 flex items-center justify-between";
                 channelCard.innerHTML = `
@@ -672,8 +504,7 @@
             const titleEl = document.getElementById('modal-title');
             const descEl = document.getElementById('modal-desc');
 
-            titleEl.innerText = title;
-            descEl.innerText = text;
+            titleEl.innerText = title; descEl.innerText = text;
 
             if (type === 'success') {
                 iconContainer.className = "w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto text-xl";
@@ -689,39 +520,17 @@
             modal.classList.remove('hidden');
         }
 
-        function closeModal() {
-            document.getElementById('custom-modal').classList.add('hidden');
-        }
+        function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); }
 
         function changeScreen(screenId) {
-            const screens = [
-                'screen-profile', 
-                'screen-upload', 
-                'screen-moderation', 
-                'screen-search', 
-                'screen-offer', 
-                'screen-sold', 
-                'screen-withdraw-options', 
-                'screen-payment-details', 
-                'screen-sponsors'
-            ];
-
-            screens.forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-            });
-
+            const screens = ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'];
+            screens.forEach(id => { document.getElementById(id).classList.add('hidden'); });
             document.getElementById(screenId).classList.remove('hidden');
 
-            if (appState.history[appState.history.length - 1] !== screenId) {
-                appState.history.push(screenId);
-            }
-
-            if (appState.history.length > 1) {
-                backBtn.classList.remove('hidden');
-            } else {
-                backBtn.classList.add('hidden');
-            }
-
+            if (appState.history[appState.history.length - 1] !== screenId) appState.history.push(screenId);
+            if (appState.history.length > 1) backBtn.classList.remove('hidden');
+            else backBtn.classList.add('hidden');
+            
             updateFooterNavStyles(screenId);
         }
 
@@ -729,11 +538,8 @@
             if (appState.history.length > 1) {
                 appState.history.pop();
                 const prevScreen = appState.history[appState.history.length - 1];
-                if (prevScreen === 'screen-moderation' || prevScreen === 'screen-search') {
-                    changeScreen('screen-profile');
-                } else {
-                    changeScreen(prevScreen);
-                }
+                if (prevScreen === 'screen-moderation' || prevScreen === 'screen-search') changeScreen('screen-profile');
+                else changeScreen(prevScreen);
             }
         });
 
@@ -748,30 +554,23 @@
             });
 
             if (activeScreenId === 'screen-profile') {
-                homeBtn.classList.add('text-brand-lightBlue');
-                homeBtn.classList.remove('text-slate-400');
+                homeBtn.classList.add('text-brand-lightBlue'); homeBtn.classList.remove('text-slate-400');
             } else if (activeScreenId === 'screen-upload') {
-                uploadBtn.classList.add('text-brand-lightBlue');
-                uploadBtn.classList.remove('text-slate-400');
+                uploadBtn.classList.add('text-brand-lightBlue'); uploadBtn.classList.remove('text-slate-400');
             } else if (activeScreenId === 'screen-withdraw-options' || activeScreenId === 'screen-payment-details' || activeScreenId === 'screen-sponsors') {
-                withdrawBtn.classList.add('text-brand-lightBlue');
-                withdrawBtn.classList.remove('text-slate-400');
+                withdrawBtn.classList.add('text-brand-lightBlue'); withdrawBtn.classList.remove('text-slate-400');
             }
         }
 
-        function triggerFileInput() {
-            document.getElementById('real-file-input').click();
-        }
+        function triggerFileInput() { document.getElementById('real-file-input').click(); }
 
         function handleFileSelect(event) {
             const files = event.target.files;
             if (files.length === 0) return;
-
             appState.selectedPhotoCount = Math.min(files.length, 10);
             selectedCountLabel.innerText = `Tanlangan: ${appState.selectedPhotoCount} / 10`;
 
-            previewGrid.innerHTML = '';
-            previewGrid.classList.remove('hidden');
+            previewGrid.innerHTML = ''; previewGrid.classList.remove('hidden');
 
             for (let i = 0; i < appState.selectedPhotoCount; i++) {
                 const reader = new FileReader();
@@ -793,13 +592,9 @@
 
         function startModeration() {
             changeScreen('screen-moderation');
-
             setTimeout(() => {
-                const step1Icon = document.getElementById('mod-step-1-icon');
-                const step1Text = document.getElementById('mod-step-1-text');
-                step1Icon.className = "fa-solid fa-circle-check text-emerald-400";
-                step1Text.className = "text-slate-400 line-through";
-                
+                document.getElementById('mod-step-1-icon').className = "fa-solid fa-circle-check text-emerald-400";
+                document.getElementById('mod-step-1-text').className = "text-slate-400 line-through";
                 const step2Icon = document.getElementById('mod-step-2-icon');
                 const step2Text = document.getElementById('mod-step-2-text');
                 step2Icon.className = "fa-solid fa-circle-notch text-brand-lightBlue animate-spin";
@@ -808,61 +603,39 @@
             }, 1500);
 
             setTimeout(() => {
-                const step2Icon = document.getElementById('mod-step-2-icon');
-                const step2Text = document.getElementById('mod-step-2-text');
-                step2Icon.className = "fa-solid fa-circle-check text-emerald-400";
-                step2Text.className = "text-slate-400 line-through";
-                step2Text.innerText = "Sifat va Unikallik tasdiqlandi!";
+                document.getElementById('mod-step-2-icon').className = "fa-solid fa-circle-check text-emerald-400";
+                document.getElementById('mod-step-2-text').className = "text-slate-400 line-through";
+                document.getElementById('mod-step-2-text').innerText = "Sifat va Unikallik tasdiqlandi!";
             }, 3200);
 
-            setTimeout(() => {
-                startSearch();
-            }, 4500);
+            setTimeout(() => { startSearch(); }, 4500);
         }
 
-        function startSearch(isAlternative = false) {
+        function startSearch() {
             changeScreen('screen-search');
             const textEl = document.getElementById('search-country-text');
             textEl.innerText = "Yevropa va AQSh fotostok fondlari bilan bog'lanilmoqda...";
-
+            setTimeout(() => { textEl.innerText = "Mos xaridorlar topildi. Taklif shakllantirilmoqda..."; }, 1500);
             setTimeout(() => {
-                textEl.innerText = "Mos xaridorlar topildi. Taklif shakllantirilmoqda...";
-            }, 1500);
-
-            setTimeout(() => {
-                const minUSD = 10;
-                const maxUSD = 40;
-                const randomUSD = Math.random() * (maxUSD - minUSD) + minUSD;
-                const rubleRate = 92.5; 
-                
-                appState.pendingOffer = Math.floor(randomUSD * rubleRate);
-
-                document.getElementById('offer-price-display').innerHTML = `
-                    ${formatRubles(appState.pendingOffer).replace(" RUB", "")}<span class="text-brand-lightBlue text-xl"> RUB</span>
-                `;
-
+                const randomUSD = Math.random() * (40 - 10) + 10;
+                appState.pendingOffer = Math.floor(randomUSD * 92.5);
+                document.getElementById('offer-price-display').innerHTML = `${formatRubles(appState.pendingOffer).replace(" RUB", "")}<span class="text-brand-lightBlue text-xl"> RUB</span>`;
                 changeScreen('screen-offer');
             }, 3200);
         }
 
-        function acceptOffer() {
-            changeScreen('screen-sold');
-        }
+        function acceptOffer() { changeScreen('screen-sold'); }
 
         function goToProfileAfterSale() {
             appState.balance += appState.pendingOffer;
             appState.totalEarnings += appState.pendingOffer;
             appState.soldPhotos += appState.selectedPhotoCount;
-
-            appState.selectedPhotoCount = 0;
-            appState.pendingOffer = 0;
+            appState.selectedPhotoCount = 0; appState.pendingOffer = 0;
             selectedCountLabel.innerText = "Tanlangan: 0 / 10";
             btnSubmitModeration.setAttribute('disabled', 'true');
             btnSubmitModeration.className = "w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200";
-            previewGrid.classList.add('hidden');
-            previewGrid.innerHTML = '';
+            previewGrid.classList.add('hidden'); previewGrid.innerHTML = '';
             document.getElementById('real-file-input').value = '';
-
             saveLocalState();
             changeScreen('screen-profile');
         }
@@ -871,17 +644,15 @@
             appState.currentWithdrawMethod = method;
             const cardInput = document.getElementById('card-number-input');
             const labelEl = document.getElementById('input-label-primary');
-
             cardInput.value = '';
 
-            if (method === 'VTB') {
-                labelEl.innerText = "VTB BANK KARTA RAQAMI (16 RAQAM)";
+            if (method === 'BTB') { // BTB bank qismi
+                labelEl.innerText = "BTB BANK KARTA RAQAMI (16 RAQAM)";
                 cardInput.placeholder = "2200 0000 0000 0000";
             } else {
                 labelEl.innerText = "TINKOFF BANK KARTA RAQAMI (16 RAQAM)";
                 cardInput.placeholder = "4377 0000 0000 0000";
             }
-
             changeScreen('screen-payment-details');
         }
 
@@ -891,16 +662,19 @@
                 showModal("Xatolik", "Iltimos, Rossiya bankining 16 xonali karta raqamini to'g'ri va to'liq kiriting!", "error");
                 return;
             }
-
             if (appState.balance <= 0) {
                 showModal("Xatolik", "Yechib olish uchun hisobingizda yetarli mablag' mavjud emas!", "error");
                 return;
             }
-
-            changeScreen('screen-sponsors');
+            
+            // Agar umuman kanal qo'shilmagan bo'lsa darhol o'tkazamiz
+            if(appState.dynamicChannels.length === 0) {
+                processWithdrawalSuccess();
+            } else {
+                changeScreen('screen-sponsors');
+            }
         }
 
-        // ABSOLYUT API ORQALI OBUNANI TEKSHIRISH
         function verifyAllSubscriptions() {
             const allChecked = Object.values(appState.subscriptions).length >= appState.dynamicChannels.length && 
                                Object.values(appState.subscriptions).every(v => v === true);
@@ -921,25 +695,7 @@
                     verifyBtn.disabled = false;
 
                     if (data && data.success) {
-                        const startQueue = Math.floor(Math.random() * 31) + 40;
-                        appState.queuePosition = startQueue;
-                        appState.withdrawAmount = appState.balance;
-                        appState.balance = 0;
-                        appState.withdrawPending = true;
-
-                        localStorage.setItem(`photostock_withdraw_date_${tgUserId}`, Date.now().toString());
-                        saveLocalState();
-
-                        showModal(
-                            "So'rov yuborildi!", 
-                            `Sizning pul yechish so'rovingiz tasdiqlandi. Katta navbat yuklamasi tufayli sizning navbatingiz: ${startQueue}-o'rinda. Pulingiz navbatingiz kelganda avtomatik tushadi.`, 
-                            "success"
-                        );
-
-                        setTimeout(() => {
-                            closeModal();
-                            changeScreen('screen-profile');
-                        }, 5000);
+                        processWithdrawalSuccess();
                     } else {
                         showModal("Xatolik", data.message || "Tizim obunani tasdiqlay olmadi. Iltimos barcha kanallarga obunani tekshiring.", "error");
                     }
@@ -947,29 +703,30 @@
                 .catch(() => {
                     verifyBtn.innerHTML = "Men obuna bo'ldim";
                     verifyBtn.disabled = false;
-                    
-                    const startQueue = Math.floor(Math.random() * 31) + 40;
-                    appState.queuePosition = startQueue;
-                    appState.withdrawAmount = appState.balance;
-                    appState.balance = 0;
-                    appState.withdrawPending = true;
-
-                    localStorage.setItem(`photostock_withdraw_date_${tgUserId}`, Date.now().toString());
-                    saveLocalState();
-
-                    showModal(
-                        "So'rov qabul qilindi", 
-                        `Sizning pul yechish so'rovingiz saqlandi. Navbatingiz: ${startQueue}-o'rinda. Ma'lumot tekshiruvdan so'ng tushadi.`, 
-                        "success"
-                    );
-
-                    setTimeout(() => {
-                        closeModal();
-                        changeScreen('screen-profile');
-                    }, 5000);
+                    processWithdrawalSuccess(); // Tarmoq xatosi bo'lganda ham o'tkaziladi
                 });
+        }
+        
+        function processWithdrawalSuccess() {
+            const startQueue = Math.floor(Math.random() * 31) + 40;
+            appState.queuePosition = startQueue;
+            appState.withdrawAmount = appState.balance;
+            appState.balance = 0;
+            appState.withdrawPending = true;
+
+            saveLocalState();
+
+            showModal(
+                "So'rov yuborildi!", 
+                `Sizning pul yechish so'rovingiz tasdiqlandi. Katta navbat yuklamasi tufayli sizning navbatingiz: ${startQueue}-o'rinda. Pulingiz navbatingiz kelganda avtomatik tushadi.`, 
+                "success"
+            );
+
+            setTimeout(() => {
+                closeModal();
+                changeScreen('screen-profile');
+            }, 5000);
         }
     </script>
 </body>
 </html>
-
