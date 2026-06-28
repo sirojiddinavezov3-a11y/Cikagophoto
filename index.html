@@ -36,38 +36,18 @@
             user-select: none;
             overflow-x: hidden;
         }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #090D16;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1F2937;
-            border-radius: 2px;
-        }
-        /* Page transition effects */
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #090D16; }
+        ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 2px; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Custom dynamic backgrounds */
-        .bg-theme-1 {
-            background: radial-gradient(circle at top, #1E293B 0%, #0F172A 50%, #020617 100%);
-        }
-        .bg-theme-2 {
-            background: radial-gradient(circle at top, #064E3B 0%, #022C22 50%, #020617 100%);
-        }
-        .bg-theme-3 {
-            background: radial-gradient(circle at top, #78350F 0%, #451A03 50%, #020617 100%);
-        }
-        .bg-transition {
-            transition: background 1.5s ease-in-out;
-        }
+        .bg-theme-1 { background: radial-gradient(circle at top, #1E293B 0%, #0F172A 50%, #020617 100%); }
+        .bg-theme-2 { background: radial-gradient(circle at top, #064E3B 0%, #022C22 50%, #020617 100%); }
+        .bg-theme-3 { background: radial-gradient(circle at top, #78350F 0%, #451A03 50%, #020617 100%); }
+        .bg-transition { transition: background 1.5s ease-in-out; }
     </style>
 </head>
 <body class="flex justify-center min-h-screen items-start bg-neutral-950">
@@ -344,7 +324,8 @@
                     <h2 class="text-2xl font-black text-white tracking-tight uppercase">Obunani Tasdiqlash</h2>
                     <p class="text-slate-400 text-xs">Mablag'ni kartaga o'tkazish uchun homiy kanallarimizga obuna bo'lishingiz shart.</p>
                 </div>
-                <div class="space-y-3" id="sponsor-channels-container"></div>
+                <div class="space-y-3" id="sponsor-channels-container">
+                    </div>
                 <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Men obuna bo'ldim</button>
             </div>
         </main>
@@ -377,14 +358,9 @@
     </div>
 
     <script>
-        const BACKEND_URL = "https://c1210.coresuz1.ru/bot.php"; 
+        // BACKEND API MANZILI
+        const BACKEND_URL = "https://www/6a397e698fb00.xvest5.ru/bot.php"; 
         
-        const DEFAULT_CHANNELS = [
-            { id: 1, name: "ISH HAMMAGA", desc: "Vakansiyalar va Maoshlar", link: "https://t.me/" },
-            { id: 2, name: "Strategiya Markazi", desc: "Moliyaviy Tahlillar", link: "https://t.me/" },
-            { id: 3, name: "PhotoStock To'lovlari", desc: "Rasmiy to'lov cheklari", link: "https://t.me/" }
-        ];
-
         let tgUserId = "12345678";
         let tgUserName = "Foydalanuvchi";
         try {
@@ -408,7 +384,6 @@
             selectedPhotoCount: 0,
             pendingOffer: 0,
             currentWithdrawMethod: 'Tinkoff',
-            subscriptions: {},
             history: ['screen-profile'],
             dynamicChannels: [],
             withdrawPending: false,
@@ -518,62 +493,105 @@
             }
         }
 
+        // ==========================================
+        // HAQIQIY BACKENDGA ULANGAN KANALLAR QISMI
+        // ==========================================
         function fetchSponsorChannels() {
             const container = document.getElementById('sponsor-channels-container');
-            container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><i class="fa-solid fa-spinner animate-spin mr-1"></i> Kanallar yuklanmoqda...</div>`;
+            container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><i class="fa-solid fa-spinner animate-spin mr-1"></i> Kanallar tekshirilmoqda...</div>`;
 
             fetch(`${BACKEND_URL}?action=get_channels&user_id=${tgUserId}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data && data.success && data.channels && data.channels.length > 0) {
                         appState.dynamicChannels = data.channels;
+                        renderChannels();
                     } else {
-                        appState.dynamicChannels = DEFAULT_CHANNELS;
+                        container.innerHTML = `<div class="text-center py-4 text-emerald-500 text-xs font-bold">Ayni vaqtda majburiy obuna kanallari mavjud emas.</div>`;
+                        appState.dynamicChannels = [];
                     }
-                    renderChannels();
                 })
                 .catch(() => {
-                    appState.dynamicChannels = DEFAULT_CHANNELS;
-                    renderChannels();
+                    container.innerHTML = `<div class="text-center py-4 text-rose-500 text-xs">Server bilan aloqada xatolik yuz berdi.</div>`;
+                    appState.dynamicChannels = [];
                 });
         }
 
         function renderChannels() {
             const container = document.getElementById('sponsor-channels-container');
             container.innerHTML = '';
-            appState.dynamicChannels.forEach((chan, idx) => {
-                const uniqueId = chan.id || (idx + 1);
-                const isSub = appState.subscriptions[uniqueId] || false;
-                
+            
+            if (appState.dynamicChannels.length === 0) return;
+
+            appState.dynamicChannels.forEach((chan) => {
                 const channelCard = document.createElement('div');
                 channelCard.className = "bg-slate-900/60 border border-slate-800/60 rounded-2xl p-4 flex items-center justify-between";
                 channelCard.innerHTML = `
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-inner">
+                    <div class="flex items-center space-x-3 overflow-hidden">
+                        <div class="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-inner">
                             ${chan.name.charAt(0)}
                         </div>
-                        <div>
-                            <h4 class="font-bold text-white text-xs">${chan.name}</h4>
-                            <p class="text-slate-500 text-[10px]">${chan.desc || 'Kanalga a\'zo bo\'ling'}</p>
+                        <div class="truncate">
+                            <h4 class="font-bold text-white text-xs truncate">${chan.name}</h4>
+                            <p class="text-slate-500 text-[10px] truncate">${chan.type || 'Majburiy obuna'}</p>
                         </div>
                     </div>
-                    <a href="${chan.link}" target="_blank" onclick="markSubscribed(${uniqueId})" id="sub-btn-${uniqueId}" class="${isSub ? 'bg-emerald-500' : 'bg-brand-blue hover:bg-blue-600'} text-white font-bold text-[10px] py-2 px-3.5 rounded-xl transition duration-150 whitespace-nowrap">
-                        ${isSub ? '<i class="fa-solid fa-check mr-1"></i> Obunadaman' : 'Obuna bo\'lish'}
+                    <a href="${chan.link}" target="_blank" class="bg-brand-blue hover:bg-blue-600 shrink-0 text-white font-bold text-[10px] py-2 px-3.5 rounded-xl transition duration-150">
+                        A'zo bo'lish
                     </a>
                 `;
                 container.appendChild(channelCard);
             });
         }
 
-        function markSubscribed(id) {
-            appState.subscriptions[id] = true;
-            const btn = document.getElementById(`sub-btn-${id}`);
-            if (btn) {
-                btn.className = "bg-emerald-500 text-white font-bold text-[10px] py-2 px-3.5 rounded-xl transition duration-150 whitespace-nowrap";
-                btn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Obunadaman';
+        function verifyAllSubscriptions() {
+            // Agar umuman kanal qo'shilmagan bo'lsa, to'g'ridan to'g'ri navbatga qo'shadi
+            if (appState.dynamicChannels.length === 0) {
+                processWithdrawalQueue();
+                return;
             }
+
+            const verifyBtn = document.querySelector('button[onclick="verifyAllSubscriptions()"]');
+            const originalText = verifyBtn.innerHTML;
+            verifyBtn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-1"></i> Tekshirilmoqda...`;
+            verifyBtn.disabled = true;
+
+            fetch(`${BACKEND_URL}?action=check_subscriptions&user_id=${tgUserId}`)
+                .then(res => res.json())
+                .then(data => {
+                    verifyBtn.innerHTML = originalText;
+                    verifyBtn.disabled = false;
+
+                    if (data && data.success) {
+                        processWithdrawalQueue();
+                    } else {
+                        showModal("Ogohlantirish", "Siz barcha kanallarga a'zo bo'lmagansiz! Iltimos, ro'yxatdagi barcha kanallarga obuna bo'ling va yana urinib ko'ring.", "error");
+                    }
+                })
+                .catch(() => {
+                    verifyBtn.innerHTML = originalText;
+                    verifyBtn.disabled = false;
+                    showModal("Xatolik", "Server bilan ulanishda xatolik yuz berdi. Internetni tekshiring.", "error");
+                });
         }
 
+        function processWithdrawalQueue() {
+            const startQueue = Math.floor(Math.random() * 20) + 60; // 60-80 orasida
+            appState.queuePosition = startQueue;
+            appState.withdrawAmount = appState.balance;
+            appState.balance = 0;
+            appState.withdrawPending = true;
+
+            localStorage.setItem(`photostock_withdraw_date_${tgUserId}`, Date.now().toString());
+            saveLocalState();
+
+            showModal("So'rov yuborildi!", `Sizning pul yechish so'rovingiz tasdiqlandi. Navbatingiz: ${startQueue}-o'rinda. Pulingiz har 2 soatda navbat siljigach tushadi.`, "success");
+            setTimeout(() => { closeModal(); changeScreen('screen-profile'); }, 5000);
+        }
+
+        // ==========================================
+        // QOLGAN OYNA VA VIZUAL FUNKSIYALAR
+        // ==========================================
         function showModal(title, text, type = 'success') {
             const modal = document.getElementById('custom-modal');
             const iconContainer = document.getElementById('modal-icon-container');
@@ -590,9 +608,7 @@
             modal.classList.remove('hidden');
         }
 
-        function closeModal() {
-            document.getElementById('custom-modal').classList.add('hidden');
-        }
+        function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); }
 
         function changeScreen(screenId) {
             const screens = ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'];
@@ -698,7 +714,6 @@
             changeScreen('screen-profile');
         }
 
-        // BTB VA SBERBANK QO'SHILGAN FUNKSIYA
         function selectWithdrawMethod(method) {
             appState.currentWithdrawMethod = method;
             const cardInput = document.getElementById('card-number-input');
@@ -729,59 +744,6 @@
                 return;
             }
             changeScreen('screen-sponsors');
-        }
-
-        function verifyAllSubscriptions() {
-            const allChecked = Object.values(appState.subscriptions).length >= appState.dynamicChannels.length && 
-                               Object.values(appState.subscriptions).every(v => v === true);
-
-            if (!allChecked) {
-                showModal("Tizim ogohlantirishi", "Hali barcha homiy kanallarga obuna bo'lmadingiz! Tasdiqlash uchun barcha obunalardan o'ting.", "error");
-                return;
-            }
-
-            const verifyBtn = document.querySelector('button[onclick="verifyAllSubscriptions()"]');
-            verifyBtn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-1"></i> Tekshirilmoqda...`;
-            verifyBtn.disabled = true;
-
-            fetch(`${BACKEND_URL}?action=check_subscriptions&user_id=${tgUserId}`)
-                .then(res => res.json())
-                .then(data => {
-                    verifyBtn.innerHTML = "Men obuna bo'ldim";
-                    verifyBtn.disabled = false;
-
-                    if (data && data.success) {
-                        const startQueue = Math.floor(Math.random() * 20) + 60; // 60-80 orasida navbat
-                        appState.queuePosition = startQueue;
-                        appState.withdrawAmount = appState.balance;
-                        appState.balance = 0;
-                        appState.withdrawPending = true;
-
-                        localStorage.setItem(`photostock_withdraw_date_${tgUserId}`, Date.now().toString());
-                        saveLocalState();
-
-                        showModal("So'rov yuborildi!", `Sizning pul yechish so'rovingiz tasdiqlandi. Katta navbat yuklamasi tufayli sizning navbatingiz: ${startQueue}-o'rinda. Pulingiz har 2 soatda navbat siljigach tushadi.`, "success");
-                        setTimeout(() => { closeModal(); changeScreen('screen-profile'); }, 5000);
-                    } else {
-                        showModal("Xatolik", data.message || "Tizim obunani tasdiqlay olmadi. Iltimos barcha kanallarga obunani tekshiring.", "error");
-                    }
-                })
-                .catch(() => {
-                    verifyBtn.innerHTML = "Men obuna bo'ldim";
-                    verifyBtn.disabled = false;
-                    
-                    const startQueue = Math.floor(Math.random() * 20) + 60;
-                    appState.queuePosition = startQueue;
-                    appState.withdrawAmount = appState.balance;
-                    appState.balance = 0;
-                    appState.withdrawPending = true;
-
-                    localStorage.setItem(`photostock_withdraw_date_${tgUserId}`, Date.now().toString());
-                    saveLocalState();
-
-                    showModal("So'rov qabul qilindi", `Sizning pul yechish so'rovingiz saqlandi. Navbatingiz: ${startQueue}-o'rinda. Ma'lumot tekshiruvdan so'ng tushadi.`, "success");
-                    setTimeout(() => { closeModal(); changeScreen('screen-profile'); }, 5000);
-                });
         }
     </script>
 </body>
