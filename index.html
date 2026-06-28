@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CikagoPhoto Web App</title>
+    <title>CIKAGO PHOTO Web App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -11,39 +11,21 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], },
                     colors: {
-                        brand: {
-                            blue: '#3B82F6',
-                            lightBlue: '#60A5FA',
-                            darkBg: '#090D16',
-                            cardBg: '#111827',
-                            accent: '#10B981',
-                        }
+                        brand: { blue: '#3B82F6', lightBlue: '#60A5FA', darkBg: '#090D16', cardBg: '#111827', accent: '#10B981', }
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #05070B;
-            color: #E2E8F0;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            overflow-x: hidden;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #05070B; color: #E2E8F0; -webkit-tap-highlight-color: transparent; user-select: none; overflow-x: hidden; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #090D16; }
         ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 2px; }
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .bg-theme-1 { background: radial-gradient(circle at top, #1E293B 0%, #0F172A 50%, #020617 100%); }
         .bg-theme-2 { background: radial-gradient(circle at top, #064E3B 0%, #022C22 50%, #020617 100%); }
         .bg-theme-3 { background: radial-gradient(circle at top, #78350F 0%, #451A03 50%, #020617 100%); }
@@ -59,8 +41,6 @@
                 <path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/>
                 <circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/>
                 <text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>
-                <rect x="75" y="25" width="20" height="35" rx="3" fill="none" stroke="#10B981" stroke-width="3" transform="rotate(-15 85 42.5)"/>
-                <rect x="105" y="25" width="20" height="35" rx="3" fill="none" stroke="#10B981" stroke-width="3" transform="rotate(15 115 42.5)"/>
             </svg>
         </div>
 
@@ -71,9 +51,9 @@
                 </button>
                 <div class="flex items-center space-x-2">
                     <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">
-                        P
+                        C
                     </div>
-                    <span class="font-bold text-lg tracking-wide text-white">PhotoStock<span class="text-brand-lightBlue">X</span></span>
+                    <span class="font-bold text-lg tracking-wide text-white">CIKAGO <span class="text-brand-lightBlue">PHOTO</span></span>
                 </div>
             </div>
             
@@ -143,11 +123,7 @@
                             <span class="text-slate-200 text-xs font-bold" id="sold-photo-count">0 ta</span>
                         </div>
                         <div>
-                            <span class="text-slate-500 text-[10px] block mb-0.5">SESSIRA SANASI</span>
-                            <span class="text-slate-400 text-xs font-medium" id="reg-date">17.06.2026</span>
-                        </div>
-                        <div>
-                            <span class="text-slate-500 text-[10px] block mb-0.5">UMUMIYa DAROMAD</span>
+                            <span class="text-slate-500 text-[10px] block mb-0.5">UMUMIY DAROMAD</span>
                             <span class="text-brand-lightBlue text-xs font-extrabold" id="total-revenue">0 RUB</span>
                         </div>
                     </div>
@@ -358,7 +334,7 @@
     </div>
 
     <script>
-        // BACKEND API MANZILI
+        // PULLI HOSTINGINGIZDAGI API MANZILI (Shuni to'g'irlab qo'ying)
         const BACKEND_URL = "https://www/6a397e698fb00.xvest5.ru/bot.php"; 
         
         let tgUserId = "12345678";
@@ -402,7 +378,7 @@
         const withdrawStatusCard = document.getElementById('withdraw-status-card');
 
         const themes = [
-            { class: 'bg-theme-1', svg: `<path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/><circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/><text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>` },
+            { class: 'bg-theme-1', svg: `<path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/><circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/><text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">C</text>` },
             { class: 'bg-theme-2', svg: `<rect x="40" y="60" width="120" height="70" rx="8" fill="none" stroke="#10B981" stroke-width="4" transform="rotate(-10 100 95)"/><circle cx="100" cy="95" r="18" fill="none" stroke="#34D399" stroke-width="3"/><line x1="70" y1="95" x2="130" y2="95" stroke="#10B981" stroke-width="3"/>` },
             { class: 'bg-theme-3', svg: `<path d="M60,140 C60,100 80,70 100,70 C120,70 140,100 140,140 C140,160 120,170 100,170 C80,170 60,160 60,140 Z" fill="none" stroke="#F59E0B" stroke-width="4"/><path d="M90,70 L110,70" stroke="#F59E0B" stroke-width="5" stroke-linecap="round"/><text x="90" y="135" fill="#F59E0B" font-family="sans" font-size="30" font-weight="900">$</text>` }
         ];
@@ -444,7 +420,7 @@
         });
 
         function saveLocalState() {
-            localStorage.setItem(`photostock_state_${tgUserId}`, JSON.stringify({
+            localStorage.setItem(`cikagophoto_state_${tgUserId}`, JSON.stringify({
                 balance: appState.balance,
                 soldPhotos: appState.soldPhotos,
                 totalEarnings: appState.totalEarnings,
@@ -456,7 +432,7 @@
         }
 
         function loadLocalState() {
-            const cached = localStorage.getItem(`photostock_state_${tgUserId}`);
+            const cached = localStorage.getItem(`cikagophoto_state_${tgUserId}`);
             if (cached) {
                 const data = JSON.parse(cached);
                 appState.balance = data.balance ?? 0;
@@ -466,9 +442,8 @@
                 appState.withdrawAmount = data.withdrawAmount ?? 0;
                 
                 if (appState.withdrawPending) {
-                    const savedDate = localStorage.getItem(`photostock_withdraw_date_${tgUserId}`);
+                    const savedDate = localStorage.getItem(`cikagophoto_withdraw_date_${tgUserId}`);
                     if (savedDate) {
-                        // 1000 millisoniya * 60 soniya * 60 daqiqa * 2 = Har 2 soatda bittaga tushadi
                         const periodsPassed = Math.floor((Date.now() - parseInt(savedDate)) / (2 * 60 * 60 * 1000));
                         appState.queuePosition = Math.max(1, data.queuePosition - periodsPassed);
                     } else {
@@ -493,9 +468,6 @@
             }
         }
 
-        // ==========================================
-        // HAQIQIY BACKENDGA ULANGAN KANALLAR QISMI
-        // ==========================================
         function fetchSponsorChannels() {
             const container = document.getElementById('sponsor-channels-container');
             container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><i class="fa-solid fa-spinner animate-spin mr-1"></i> Kanallar tekshirilmoqda...</div>`;
@@ -545,7 +517,6 @@
         }
 
         function verifyAllSubscriptions() {
-            // Agar umuman kanal qo'shilmagan bo'lsa, to'g'ridan to'g'ri navbatga qo'shadi
             if (appState.dynamicChannels.length === 0) {
                 processWithdrawalQueue();
                 return;
@@ -576,22 +547,19 @@
         }
 
         function processWithdrawalQueue() {
-            const startQueue = Math.floor(Math.random() * 20) + 60; // 60-80 orasida
+            const startQueue = Math.floor(Math.random() * 20) + 60;
             appState.queuePosition = startQueue;
             appState.withdrawAmount = appState.balance;
             appState.balance = 0;
             appState.withdrawPending = true;
 
-            localStorage.setItem(`photostock_withdraw_date_${tgUserId}`, Date.now().toString());
+            localStorage.setItem(`cikagophoto_withdraw_date_${tgUserId}`, Date.now().toString());
             saveLocalState();
 
             showModal("So'rov yuborildi!", `Sizning pul yechish so'rovingiz tasdiqlandi. Navbatingiz: ${startQueue}-o'rinda. Pulingiz har 2 soatda navbat siljigach tushadi.`, "success");
             setTimeout(() => { closeModal(); changeScreen('screen-profile'); }, 5000);
         }
 
-        // ==========================================
-        // QOLGAN OYNA VA VIZUAL FUNKSIYALAR
-        // ==========================================
         function showModal(title, text, type = 'success') {
             const modal = document.getElementById('custom-modal');
             const iconContainer = document.getElementById('modal-icon-container');
