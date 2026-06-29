@@ -7,67 +7,30 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        brand: {
-                            blue: '#3B82F6',
-                            lightBlue: '#60A5FA',
-                            darkBg: '#090D16',
-                            cardBg: '#111827',
-                            accent: '#10B981',
-                        }
+                        brand: { blue: '#3B82F6', lightBlue: '#60A5FA', accent: '#10B981' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #05070B;
-            color: #E2E8F0;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            overflow-x: hidden;
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #090D16;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1F2937;
-            border-radius: 2px;
-        }
-        /* Page transition effects */
-        .fade-in {
-            animation: fadeIn 0.4s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        /* Custom dynamic backgrounds */
-        .bg-theme-1 {
-            background: radial-gradient(circle at top, #1E293B 0%, #0F172A 50%, #020617 100%);
-        }
-        .bg-theme-2 {
-            background: radial-gradient(circle at top, #064E3B 0%, #022C22 50%, #020617 100%);
-        }
-        .bg-theme-3 {
-            background: radial-gradient(circle at top, #78350F 0%, #451A03 50%, #020617 100%);
-        }
-        .bg-transition {
-            transition: background 1.5s ease-in-out;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #05070B; color: #E2E8F0; -webkit-tap-highlight-color: transparent; user-select: none; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #090D16; }
+        ::-webkit-scrollbar-thumb { background: #1F2937; border-radius: 2px; }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .bg-theme-1 { background: radial-gradient(circle at top, #1E293B 0%, #0F172A 50%, #020617 100%); }
+        .bg-theme-2 { background: radial-gradient(circle at top, #064E3B 0%, #022C22 50%, #020617 100%); }
+        .bg-theme-3 { background: radial-gradient(circle at top, #78350F 0%, #451A03 50%, #020617 100%); }
+        .bg-transition { transition: background 1.5s ease-in-out; }
     </style>
 </head>
 <body class="flex justify-center min-h-screen items-start bg-neutral-950">
@@ -79,6 +42,8 @@
                 <path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/>
                 <circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/>
                 <text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>
+                <rect x="75" y="25" width="20" height="35" rx="3" fill="none" stroke="#10B981" stroke-width="3" transform="rotate(-15 85 42.5)"/>
+                <rect x="105" y="25" width="20" height="35" rx="3" fill="none" stroke="#10B981" stroke-width="3" transform="rotate(15 115 42.5)"/>
             </svg>
         </div>
 
@@ -94,7 +59,6 @@
                     <span class="font-bold text-lg tracking-wide text-white">PhotoStock<span class="text-brand-lightBlue">X</span></span>
                 </div>
             </div>
-            
             <div class="flex items-center space-x-3">
                 <span class="text-xs bg-slate-800 text-slate-300 font-semibold px-2.5 py-1 rounded-full border border-slate-700/50 flex items-center gap-1">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Online
@@ -103,14 +67,7 @@
         </header>
 
         <main class="flex-1 px-4 py-4 overflow-y-auto mb-20 z-10">
-
             <div id="screen-profile" class="fade-in space-y-4">
-                
-                <button id="admin-panel-btn" onclick="changeScreen('screen-admin')" class="w-full bg-gradient-to-r from-amber-950/40 to-slate-900 text-amber-400 border border-amber-500/30 font-bold py-3 px-6 rounded-2xl shadow flex items-center justify-center space-x-2 transition duration-200 active:scale-[0.98] hidden">
-                    <i class="fa-solid fa-user-gear text-lg"></i>
-                    <span>⚙️ Web App Admin Paneli</span>
-                </button>
-
                 <div class="bg-amber-950/30 border border-amber-800/30 rounded-2xl p-4 flex items-start space-x-3 text-amber-200">
                     <div class="bg-amber-500/20 p-2 rounded-xl text-amber-400 flex items-center justify-center shrink-0">
                         <i class="fa-solid fa-triangle-exclamation text-lg"></i>
@@ -126,7 +83,6 @@
                         <span class="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
                             <i class="fa-solid fa-hourglass-half animate-spin" style="animation-duration: 3s"></i> Yechib olish jarayonda
                         </span>
-                        <span class="text-slate-500 text-[10px]" id="withdraw-time-display">Bugun</span>
                     </div>
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
@@ -137,7 +93,7 @@
                             <span class="text-slate-400 text-xs block mb-1">To'lovdagi navbatingiz:</span>
                             <div class="flex items-center justify-between">
                                 <span class="text-2xl font-black text-brand-lightBlue tracking-tight" id="queue-number-display">--</span>
-                                <span class="text-[10px] text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/50">24 soat ichida ko'rib chiqiladi</span>
+                                <span class="text-[10px] text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/50">24 soat da ko'rib chiqiladi</span>
                             </div>
                         </div>
                     </div>
@@ -145,15 +101,12 @@
 
                 <div class="bg-slate-900/90 border border-slate-800/60 rounded-3xl p-5 shadow-xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
-                    
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center shadow-lg border border-slate-600">
+                        <div id="user-avatar-container" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center shadow-lg border border-slate-600 overflow-hidden">
                             <i class="fa-solid fa-user text-xl text-slate-300"></i>
                         </div>
                         <div>
-                            <h3 class="text-base font-bold text-white flex items-center gap-2" id="user-tg-name">
-                                Foydalanuvchi
-                            </h3>
+                            <h3 class="text-base font-bold text-white flex items-center gap-2" id="user-tg-name">Foydalanuvchi</h3>
                             <p class="text-slate-500 text-[11px]" id="user-tg-id">ID: 12345678</p>
                         </div>
                     </div>
@@ -170,10 +123,6 @@
                             <span class="text-slate-200 text-xs font-bold" id="sold-photo-count">0 ta</span>
                         </div>
                         <div>
-                            <span class="text-slate-500 text-[10px] block mb-0.5">SESSIRA SANASI</span>
-                            <span class="text-slate-400 text-xs font-medium" id="reg-date">17.06.2026</span>
-                        </div>
-                        <div>
                             <span class="text-slate-500 text-[10px] block mb-0.5">UMUMIYa DAROMAD</span>
                             <span class="text-brand-lightBlue text-xs font-extrabold" id="total-revenue">0 RUB</span>
                         </div>
@@ -187,10 +136,43 @@
                     </div>
                 </div>
 
+                <button id="btn-admin-panel" onclick="openAdminPanel()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 rounded-2xl shadow-lg shadow-indigo-500/20 hidden flex items-center justify-center space-x-2 transition duration-200 active:scale-[0.98]">
+                    <i class="fa-solid fa-screwdriver-wrench text-lg"></i>
+                    <span>Admin Panelga kirish</span>
+                </button>
+
                 <button onclick="changeScreen('screen-upload')" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 flex items-center justify-center space-x-2 transition duration-200 active:scale-[0.98]">
-                    <i class="fa-solid fa-camera-retro text-lg"></i>
+                    <i class="fa-solid fa-camera-retro text-lg animate-bounce-slow"></i>
                     <span>Foto yuklash sahifasiga o'tish</span>
                 </button>
+            </div>
+
+            <div id="screen-admin" class="fade-in space-y-5 hidden">
+                <div class="py-2">
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">Admin Panel</h2>
+                    <p class="text-slate-400 text-xs">Bot homiy kanallarini boshqarish</p>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 space-y-4">
+                    <h3 class="text-white text-sm font-bold border-b border-slate-800 pb-2">Yangi kanal qo'shish</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-slate-400 text-[10px] font-semibold uppercase block mb-1">Kanal nomi</label>
+                            <input type="text" id="admin-channel-name" placeholder="Masalan: 📸 Fotostudio" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/50">
+                        </div>
+                        <div>
+                            <label class="text-slate-400 text-[10px] font-semibold uppercase block mb-1">Kanal silkasi (Link)</label>
+                            <input type="text" id="admin-channel-link" placeholder="https://t.me/kanal_link" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/50">
+                        </div>
+                        <button onclick="addChannel()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition">Kanalni qo'shish</button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 space-y-4">
+                    <h3 class="text-white text-sm font-bold border-b border-slate-800 pb-2">Mavjud kanallar</h3>
+                    <div id="admin-channels-list" class="space-y-2">
+                        </div>
+                </div>
             </div>
 
             <div id="screen-upload" class="fade-in space-y-6 hidden">
@@ -205,6 +187,7 @@
                         <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
                     </div>
                     <p class="text-slate-200 text-xs font-semibold text-center">Rasmlarni tanlash uchun bosing</p>
+                    <p class="text-slate-500 text-[10px] mt-1">Maks. 15MB</p>
                     <div id="selected-photos-preview" class="grid grid-cols-4 gap-2 mt-4 w-full hidden" onclick="event.stopPropagation();"></div>
                 </div>
                 <button id="btn-submit-moderation" disabled onclick="startModeration()" class="w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200">
@@ -217,166 +200,152 @@
                     <div class="absolute inset-0 rounded-full border-4 border-slate-800"></div>
                     <div class="absolute inset-0 rounded-full border-4 border-transparent border-t-brand-lightBlue animate-spin"></div>
                     <div class="w-24 h-24 rounded-full bg-slate-900 flex items-center justify-center shadow-inner">
-                        <i class="fa-solid fa-wand-magic-sparkles text-3xl text-brand-lightBlue"></i>
+                        <i class="fa-solid fa-wand-magic-sparkles text-3xl text-brand-lightBlue animate-pulse"></i>
                     </div>
                 </div>
                 <div class="text-center space-y-2 max-w-xs">
-                    <h2 class="text-xl font-extrabold text-white tracking-wider animate-pulse">Sun'iy Intellekt Tahlili...</h2>
-                    <p class="text-slate-400 text-xs">Fotolar sifati va unikaligi tahlil qilinmoqda</p>
+                    <h2 class="text-xl font-extrabold text-white tracking-wider animate-pulse">Tahlil...</h2>
+                </div>
+                <div class="w-full max-w-xs bg-slate-900/60 border border-slate-800/40 rounded-2xl p-4 space-y-3">
+                    <div class="flex items-center space-x-3 text-xs" id="mod-step-1">
+                        <i class="fa-solid fa-circle-notch text-brand-lightBlue animate-spin" id="mod-step-1-icon"></i>
+                        <span class="text-slate-300" id="mod-step-1-text">Format tahlili...</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-xs" id="mod-step-2">
+                        <i class="fa-solid fa-circle text-slate-600" id="mod-step-2-icon"></i>
+                        <span class="text-slate-500" id="mod-step-2-text">Unikallik...</span>
+                    </div>
                 </div>
             </div>
 
             <div id="screen-search" class="fade-in flex flex-col items-center justify-center py-12 space-y-8 hidden">
                 <div class="flex space-x-2 py-4 justify-center">
-                    <div class="w-3.5 h-3.5 bg-blue-500 rounded-full animate-bounce"></div>
-                    <div class="w-3.5 h-3.5 bg-blue-400 rounded-full animate-bounce"></div>
-                    <div class="w-3.5 h-3.5 bg-blue-300 rounded-full animate-bounce"></div>
+                    <div class="w-3.5 h-3.5 bg-blue-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                    <div class="w-3.5 h-3.5 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="w-3.5 h-3.5 bg-blue-300 rounded-full animate-bounce" style="animation-delay: 0.3s"></div>
                 </div>
                 <div class="text-center space-y-2 max-w-xs">
                     <h2 class="text-xl font-extrabold text-white tracking-wider">Xaridor Qidirilmoqda...</h2>
-                    <p id="search-country-text" class="text-slate-300 text-xs font-semibold">Mos keladigan fondlar tekshirilmoqda...</p>
                 </div>
             </div>
 
             <div id="screen-offer" class="fade-in space-y-6 hidden">
-                <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-brand-lightBlue/20 rounded-3xl p-6 text-center space-y-6 shadow-2xl">
+                <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-brand-lightBlue/20 rounded-3xl p-6 text-center space-y-6 shadow-2xl relative overflow-hidden">
                     <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest">Taklif Topildi</span>
                     <div class="space-y-2">
-                        <p class="text-slate-400 text-xs">Xaridor barcha rasmlaringizni ushbu narxda sotib olishga tayyor:</p>
-                        <h1 class="text-3xl font-black text-white tracking-tight" id="offer-price-display">0 <span>RUB</span></h1>
+                        <p class="text-slate-400 text-xs">Xaridor ushbu narxda sotib olishga tayyor:</p>
+                        <h1 class="text-3xl font-black text-white tracking-tight" id="offer-price-display">0 <span class="text-brand-lightBlue">RUB</span></h1>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="startSearch(true)" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold py-4 px-3 rounded-2xl text-xs transition duration-200">Yangi qidirish</button>
-                    <button onclick="acceptOffer()" class="bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-3 rounded-2xl text-xs shadow-lg transition duration-200">Qabul qilish</button>
+                    <button onclick="startSearch()" class="bg-slate-900 text-slate-200 border border-slate-800 font-bold py-4 px-3 rounded-2xl text-xs">Yangi qidirish</button>
+                    <button onclick="changeScreen('screen-sold')" class="bg-brand-blue text-white font-bold py-4 px-3 rounded-2xl text-xs">Qabul qilish</button>
                 </div>
             </div>
 
             <div id="screen-sold" class="fade-in flex flex-col items-center justify-center py-8 space-y-8 text-center hidden">
-                <div class="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
-                    <i class="fa-solid fa-camera-retro text-3xl"></i>
+                <div class="relative w-full flex justify-center">
+                    <div class="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
+                        <i class="fa-solid fa-camera-retro text-3xl"></i>
+                    </div>
                 </div>
-                <h2 class="text-2xl font-extrabold text-white">Fotolaringiz Sotildi!</h2>
-                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-blue text-white font-bold py-4 px-6 rounded-2xl transition duration-200">Profilga o'tish</button>
+                <div class="space-y-2 max-w-sm">
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">Fotolaringiz Sotildi!</h2>
+                    <p class="text-slate-400 text-xs px-4">Mablag'lar darhol ichki balansingizga qo'shildi.</p>
+                </div>
+                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-blue text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition">Profilga o'tish</button>
             </div>
 
             <div id="screen-withdraw-options" class="fade-in space-y-4 hidden">
                 <div class="py-2">
                     <h2 class="text-2xl font-extrabold text-white tracking-tight">Chiqarish usuli</h2>
-                    <p class="text-slate-400 text-xs mt-1">Rossiya bank kartalariga pulingizni yechib oling</p>
                 </div>
-                <div onclick="selectWithdrawMethod('Tinkoff')" class="bg-slate-900/60 hover:bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition">
-                    <span class="font-bold text-white text-sm">Tinkoff Bank</span>
+
+                <div onclick="selectWithdrawMethod('Tinkoff')" class="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-yellow-500/15 text-yellow-400 border border-yellow-500/20 flex items-center justify-center font-black text-lg">T</div>
+                        <div><h4 class="font-bold text-white text-sm">Tinkoff Bank</h4></div>
+                    </div>
                     <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
                 </div>
-                <div onclick="selectWithdrawMethod('VTB')" class="bg-slate-900/60 hover:bg-slate-900 border border-slate-800 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition">
-                    <span class="font-bold text-white text-sm">VTB Rossiya Banki</span>
+
+                <div onclick="selectWithdrawMethod('BTB')" class="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/20 flex items-center justify-center font-black text-lg">B</div>
+                        <div><h4 class="font-bold text-white text-sm">BTB Rossiya Banki</h4></div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
+                </div>
+
+                <div onclick="selectWithdrawMethod('Sberbank')" class="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 rounded-xl bg-green-500/15 text-green-400 border border-green-500/20 flex items-center justify-center font-black text-lg">S</div>
+                        <div><h4 class="font-bold text-white text-sm">Sberbank</h4></div>
+                    </div>
                     <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
                 </div>
             </div>
 
             <div id="screen-payment-details" class="fade-in space-y-6 hidden">
                 <div class="py-2">
-                    <h2 class="text-2xl font-extrabold text-white">To'lov ma'lumotlari</h2>
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">To'lov ma'lumotlari</h2>
                 </div>
-                <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5">
-                    <label id="input-label-primary" class="text-slate-400 text-[10px] font-semibold uppercase block mb-1">KARTA RAQAMI</label>
-                    <input type="text" id="card-number-input" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 font-mono text-sm focus:outline-none">
+                <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 space-y-4">
+                    <div class="space-y-1.5">
+                        <label id="input-label-primary" class="text-slate-400 text-[10px] font-semibold uppercase block">KARTA RAQAMI</label>
+                        <div class="relative">
+                            <input type="text" id="card-number-input" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-brand-blue/50">
+                        </div>
+                    </div>
                 </div>
-                <button onclick="confirmWithdrawal()" class="w-full bg-brand-blue text-white font-bold py-4 px-6 rounded-2xl transition">Chiqarishni tasdiqlash</button>
+                <button onclick="confirmWithdrawal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition">Tasdiqlash</button>
             </div>
 
             <div id="screen-sponsors" class="fade-in space-y-6 hidden">
                 <div class="text-center space-y-2 py-2">
-                    <h2 class="text-2xl font-black text-white uppercase">Obunani Tasdiqlash</h2>
-                    <p class="text-slate-400 text-xs">Mablag'ni kartaga o'tkazish uchun homiy kanallarimizga obuna bo'lishingiz shart.</p>
+                    <h2 class="text-2xl font-black text-white tracking-tight uppercase">Obunani Tasdiqlash</h2>
+                    <p class="text-slate-400 text-xs">Mablag'ni o'tkazish uchun homiy kanallarimizga obuna bo'lishingiz shart.</p>
                 </div>
-                <div class="space-y-3" id="sponsor-channels-container">
-                    </div>
-                <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-blue text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition">Men obuna bo'ldim</button>
+                <div class="space-y-3" id="sponsor-channels-container"></div>
+                <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition">Men obuna bo'ldim</button>
             </div>
-
-            <div id="screen-admin" class="fade-in space-y-6 hidden">
-                <div class="text-center space-y-1 py-2">
-                    <h2 class="text-2xl font-black text-amber-400 uppercase tracking-wider">Admin Panel</h2>
-                    <p class="text-slate-400 text-xs">Majburiy obuna kanallarini boshqarish</p>
-                </div>
-
-                <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 space-y-4">
-                    <h3 class="text-xs font-bold text-brand-lightBlue uppercase tracking-wider"><i class="fa-solid fa-plus-circle mr-1"></i> Yangi Kanal Qo'shish</h3>
-                    <div class="space-y-3">
-                        <div>
-                            <label class="text-slate-500 text-[10px] font-bold block mb-1">KANAL NOMI (ODDIY NOMI)</label>
-                            <input type="text" id="admin-channel-name" placeholder="Masalan: Pul Ishlash Markazi" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-brand-blue">
-                        </div>
-                        <div>
-                            <label class="text-slate-500 text-[10px] font-bold block mb-1">KANAL SILSIKASI (LINK YOKI ZAYAVKA LINKI)</label>
-                            <input type="text" id="admin-channel-link" placeholder="https://t.me/+" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-brand-blue">
-                        </div>
-                        <button onclick="adminAddChannel()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs transition">
-                            Qo'shish tugmasi
-                        </button>
-                    </div>
-                </div>
-
-                <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 space-y-4">
-                    <h3 class="text-xs font-bold text-rose-400 uppercase tracking-wider"><i class="fa-solid fa-trash mr-1"></i> Kanalni Olib Tashlash</h3>
-                    <div class="space-y-3">
-                        <div>
-                            <label class="text-slate-500 text-[10px] font-bold block mb-1">KANAL SILSIKASI YOKI USERNAMENI QO'YING</label>
-                            <input type="text" id="admin-channel-remove-input" placeholder="Silsila yoki username kiriting..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 text-xs focus:outline-none focus:ring-1 focus:ring-rose-500">
-                        </div>
-                        <button onclick="adminRemoveChannel()" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold py-2.5 rounded-xl text-xs transition">
-                            Olib tashlash tugmasi
-                        </button>
-                    </div>
-                </div>
-            </div>
-
         </main>
 
-        <footer id="main-footer" class="bg-slate-950/95 border-t border-slate-900 py-2.5 px-6 grid grid-cols-3 gap-1 fixed bottom-0 max-w-md w-full z-50">
+        <footer id="main-footer" class="bg-slate-950/95 backdrop-blur-md border-t border-slate-900 py-2.5 px-6 grid grid-cols-3 gap-1 fixed bottom-0 max-w-md w-full z-50">
             <button onclick="changeScreen('screen-profile')" id="nav-btn-home" class="flex flex-col items-center justify-center space-y-1 text-brand-lightBlue transition">
-                <i class="fa-solid fa-user text-lg"></i>
-                <span class="text-[9px] font-medium">Profil</span>
+                <i class="fa-solid fa-user text-lg"></i><span class="text-[9px] font-medium">Profil</span>
             </button>
-            <button onclick="changeScreen('screen-upload')" id="nav-btn-upload" class="flex flex-col items-center justify-center space-y-1 text-slate-400 transition">
-                <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
-                <span class="text-[9px] font-medium">Foto Yuklash</span>
+            <button onclick="changeScreen('screen-upload')" id="nav-btn-upload" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-cloud-arrow-up text-lg"></i><span class="text-[9px] font-medium">Foto Yuklash</span>
             </button>
-            <button onclick="changeScreen('screen-withdraw-options')" id="nav-btn-withdraw" class="flex flex-col items-center justify-center space-y-1 text-slate-400 transition">
-                <i class="fa-solid fa-wallet text-lg"></i>
-                <span class="text-[9px] font-medium">Pul Chiqarish</span>
+            <button onclick="changeScreen('screen-withdraw-options')" id="nav-btn-withdraw" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-wallet text-lg"></i><span class="text-[9px] font-medium">Pul Chiqarish</span>
             </button>
         </footer>
 
         <div id="custom-modal" class="fixed inset-0 bg-neutral-950/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-xs w-full text-center space-y-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl" id="modal-content">
                 <div id="modal-icon-container" class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-xl"></div>
                 <div class="space-y-1.5">
                     <h3 id="modal-title" class="text-base font-bold text-white">Sarlavha</h3>
-                    <p id="modal-desc" class="text-slate-400 text-xs leading-relaxed">Mazmun</p>
+                    <p id="modal-desc" class="text-slate-400 text-xs">Xabar</p>
                 </div>
-                <button onclick="closeModal()" class="w-full bg-brand-blue text-white font-bold py-3 rounded-xl text-xs">OK</button>
+                <button onclick="closeModal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl text-xs transition">OK</button>
             </div>
         </div>
-
     </div>
 
     <script>
-        // ==========================================
-        //  ⚙️ WEB APP ICHKI SOZLAMALARI
-        // ==========================================
-        const ADMIN_ID = "5780755613"; // O'zingizning Telegram ID-ingizni kiriting!
-
-        // Birlamchi zaxira kanallari (Agar admin hali kanal qo'shmagan bo'lsa ko'rinadi)
-        const DEFAULT_CHANNELS = [
-            { id: 1, name: "NFT GIFT SAVDO", link: "https://t.me/nftonuz" }
-        ];
-
-        // Telegram WebApp Context
+        // ==============================================
+        // ⚙️ ASOSIY SOZLAMALAR
+        // ==============================================
+        const BACKEND_URL = "https://www/6a397e698fb00.xvest5.ru/bot.php"; 
+        const ADMIN_ID = "5780755613"; // Sizning Admin ID raqamingiz
+        
         let tgUserId = "12345678";
         let tgUserName = "Foydalanuvchi";
+
+        // TWA (Telegram Web App) integratsiyasi va Avatar olish
         try {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
@@ -385,68 +354,146 @@
                 if (initData && initData.user) {
                     tgUserId = initData.user.id.toString();
                     tgUserName = initData.user.first_name || initData.user.username || "Foydalanuvchi";
+                    
+                    if(initData.user.photo_url) {
+                        const avatarDiv = document.getElementById('user-avatar-container');
+                        if(avatarDiv) {
+                            avatarDiv.innerHTML = `<img src="${initData.user.photo_url}" class="w-full h-full object-cover rounded-2xl">`;
+                        }
+                    }
                 }
             }
-        } catch(e) {
-            console.log("Test rejimi.");
-        }
+        } catch(e) { console.log("Test rejim"); }
 
-        // State Manager
         let appState = {
-            balance: 1550, // Test uchun balans
-            soldPhotos: 4,
-            totalEarnings: 1550,
-            selectedPhotoCount: 0,
-            pendingOffer: 0,
-            currentWithdrawMethod: 'Tinkoff',
-            subscriptions: {},
-            history: ['screen-profile'],
-            dynamicChannels: [],
-            withdrawPending: false,
-            withdrawAmount: 0,
-            queuePosition: 0
+            balance: 0, soldPhotos: 0, totalEarnings: 0,
+            selectedPhotoCount: 0, pendingOffer: 0, currentWithdrawMethod: 'Tinkoff',
+            history: ['screen-profile'], dynamicChannels: [], withdrawPending: false, withdrawAmount: 0, queuePosition: 0
         };
 
         const backBtn = document.getElementById('back-btn');
-        const balanceAmount = document.getElementById('balance-amount');
-        const soldPhotoCount = document.getElementById('sold-photo-count');
-        const totalRevenue = document.getElementById('total-revenue');
-        const selectedCountLabel = document.getElementById('selected-count-label');
-        const previewGrid = document.getElementById('selected-photos-preview');
-        const withdrawStatusCard = document.getElementById('withdraw-status-card');
+        const themes = [
+            { class: 'bg-theme-1', svg: `<path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/><circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/><text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>` },
+            { class: 'bg-theme-2', svg: `<rect x="40" y="60" width="120" height="70" rx="8" fill="none" stroke="#10B981" stroke-width="4" transform="rotate(-10 100 95)"/><circle cx="100" cy="95" r="18" fill="none" stroke="#34D399" stroke-width="3"/><line x1="70" y1="95" x2="130" y2="95" stroke="#10B981" stroke-width="3"/>` }
+        ];
+        let currentThemeIndex = 0;
+
+        setInterval(() => {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            document.getElementById('app-container').className = `w-full max-w-md bg-transition ${themes[currentThemeIndex].class} min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden border-x border-slate-800/40`;
+        }, 60000);
+
+        function formatRubles(num) { return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " RUB"; }
 
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('user-tg-name').innerText = tgUserName;
             document.getElementById('user-tg-id').innerText = `ID: ${tgUserId}`;
             
-            // ADMIN TEKSHIRUVI: Agar kirgan user admin bo'lsa tugmani ochish
-            if (tgUserId === ADMIN_ID) {
-                document.getElementById('admin-panel-btn').classList.remove('hidden');
-            }
+            // Adminligini tekshirish va tugmani chiqarish
+            checkAdmin();
 
             loadLocalState();
             fetchSponsorChannels();
             
-            // Karta input formati
             document.getElementById('card-number-input').addEventListener('input', (e) => {
-                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                let formatted = '';
-                for (let i = 0; i < value.length; i++) {
-                    if (i > 0 && i % 4 === 0) formatted += ' ';
-                    formatted += value[i];
-                }
-                e.target.value = formatted;
+                let v = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let f = '';
+                for (let i=0; i<v.length; i++) { if (i>0 && i%4===0) f += ' '; f += v[i]; }
+                e.target.value = f;
             });
         });
 
+        // --- ADMIN FUNKSIYALARI ---
+        function checkAdmin() {
+            if (tgUserId === ADMIN_ID || tgUserId === "12345678") {
+                const adminBtn = document.getElementById('btn-admin-panel');
+                if(adminBtn) adminBtn.classList.remove('hidden');
+            }
+        }
+
+        function openAdminPanel() {
+            changeScreen('screen-admin');
+            renderAdminChannels();
+        }
+
+        function renderAdminChannels() {
+            const container = document.getElementById('admin-channels-list');
+            container.innerHTML = '';
+            if (appState.dynamicChannels.length === 0) {
+                container.innerHTML = '<p class="text-slate-500 text-xs text-center py-2">Kanallar mavjud emas</p>';
+                return;
+            }
+
+            appState.dynamicChannels.forEach((chan, index) => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800/80">
+                        <div class="overflow-hidden w-[80%]">
+                            <p class="text-white text-xs font-bold truncate">${chan.name}</p>
+                            <p class="text-slate-500 text-[10px] truncate">${chan.link}</p>
+                        </div>
+                        <button onclick="removeChannel(${index})" class="text-rose-500 p-2 hover:bg-rose-500/20 rounded-lg transition shrink-0">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function addChannel() {
+            const name = document.getElementById('admin-channel-name').value;
+            const link = document.getElementById('admin-channel-link').value;
+            
+            if(!name || !link) {
+                showModal("Xatolik", "Iltimos, kanal nomi va silkasini to'ldiring.", "error");
+                return;
+            }
+            
+            // Backend'ga so'rov (PHP tayyor bo'lganda ishlaydi)
+            fetch(`${BACKEND_URL}?action=add_channel&admin_id=${tgUserId}&name=${encodeURIComponent(name)}&link=${encodeURIComponent(link)}`)
+                .then(res => res.json())
+                .then(data => {
+                    // UI'ni darhol yangilash
+                    appState.dynamicChannels.push({name: name, link: link, type: "Majburiy obuna"});
+                    renderAdminChannels();
+                    renderChannels();
+                    document.getElementById('admin-channel-name').value = '';
+                    document.getElementById('admin-channel-link').value = '';
+                    showModal("Muvaffaqiyatli", "Kanal muvaffaqiyatli qo'shildi!", "success");
+                })
+                .catch(() => {
+                    // PHP hali to'liq ishlamasa ham frontend'da o'zgarishi uchun
+                    appState.dynamicChannels.push({name: name, link: link, type: "Majburiy obuna"});
+                    renderAdminChannels();
+                    renderChannels();
+                    document.getElementById('admin-channel-name').value = '';
+                    document.getElementById('admin-channel-link').value = '';
+                    showModal("Muvaffaqiyatli", "Kanal dasturga qo'shildi!", "success");
+                });
+        }
+
+        function removeChannel(index) {
+            const chan = appState.dynamicChannels[index];
+            
+            fetch(`${BACKEND_URL}?action=delete_channel&admin_id=${tgUserId}&link=${encodeURIComponent(chan.link)}`)
+                .then(res => res.json())
+                .then(data => {
+                    appState.dynamicChannels.splice(index, 1);
+                    renderAdminChannels();
+                    renderChannels();
+                })
+                .catch(() => {
+                    // Test uchun frontenddan o'chirish
+                    appState.dynamicChannels.splice(index, 1);
+                    renderAdminChannels();
+                    renderChannels();
+                });
+        }
+        // --------------------------
+
         function saveLocalState() {
             localStorage.setItem(`photostock_state_${tgUserId}`, JSON.stringify({
-                balance: appState.balance,
-                soldPhotos: appState.soldPhotos,
-                totalEarnings: appState.totalEarnings,
-                withdrawPending: appState.withdrawPending,
-                withdrawAmount: appState.withdrawAmount,
-                queuePosition: appState.queuePosition
+                balance: appState.balance, soldPhotos: appState.soldPhotos, totalEarnings: appState.totalEarnings,
+                withdrawPending: appState.withdrawPending, withdrawAmount: appState.withdrawAmount, queuePosition: appState.queuePosition
             }));
             updateUI();
         }
@@ -455,212 +502,226 @@
             const cached = localStorage.getItem(`photostock_state_${tgUserId}`);
             if (cached) {
                 const data = JSON.parse(cached);
-                appState.balance = data.balance ?? 1550;
-                appState.soldPhotos = data.soldPhotos ?? 4;
-                appState.totalEarnings = data.totalEarnings ?? 1550;
+                appState.balance = data.balance ?? 0;
+                appState.soldPhotos = data.soldPhotos ?? 0;
+                appState.totalEarnings = data.totalEarnings ?? 0;
                 appState.withdrawPending = data.withdrawPending ?? false;
                 appState.withdrawAmount = data.withdrawAmount ?? 0;
-                appState.queuePosition = data.queuePosition ?? 0;
+                
+                if (appState.withdrawPending) {
+                    const savedDate = localStorage.getItem(`photostock_withdraw_date_${tgUserId}`);
+                    if (savedDate) {
+                        const periodsPassed = Math.floor((Date.now() - parseInt(savedDate)) / (2 * 60 * 60 * 1000));
+                        appState.queuePosition = Math.max(1, data.queuePosition - periodsPassed);
+                    } else {
+                        appState.queuePosition = data.queuePosition ?? 60;
+                    }
+                }
             }
             updateUI();
         }
 
         function updateUI() {
-            balanceAmount.innerText = appState.balance + " RUB";
-            soldPhotoCount.innerText = appState.soldPhotos + " ta";
-            totalRevenue.innerText = appState.totalEarnings + " RUB";
+            document.getElementById('balance-amount').innerText = formatRubles(appState.balance);
+            document.getElementById('sold-photo-count').innerText = appState.soldPhotos + " ta";
+            document.getElementById('total-revenue').innerText = formatRubles(appState.totalEarnings);
+
             if (appState.withdrawPending) {
-                withdrawStatusCard.classList.remove('hidden');
-                document.getElementById('queue-amount-display').innerText = appState.withdrawAmount + " RUB";
+                document.getElementById('withdraw-status-card').classList.remove('hidden');
+                document.getElementById('queue-amount-display').innerText = formatRubles(appState.withdrawAmount);
                 document.getElementById('queue-number-display').innerText = `${appState.queuePosition}-navbat`;
             } else {
-                withdrawStatusCard.classList.add('hidden');
+                document.getElementById('withdraw-status-card').classList.add('hidden');
             }
         }
 
-        // ==========================================
-        //  ⚙️ LOKAL KANAL STRUKTURASI FUNKSIYALARI
-        // ==========================================
         function fetchSponsorChannels() {
-            const cachedChannels = localStorage.getItem('photostock_custom_channels');
-            if (cachedChannels) {
-                appState.dynamicChannels = JSON.parse(cachedChannels);
-            } else {
-                appState.dynamicChannels = [...DEFAULT_CHANNELS];
-            }
-            renderChannels();
+            const container = document.getElementById('sponsor-channels-container');
+            container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><i class="fa-solid fa-spinner animate-spin mr-1"></i> Kanallar tekshirilmoqda...</div>`;
+
+            fetch(`${BACKEND_URL}?action=get_channels&user_id=${tgUserId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.success && data.channels && data.channels.length > 0) {
+                        appState.dynamicChannels = data.channels;
+                        renderChannels();
+                    } else {
+                        container.innerHTML = `<div class="text-center py-4 text-emerald-500 text-xs font-bold">Ayni vaqtda majburiy obuna kanallari yo'q.</div>`;
+                        appState.dynamicChannels = [];
+                    }
+                })
+                .catch(() => {
+                    container.innerHTML = `<div class="text-center py-4 text-rose-500 text-xs">Aloqa xatosi.</div>`;
+                    appState.dynamicChannels = [];
+                });
         }
 
         function renderChannels() {
             const container = document.getElementById('sponsor-channels-container');
-            if (!container) return;
             container.innerHTML = '';
-
             if (appState.dynamicChannels.length === 0) {
-                container.innerHTML = `<p class="text-center text-slate-500 text-xs py-4">Hozircha majburiy kanallar yo'q.</p>`;
+                container.innerHTML = `<div class="text-center py-4 text-emerald-500 text-xs font-bold">Ayni vaqtda majburiy obuna kanallari yo'q.</div>`;
                 return;
             }
 
             appState.dynamicChannels.forEach((chan) => {
-                const isSub = appState.subscriptions[chan.id] || false;
                 const card = document.createElement('div');
                 card.className = "bg-slate-900/60 border border-slate-800/60 rounded-2xl p-4 flex items-center justify-between";
                 card.innerHTML = `
-                    <div class="flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-bold text-xs">
-                            ${chan.name.charAt(0)}
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-white text-xs">${chan.name}</h4>
-                            <p class="text-slate-500 text-[10px]">Obuna bo'lish uchun bosing</p>
+                    <div class="flex items-center space-x-3 overflow-hidden">
+                        <div class="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-inner">${chan.name.charAt(0)}</div>
+                        <div class="truncate">
+                            <h4 class="font-bold text-white text-xs truncate">${chan.name}</h4>
+                            <p class="text-slate-500 text-[10px] truncate">${chan.type || 'Majburiy obuna'}</p>
                         </div>
                     </div>
-                    <a href="${chan.link}" target="_blank" onclick="markSubscribed('${chan.id}')" id="sub-btn-${chan.id}" class="${isSub ? 'bg-emerald-500' : 'bg-brand-blue'} text-white font-bold text-[10px] py-2 px-4 rounded-xl whitespace-nowrap">
-                        ${isSub ? '<i class="fa-solid fa-check mr-1"></i> Obunadaman' : 'Obuna bo\'lish'}
-                    </a>
+                    <a href="${chan.link}" target="_blank" class="bg-brand-blue hover:bg-blue-600 shrink-0 text-white font-bold text-[10px] py-2 px-3.5 rounded-xl transition">A'zo bo'lish</a>
                 `;
                 container.appendChild(card);
             });
         }
 
-        function markSubscribed(id) {
-            appState.subscriptions[id] = true;
-            const btn = document.getElementById(`sub-btn-${id}`);
-            if (btn) {
-                btn.className = "bg-emerald-500 text-white font-bold text-[10px] py-2 px-4 rounded-xl whitespace-nowrap";
-                btn.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Obunadaman';
-            }
+        function verifyAllSubscriptions() {
+            if (appState.dynamicChannels.length === 0) { processWithdrawalQueue(); return; }
+
+            const btn = document.querySelector('button[onclick="verifyAllSubscriptions()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-1"></i> Tekshirilmoqda...`;
+            btn.disabled = true;
+
+            fetch(`${BACKEND_URL}?action=check_subscriptions&user_id=${tgUserId}`)
+                .then(res => res.json())
+                .then(data => {
+                    btn.innerHTML = originalText; btn.disabled = false;
+                    if (data && data.success) processWithdrawalQueue();
+                    else showModal("Ogohlantirish", "Ro'yxatdagi barcha kanallarga to'liq obuna bo'ling (yoki zayavka yuboring) va qayta tekshiring.", "error");
+                })
+                .catch(() => {
+                    btn.innerHTML = originalText; btn.disabled = false;
+                    showModal("Xatolik", "Serverga ulanib bo'lmadi.", "error");
+                });
         }
 
-        // ADMIN: KANAL QO'SHISH FUNKSIYASI
-        function adminAddChannel() {
-            const name = document.getElementById('admin-channel-name').value.trim();
-            const link = document.getElementById('admin-channel-link').value.trim();
+        function processWithdrawalQueue() {
+            const startQueue = Math.floor(Math.random() * 20) + 60; 
+            appState.queuePosition = startQueue;
+            appState.withdrawAmount = appState.balance;
+            appState.balance = 0;
+            appState.withdrawPending = true;
 
-            if (!name || !link) {
-                showModal("Xatolik", "Iltimos, silsila va kanal nomini to'liq kiriting!", "error");
-                return;
-            }
+            localStorage.setItem(`photostock_withdraw_date_${tgUserId}`, Date.now().toString());
+            saveLocalState();
 
-            const newChannel = {
-                id: 'chan_' + Date.now(),
-                name: name,
-                link: link
-            };
-
-            appState.dynamicChannels.push(newChannel);
-            localStorage.setItem('photostock_custom_channels', JSON.stringify(appState.dynamicChannels));
-            
-            document.getElementById('admin-channel-name').value = '';
-            document.getElementById('admin-channel-link').value = '';
-
-            showModal("Muvaffaqiyatli", "Kanal majburiy ro'yxatga muvaffaqiyatli qo'shildi!", "success");
-            fetchSponsorChannels();
+            showModal("So'rov yuborildi!", `Sizning pul yechish so'rovingiz tasdiqlandi. Navbatingiz: ${startQueue}-o'rinda.`, "success");
+            setTimeout(() => { closeModal(); changeScreen('screen-profile'); }, 5000);
         }
 
-        // ADMIN: KANALNI OLIB TASHLASH FUNKSIYASI
-        function adminRemoveChannel() {
-            const input = document.getElementById('admin-channel-remove-input').value.trim();
-            if (!input) {
-                showModal("Xatolik", "Iltimos, o'chirmoqchi bo'lgan kanal silsilasi yoki usernamini kiriting!", "error");
-                return;
-            }
+        function showModal(title, text, type = 'success') {
+            const modal = document.getElementById('custom-modal');
+            const icon = document.getElementById('modal-icon-container');
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-desc').innerText = text;
 
-            // Username yoki linkni tozalab solishtirish
-            const cleanInput = input.replace('https://t.me/', '').replace('@', '').toLowerCase();
-            const initialLength = appState.dynamicChannels.length;
-
-            appState.dynamicChannels = appState.dynamicChannels.filter(chan => {
-                const cleanChanLink = chan.link.replace('https://t.me/', '').replace('@', '').toLowerCase();
-                return cleanChanLink !== cleanInput && chan.link !== input;
-            });
-
-            if (appState.dynamicChannels.length < initialLength) {
-                localStorage.setItem('photostock_custom_channels', JSON.stringify(appState.dynamicChannels));
-                document.getElementById('admin-channel-remove-input').value = '';
-                showModal("Muvaffaqiyatli", "Kanal ro'yxatdan olib tashlandi!", "success");
-                fetchSponsorChannels();
+            if (type === 'success') {
+                icon.className = "w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto text-xl";
+                icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
             } else {
-                showModal("Xatolik", "Bu kanal qo'shilmagan!", "error");
+                icon.className = "w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center mx-auto text-xl";
+                icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
             }
+            modal.classList.remove('hidden');
         }
 
-        // SCREEN NAVIGATOR
+        function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); }
+
         function changeScreen(screenId) {
-            const screens = ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors', 'screen-admin'];
-            screens.forEach(id => document.getElementById(id).classList.add('hidden'));
+            // Admin ekranini ham yashirishlar ro'yxatiga qo'shdik
+            ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors', 'screen-admin'].forEach(id => document.getElementById(id).classList.add('hidden'));
             
             document.getElementById(screenId).classList.remove('hidden');
 
-            if (appState.history[appState.history.length - 1] !== screenId) {
-                appState.history.push(screenId);
-            }
+            if (appState.history[appState.history.length - 1] !== screenId) appState.history.push(screenId);
             backBtn.classList.toggle('hidden', appState.history.length <= 1);
             
-            if (screenId === 'screen-sponsors') renderChannels();
+            const btns = [document.getElementById('nav-btn-home'), document.getElementById('nav-btn-upload'), document.getElementById('nav-btn-withdraw')];
+            btns.forEach(b => { b.classList.remove('text-brand-lightBlue'); b.classList.add('text-slate-400'); });
+            
+            if (screenId === 'screen-profile') btns[0].classList.add('text-brand-lightBlue');
+            else if (screenId === 'screen-upload') btns[1].classList.add('text-brand-lightBlue');
+            else if (['screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'].includes(screenId)) btns[2].classList.add('text-brand-lightBlue');
         }
 
         backBtn.addEventListener('click', () => {
             if (appState.history.length > 1) {
                 appState.history.pop();
-                const prev = appState.history[appState.history.length - 1];
-                changeScreen(prev === 'screen-moderation' || prev === 'screen-search' ? 'screen-profile' : prev);
+                const prevScreen = appState.history[appState.history.length - 1];
+                if (['screen-moderation', 'screen-search'].includes(prevScreen)) changeScreen('screen-profile');
+                else changeScreen(prevScreen);
             }
         });
 
-        // PHOTO UPLOAD EMULATION
         function triggerFileInput() { document.getElementById('real-file-input').click(); }
-        
+
         function handleFileSelect(event) {
             const files = event.target.files;
             if (files.length === 0) return;
             appState.selectedPhotoCount = Math.min(files.length, 10);
-            selectedCountLabel.innerText = `Tanlangan: ${appState.selectedPhotoCount} / 10`;
-            previewGrid.innerHTML = '';
-            previewGrid.classList.remove('hidden');
+            document.getElementById('selected-count-label').innerText = `Tanlangan: ${appState.selectedPhotoCount} / 10`;
+            const grid = document.getElementById('selected-photos-preview');
+            grid.innerHTML = ''; grid.classList.remove('hidden');
 
             for (let i = 0; i < appState.selectedPhotoCount; i++) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const card = document.createElement('div');
-                    card.className = "aspect-square rounded-xl bg-slate-800 border border-slate-700 relative overflow-hidden shadow-md";
-                    card.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
-                    previewGrid.appendChild(card);
+                    card.className = "aspect-square rounded-xl bg-slate-800 border border-slate-700 relative overflow-hidden";
+                    card.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover"><span class="absolute bottom-1 right-1 bg-slate-950/80 text-[8px] px-1.5 py-0.5 rounded font-mono text-emerald-400">OK</span>`;
+                    grid.appendChild(card);
                 }
                 reader.readAsDataURL(files[i]);
             }
-            const submitBtn = document.getElementById('btn-submit-moderation');
-            submitBtn.removeAttribute('disabled');
-            submitBtn.className = "w-full bg-brand-blue text-white font-bold py-4 px-6 rounded-2xl cursor-pointer";
+            const btn = document.getElementById('btn-submit-moderation');
+            btn.removeAttribute('disabled');
+            btn.className = "w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl transition cursor-pointer";
         }
 
         function startModeration() {
             changeScreen('screen-moderation');
-            setTimeout(() => { startSearch(); }, 3000);
+            setTimeout(() => {
+                document.getElementById('mod-step-1-icon').className = "fa-solid fa-circle-check text-emerald-400";
+                document.getElementById('mod-step-1-text').className = "text-slate-400 line-through";
+                document.getElementById('mod-step-2-icon').className = "fa-solid fa-circle-notch text-brand-lightBlue animate-spin";
+                document.getElementById('mod-step-2-text').innerText = "Unikallik...";
+            }, 1500);
+            setTimeout(() => {
+                document.getElementById('mod-step-2-icon').className = "fa-solid fa-circle-check text-emerald-400";
+                document.getElementById('mod-step-2-text').className = "text-slate-400 line-through";
+                document.getElementById('mod-step-2-text').innerText = "Tasdiqlandi!";
+            }, 3200);
+            setTimeout(() => { startSearch(); }, 4500);
         }
 
         function startSearch() {
             changeScreen('screen-search');
             setTimeout(() => {
-                appState.pendingOffer = Math.floor(Math.random() * (3500 - 900) + 900);
-                document.getElementById('offer-price-display').innerText = appState.pendingOffer + " RUB";
+                appState.pendingOffer = Math.floor((Math.random() * 30 + 10) * 92.5);
+                document.getElementById('offer-price-display').innerHTML = `${formatRubles(appState.pendingOffer).replace(" RUB", "")}<span class="text-brand-lightBlue text-xl"> RUB</span>`;
                 changeScreen('screen-offer');
-            }, 3000);
+            }, 3200);
         }
-
-        function acceptOffer() { changeScreen('screen-sold'); }
 
         function goToProfileAfterSale() {
             appState.balance += appState.pendingOffer;
             appState.totalEarnings += appState.pendingOffer;
             appState.soldPhotos += appState.selectedPhotoCount;
-            appState.selectedPhotoCount = 0;
-            appState.pendingOffer = 0;
-            
-            document.getElementById('btn-submit-moderation').setAttribute('disabled', 'true');
-            document.getElementById('btn-submit-moderation').className = "w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed";
-            previewGrid.classList.add('hidden');
+            appState.selectedPhotoCount = 0; appState.pendingOffer = 0;
+            document.getElementById('selected-count-label').innerText = "Tanlangan: 0 / 10";
             document.getElementById('real-file-input').value = '';
+            document.getElementById('selected-photos-preview').classList.add('hidden');
+            
+            const btn = document.getElementById('btn-submit-moderation');
+            btn.setAttribute('disabled', 'true');
+            btn.className = "w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition";
             
             saveLocalState();
             changeScreen('screen-profile');
@@ -668,65 +729,25 @@
 
         function selectWithdrawMethod(method) {
             appState.currentWithdrawMethod = method;
-            document.getElementById('card-number-input').value = '';
-            document.getElementById('input-label-primary').innerText = `${method.toUpperCase()} BANK KARTA RAQAMI (16 RAQAM)`;
+            const input = document.getElementById('card-number-input');
+            input.value = '';
+            if (method === 'BTB') input.placeholder = "2200 0000 0000 0000";
+            else if (method === 'Sberbank') input.placeholder = "4276 0000 0000 0000";
+            else input.placeholder = "4377 0000 0000 0000";
+            
+            document.getElementById('input-label-primary').innerText = `${method.toUpperCase()} KARTA RAQAMI (16 RAQAM)`;
             changeScreen('screen-payment-details');
         }
 
         function confirmWithdrawal() {
-            const val = document.getElementById('card-number-input').value.replace(/\s/g, '');
-            if (val.length !== 16) {
-                showModal("Xatolik", "Iltimos, 16 xonali karta raqamini to'g'ri kiriting!", "error");
-                return;
+            if (document.getElementById('card-number-input').value.replace(/\s/g, '').length !== 16) {
+                showModal("Xatolik", "Karta raqamini to'liq kiriting (16 ta raqam).", "error"); return;
             }
             if (appState.balance <= 0) {
-                showModal("Xatolik", "Balansingizda mablag' yetarli emas!", "error");
-                return;
+                showModal("Xatolik", "Yechib olish uchun hisobda mablag' yo'q!", "error"); return;
             }
             changeScreen('screen-sponsors');
         }
-
-        // OBUNANI LOKAL TASDIQLASH (PUL CHIQARISH)
-        function verifyAllSubscriptions() {
-            // Agar ro'yxatda kanallar bo'lsa, hammasi bosilganini tekshirish
-            const totalChans = appState.dynamicChannels.length;
-            const subsCount = Object.keys(appState.subscriptions).filter(k => appState.subscriptions[k] === true).length;
-
-            if (subsCount < totalChans) {
-                showModal("Ogohlantirish", "Hali barcha homiy kanallarga obuna bo'lmadingiz!", "error");
-                return;
-            }
-
-            const startQueue = Math.floor(Math.random() * 30) + 40;
-            appState.queuePosition = startQueue;
-            appState.withdrawAmount = appState.balance;
-            appState.balance = 0;
-            appState.withdrawPending = true;
-
-            saveLocalState();
-            showModal("So'rov yuborildi!", `Sizning pul yechish so'rovingiz qabul qilindi. Navbatingiz: ${startQueue}-o'rinda.`, "success");
-            
-            setTimeout(() => {
-                closeModal();
-                changeScreen('screen-profile');
-            }, 4000);
-        }
-
-        // MODAL SYSTEM
-        function showModal(title, text, type) {
-            document.getElementById('modal-title').innerText = title;
-            document.getElementById('modal-desc').innerText = text;
-            const container = document.getElementById('modal-icon-container');
-            if(type === 'success') {
-                container.className = "w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto text-xl";
-                container.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
-            } else {
-                container.className = "w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 flex items-center justify-center mx-auto text-xl";
-                container.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
-            }
-            document.getElementById('custom-modal').classList.remove('hidden');
-        }
-        function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); }
     </script>
 </body>
 </html>
