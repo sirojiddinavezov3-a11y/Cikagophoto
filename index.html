@@ -171,7 +171,7 @@
                 <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-5 space-y-4">
                     <h3 class="text-white text-sm font-bold border-b border-slate-800 pb-2">Mavjud kanallar</h3>
                     <div id="admin-channels-list" class="space-y-2">
-                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -339,7 +339,6 @@
         // ==============================================
         // ⚙️ ASOSIY SOZLAMALAR
         // ==============================================
-        const BACKEND_URL = "https://www/6a397e698fb00.xvest5.ru/bot.php"; 
         const ADMIN_ID = "8526094873"; // Sizning Admin ID raqamingiz
         
         let tgUserId = "12345678";
@@ -389,11 +388,9 @@
             document.getElementById('user-tg-name').innerText = tgUserName;
             document.getElementById('user-tg-id').innerText = `ID: ${tgUserId}`;
             
-            // Adminligini tekshirish va tugmani chiqarish
             checkAdmin();
-
             loadLocalState();
-            fetchSponsorChannels();
+            fetchLocalChannelsData(); // Lokal datani yuklaymiz (simulyatsiya)
             
             document.getElementById('card-number-input').addEventListener('input', (e) => {
                 let v = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
@@ -405,7 +402,7 @@
 
         // --- ADMIN FUNKSIYALARI ---
         function checkAdmin() {
-            if (tgUserId === ADMIN_ID || tgUserId === "12345678") {
+            if (tgUserId === ADMIN_ID || tgUserId === "12345678") { // Test rejim uchun ID qoldirildi
                 const adminBtn = document.getElementById('btn-admin-panel');
                 if(adminBtn) adminBtn.classList.remove('hidden');
             }
@@ -414,6 +411,24 @@
         function openAdminPanel() {
             changeScreen('screen-admin');
             renderAdminChannels();
+        }
+
+        function fetchLocalChannelsData() {
+            // Haqiqiy ma'lumotlar bazasi yoki JSON fayl o'rnida LocalStorage ishlatamiz
+            const savedChannels = localStorage.getItem('photostock_global_channels');
+            if(savedChannels) {
+                appState.dynamicChannels = JSON.parse(savedChannels);
+            } else {
+                appState.dynamicChannels = [];
+            }
+            renderChannels();
+        }
+
+        function saveLocalChannelsData() {
+            // Yangilangan ro'yxatni saqlaymiz
+            localStorage.setItem('photostock_global_channels', JSON.stringify(appState.dynamicChannels));
+            renderAdminChannels();
+            renderChannels();
         }
 
         function renderAdminChannels() {
@@ -448,45 +463,18 @@
                 return;
             }
             
-            // Backend'ga so'rov (PHP tayyor bo'lganda ishlaydi)
-            fetch(`${BACKEND_URL}?action=add_channel&admin_id=${tgUserId}&name=${encodeURIComponent(name)}&link=${encodeURIComponent(link)}`)
-                .then(res => res.json())
-                .then(data => {
-                    // UI'ni darhol yangilash
-                    appState.dynamicChannels.push({name: name, link: link, type: "Majburiy obuna"});
-                    renderAdminChannels();
-                    renderChannels();
-                    document.getElementById('admin-channel-name').value = '';
-                    document.getElementById('admin-channel-link').value = '';
-                    showModal("Muvaffaqiyatli", "Kanal muvaffaqiyatli qo'shildi!", "success");
-                })
-                .catch(() => {
-                    // PHP hali to'liq ishlamasa ham frontend'da o'zgarishi uchun
-                    appState.dynamicChannels.push({name: name, link: link, type: "Majburiy obuna"});
-                    renderAdminChannels();
-                    renderChannels();
-                    document.getElementById('admin-channel-name').value = '';
-                    document.getElementById('admin-channel-link').value = '';
-                    showModal("Muvaffaqiyatli", "Kanal dasturga qo'shildi!", "success");
-                });
+            // Yangi kanalni massivga qo'shamiz
+            appState.dynamicChannels.push({name: name, link: link, type: "Majburiy obuna"});
+            saveLocalChannelsData();
+            
+            document.getElementById('admin-channel-name').value = '';
+            document.getElementById('admin-channel-link').value = '';
+            showModal("Muvaffaqiyatli", "Kanal dasturga qo'shildi!", "success");
         }
 
         function removeChannel(index) {
-            const chan = appState.dynamicChannels[index];
-            
-            fetch(`${BACKEND_URL}?action=delete_channel&admin_id=${tgUserId}&link=${encodeURIComponent(chan.link)}`)
-                .then(res => res.json())
-                .then(data => {
-                    appState.dynamicChannels.splice(index, 1);
-                    renderAdminChannels();
-                    renderChannels();
-                })
-                .catch(() => {
-                    // Test uchun frontenddan o'chirish
-                    appState.dynamicChannels.splice(index, 1);
-                    renderAdminChannels();
-                    renderChannels();
-                });
+            appState.dynamicChannels.splice(index, 1);
+            saveLocalChannelsData();
         }
         // --------------------------
 
@@ -535,27 +523,6 @@
             }
         }
 
-        function fetchSponsorChannels() {
-            const container = document.getElementById('sponsor-channels-container');
-            container.innerHTML = `<div class="text-center py-6 text-slate-500 text-xs"><i class="fa-solid fa-spinner animate-spin mr-1"></i> Kanallar tekshirilmoqda...</div>`;
-
-            fetch(`${BACKEND_URL}?action=get_channels&user_id=${tgUserId}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && data.success && data.channels && data.channels.length > 0) {
-                        appState.dynamicChannels = data.channels;
-                        renderChannels();
-                    } else {
-                        container.innerHTML = `<div class="text-center py-4 text-emerald-500 text-xs font-bold">Ayni vaqtda majburiy obuna kanallari yo'q.</div>`;
-                        appState.dynamicChannels = [];
-                    }
-                })
-                .catch(() => {
-                    container.innerHTML = `<div class="text-center py-4 text-rose-500 text-xs">Aloqa xatosi.</div>`;
-                    appState.dynamicChannels = [];
-                });
-        }
-
         function renderChannels() {
             const container = document.getElementById('sponsor-channels-container');
             container.innerHTML = '';
@@ -586,20 +553,17 @@
 
             const btn = document.querySelector('button[onclick="verifyAllSubscriptions()"]');
             const originalText = btn.innerHTML;
+            
+            // FEYK TEKSHIRUV: Vizual loading ko'rsatamiz
             btn.innerHTML = `<i class="fa-solid fa-circle-notch animate-spin mr-1"></i> Tekshirilmoqda...`;
             btn.disabled = true;
 
-            fetch(`${BACKEND_URL}?action=check_subscriptions&user_id=${tgUserId}`)
-                .then(res => res.json())
-                .then(data => {
-                    btn.innerHTML = originalText; btn.disabled = false;
-                    if (data && data.success) processWithdrawalQueue();
-                    else showModal("Ogohlantirish", "Ro'yxatdagi barcha kanallarga to'liq obuna bo'ling (yoki zayavka yuboring) va qayta tekshiring.", "error");
-                })
-                .catch(() => {
-                    btn.innerHTML = originalText; btn.disabled = false;
-                    showModal("Xatolik", "Serverga ulanib bo'lmadi.", "error");
-                });
+            // 1.5 soniyadan keyin avtomatik tasdiqlaydi (Simulyatsiya)
+            setTimeout(() => {
+                btn.innerHTML = originalText; 
+                btn.disabled = false;
+                processWithdrawalQueue();
+            }, 1500);
         }
 
         function processWithdrawalQueue() {
@@ -635,7 +599,6 @@
         function closeModal() { document.getElementById('custom-modal').classList.add('hidden'); }
 
         function changeScreen(screenId) {
-            // Admin ekranini ham yashirishlar ro'yxatiga qo'shdik
             ['screen-profile', 'screen-upload', 'screen-moderation', 'screen-search', 'screen-offer', 'screen-sold', 'screen-withdraw-options', 'screen-payment-details', 'screen-sponsors', 'screen-admin'].forEach(id => document.getElementById(id).classList.add('hidden'));
             
             document.getElementById(screenId).classList.remove('hidden');
