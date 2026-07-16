@@ -337,12 +337,14 @@
 
     <script>
         const ADMIN_ID = "5780755613";
-        const GITHUB_TOKEN = "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"; 
         const GITHUB_OWNER = "sirojiddinavezov3-a11y";
         const GITHUB_REPO = "Cikagophoto";
         const GITHUB_BRANCH = "main";
         const CHANNELS_FILE = "channels.json";
         
+        // --- DIQQAT: SHU YERGA O'Z SERVERINGIZDAGI API.PHP MANZILINI YOZING ---
+        const API_URL = "https://~/www/6a397e698fb00.xvest5.ru/api.php"; 
+
         let tgUserId = "12345678";
         let tgUserName = "Foydalanuvchi";
 
@@ -403,27 +405,7 @@
             renderAdminChannels();
         }
 
-        async function getChannelFileSHA() {
-            try {
-                const response = await fetch(
-                    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${CHANNELS_FILE}?ref=${GITHUB_BRANCH}`,
-                    {
-                        headers: {
-                            'Authorization': `token ${GITHUB_TOKEN}`,
-                            'Accept': 'application/vnd.github.v3'
-                        }
-                    }
-                );
-                if (response.ok) {
-                    const data = await response.json();
-                    return data.sha;
-                }
-            } catch(e) {
-                console.log("SHA olishda xatolik:", e);
-            }
-            return null;
-        }
-
+        // MA'LUMOTLARNI YUKLASH (GITHUbdan o'qish xavfsiz, o'zgartirmaymiz)
         async function fetchChannelsFromGithub() {
             try {
                 const response = await fetch(
@@ -443,6 +425,7 @@
             renderChannels();
         }
 
+        // KANAL QO'SHISH FUNKSIYASI (PHP ORQALI)
         async function addChannelToGithub() {
             const name = document.getElementById('admin-channel-name').value.trim();
             const link = document.getElementById('admin-channel-link').value.trim();
@@ -452,95 +435,67 @@
                 return;
             }
 
-            const newChannel = { name: name, link: link };
-            appState.dynamicChannels.push(newChannel);
+            const updatedChannels = [...appState.dynamicChannels, { name: name, link: link }];
 
             try {
-                const sha = await getChannelFileSHA();
-                const fileContent = JSON.stringify(appState.dynamicChannels, null, 2);
-                const encodedContent = btoa(unescape(encodeURIComponent(fileContent)));
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        channels: updatedChannels, 
+                        message: `Yangi kanal qo'shildi: ${name}` 
+                    })
+                });
 
-                const updateResponse = await fetch(
-                    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${CHANNELS_FILE}`,
-                    {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${GITHUB_TOKEN}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            message: `Yangi kanal qo'shildi: ${name}`,
-                            content: encodedContent,
-                            branch: GITHUB_BRANCH,
-                            sha: sha
-                        })
-                    }
-                );
+                const result = await response.json();
 
-                if (updateResponse.ok) {
+                if (result.success) {
+                    appState.dynamicChannels = updatedChannels;
                     document.getElementById('admin-channel-name').value = '';
                     document.getElementById('admin-channel-link').value = '';
-                    showModal("Muvaffaqiyatli", "Kanal GitHub-ga qo'shildi!", "success");
+                    showModal("Muvaffaqiyatli", "Kanal tizimga qo'shildi!", "success");
                     renderAdminChannels();
-                    
-                    setTimeout(() => {
-                        fetchChannelsFromGithub();
-                    }, 1000);
+                    renderChannels(); 
                 } else {
-                    const errorData = await updateResponse.json();
-                    showModal("Xatolik", "GitHub xatosi: " + (errorData.message || "Noma'lum"), "error");
-                    appState.dynamicChannels.pop();
+                    showModal("Xatolik", result.message, "error");
                 }
             } catch(e) {
-                console.log("Kanal qo'shishda xatolik:", e);
-                showModal("Xatolik", "Kanal qo'shishda xatolik.", "error");
-                appState.dynamicChannels.pop();
+                console.log("Xatolik:", e);
+                showModal("Xatolik", "Server (API) bilan bog'lanishda xatolik yuz berdi.", "error");
             }
         }
 
+        // KANAL O'CHIRISH FUNKSIYASI (PHP ORQALI)
         async function removeChannelFromGithub(index) {
             if (index < 0 || index >= appState.dynamicChannels.length) return;
 
             const removedChannel = appState.dynamicChannels[index];
-            appState.dynamicChannels.splice(index, 1);
+            const updatedChannels = [...appState.dynamicChannels];
+            updatedChannels.splice(index, 1); 
 
             try {
-                const sha = await getChannelFileSHA();
-                const fileContent = JSON.stringify(appState.dynamicChannels, null, 2);
-                const encodedContent = btoa(unescape(encodeURIComponent(fileContent)));
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        channels: updatedChannels, 
+                        message: `Kanal o'chirildi: ${removedChannel.name}` 
+                    })
+                });
 
-                const updateResponse = await fetch(
-                    `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${CHANNELS_FILE}`,
-                    {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${GITHUB_TOKEN}`,
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            message: `Kanal o'chirildi: ${removedChannel.name}`,
-                            content: encodedContent,
-                            branch: GITHUB_BRANCH,
-                            sha: sha
-                        })
-                    }
-                );
+                const result = await response.json();
 
-                if (updateResponse.ok) {
-                    showModal("Muvaffaqiyatli", "Kanal o'chirildi!", "success");
+                if (result.success) {
+                    appState.dynamicChannels = updatedChannels;
+                    showModal("Muvaffaqiyatli", "Kanal tizimdan o'chirildi!", "success");
                     renderAdminChannels();
-                    
-                    setTimeout(() => {
-                        fetchChannelsFromGithub();
-                    }, 1000);
+                    renderChannels();
                 } else {
-                    appState.dynamicChannels.splice(index, 0, removedChannel);
-                    showModal("Xatolik", "Kanal o'chirishda xatolik.", "error");
+                    showModal("Xatolik", result.message, "error");
                 }
             } catch(e) {
-                console.log("Kanal o'chirishda xatolik:", e);
-                appState.dynamicChannels.splice(index, 0, removedChannel);
-                showModal("Xatolik", "Kanal o'chirishda xatolik.", "error");
+                console.log("Xatolik:", e);
+                showModal("Xatolik", "Server (API) bilan bog'lanishda xatolik yuz berdi.", "error");
             }
         }
 
